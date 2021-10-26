@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 android {
@@ -41,4 +42,18 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
 
     implementation project(':resource')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'org.sheedon.component'
+                artifactId = 'application'
+                version = '1.0'
+            }
+        }
+    }
 }

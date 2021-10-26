@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 android {
@@ -41,4 +42,18 @@ dependencies {
     implementation "com.liulishuo.okdownload:okhttp:1.0.7"
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'org.sheedon.component'
+                artifactId = 'UpgradeDispatcher'
+                version = '1.0'
+            }
+        }
+    }
 }
