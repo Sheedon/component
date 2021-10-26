@@ -1,4 +1,4 @@
-package org.sheedon.kit_viewmodel;
+package org.sheedon.component;
 
 
 import android.content.Context;
