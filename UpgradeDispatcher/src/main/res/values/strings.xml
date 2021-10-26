@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_permission">请授予权限！</string>
+    <string name="app_install_failure">安装失败！</string>
+    <string name="app_update_app">更新App！</string>
+</resources>

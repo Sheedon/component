@@ -1,0 +1,37 @@
+package org.sheedon.upgradedispatcher.manager;
+
+import android.content.Context;
+
+import org.sheedon.upgradedispatcher.listener.DispatchListener;
+import org.sheedon.upgradedispatcher.utils.ApkUtils;
+
+import java.io.File;
+
+/**
+ * 默认安装管理者
+ *
+ * @Author: sheedon
+ * @Email: sheedonsun@163.com
+ * @Date: 2021/10/25 11:40 上午
+ */
+public class DefaultInstallerManager implements InstallerManagerCenter {
+
+    // 执行监听器
+    private DispatchListener listener;
+    // 上下文
+    private final Context context;
+
+    public DefaultInstallerManager(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public void attachListener(DispatchListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public boolean install(File downloadFile) {
+        return ApkUtils.installApk(context, downloadFile);
+    }
+}

@@ -1,0 +1,5 @@
+rootProject.name = "component"
+include ':app'
+include ':application'
+include ':resource'
+include ':UpgradeDispatcher'

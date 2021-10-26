@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--标题大小 头部-->
+    <dimen name="titleHeadSize">24sp</dimen>
+    <!--标题大小 标准-->
+    <dimen name="titleSize">21sp</dimen>
+
+    <!--副标题大小 标准-->
+    <dimen name="titleSubSize">17sp</dimen>
+    <!--副标题大小 小-->
+    <dimen name="titleSmallSubSize">16sp</dimen>
+
+    <!--按钮字体大小 大-->
+    <dimen name="buttonBigSize">17sp</dimen>
+    <!--按钮字体大小 标准-->
+    <dimen name="buttonSize">15sp</dimen>
+
+    <!--内容字体大小 标准-->
+    <dimen name="bodySize">15sp</dimen>
+    <!--内容字体大小 小-->
+    <dimen name="bodySmallSize">14sp</dimen>
+    <!--内容字体大小 更小 -->
+    <dimen name="bodyLittleSize">13sp</dimen>
+    <!--内容字体大小 最小 -->
+    <dimen name="bodyLeastSize">10sp</dimen>
+
+    <!--状态栏-->
+    <dimen name="statusBarSize">24dp</dimen>
+    <!--工具栏-->
+    <dimen name="navigationBarSize">56dp</dimen>
+    <dimen name="navigationBarAndStatusBarSize">80dp</dimen>
+    <!--副标题-->
+    <dimen name="subheadingSize">48dp</dimen>
+    <!--列表项-->
+    <dimen name="listCellSize">72dp</dimen>
+    <!--内容区域之间的间距-->
+    <dimen name="spacingSize">8dp</dimen>
+    <dimen name="spacingSmallSize">6dp</dimen>
+    <!--内存间距1.5倍-->
+    <dimen name="spacingSizeOfTwelve">12dp</dimen>
+    <dimen name="spacingSizeOfTwentyEight">28dp</dimen>
+    <!--双倍内容间距-->
+    <dimen name="spacingDoubleSize">16dp</dimen>
+    <dimen name="spacingQuadrupleSize">32dp</dimen>
+    <!--状态栏 + 双倍内容间距-->
+    <dimen name="statusBarAndSpacingDoubleSize">40dp</dimen>
+    <!--搜索框大小-->
+    <dimen name="searchViewSize">40dp</dimen>
+    <!--头像大小-->
+    <dimen name="headSize">96dp</dimen>
+
+    <dimen name="len_20">20dp</dimen>
+    <dimen name="len_24">24dp</dimen>
+    <dimen name="len_28">28dp</dimen>
+    <dimen name="len_32">32dp</dimen>
+    <dimen name="len_36">36dp</dimen>
+    <dimen name="len_40">40dp</dimen>
+    <dimen name="len_44">44dp</dimen>
+    <dimen name="len_48">48dp</dimen>
+    <dimen name="len_52">52dp</dimen>
+    <dimen name="len_56">56dp</dimen>
+    <dimen name="len_60">60dp</dimen>
+    <dimen name="len_64">64dp</dimen>
+    <dimen name="len_68">68dp</dimen>
+    <dimen name="len_72">72dp</dimen>
+    <dimen name="len_76">76dp</dimen>
+    <dimen name="len_80">80dp</dimen>
+    <dimen name="len_84">84dp</dimen>
+    <dimen name="len_88">88dp</dimen>
+    <dimen name="len_92">92dp</dimen>
+    <dimen name="len_96">96dp</dimen>
+    <dimen name="len_100">100dp</dimen>
+    <dimen name="len_116">116dp</dimen>
+    <dimen name="len_128">128dp</dimen>
+    <dimen name="len_156">156dp</dimen>
+    <dimen name="len_172">172dp</dimen>
+    <dimen name="len_224">224dp</dimen>
+    <dimen name="len_256">256dp</dimen>
+
+
+</resources>
