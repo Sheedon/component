@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.sheedon.kit_viewmodel">
+    package="org.sheedon.component">
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="org.sheedon.kit_viewmodel.fileprovider"
+            android:authorities="org.sheedon.component.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -22,10 +22,10 @@
         </provider>
 
         <activity
-            android:name=".NextActivity"
+            android:name="org.sheedon.component.NextActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="org.sheedon.component.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
