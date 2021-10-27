@@ -16,8 +16,6 @@ import java.io.File;
  */
 public class DefaultInstallerManager implements InstallerManagerCenter {
 
-    // 执行监听器
-    private DispatchListener listener;
     // 上下文
     private final Context context;
 
@@ -27,7 +25,7 @@ public class DefaultInstallerManager implements InstallerManagerCenter {
 
     @Override
     public void attachListener(DispatchListener listener) {
-        this.listener = listener;
+        // 执行监听器
     }
 
     @Override

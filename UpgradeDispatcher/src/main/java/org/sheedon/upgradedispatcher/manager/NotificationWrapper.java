@@ -3,35 +3,28 @@ package org.sheedon.upgradedispatcher.manager;
 
 import static android.app.Notification.VISIBILITY_SECRET;
 
-import static androidx.core.app.NotificationCompat.PRIORITY_DEFAULT;
-
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.widget.RemoteViews;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import org.sheedon.upgradedispatcher.R;
 
 /**
- * <pre>
- *     @author yangchong
- *     blog  : https://www.jianshu.com/p/514eb6193a06
- *     time  : 2018/2/10
- *     desc  : 通知栏工具类
- *     revise:
- * </pre>
+ * 通知工具类
+ *
+ * @Author: sheedon
+ * @Email: sheedonsun@163.com
+ * @Date: 2021/10/25 10:57 上午
  */
-public class NotificationUtils extends ContextWrapper {
+public class NotificationWrapper extends ContextWrapper {
 
 
     public static final String CHANNEL_ID = "default";
@@ -43,7 +36,7 @@ public class NotificationUtils extends ContextWrapper {
 
     private RemoteViews remoteViews;
 
-    public NotificationUtils(Context base) {
+    public NotificationWrapper(Context base) {
         super(base);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //android 8.0以上需要特殊处理，也就是targetSDKVersion为26以上
@@ -51,6 +44,9 @@ public class NotificationUtils extends ContextWrapper {
         }
     }
 
+    /**
+     * 获取通知渠道
+     */
     @TargetApi(Build.VERSION_CODES.O)
     private NotificationChannel createNotificationChannel() {
         //第一个参数：channel_id
@@ -89,6 +85,12 @@ public class NotificationUtils extends ContextWrapper {
         return mManager;
     }
 
+    /**
+     * 获取自定义的View
+     *
+     * @param progress 进度
+     * @return RemoteViews
+     */
     private RemoteViews getRemoteViews(int progress) {
         if (remoteViews == null) {
             remoteViews = new RemoteViews(this.getPackageName(), R.layout.remote_notification_view);
@@ -98,11 +100,19 @@ public class NotificationUtils extends ContextWrapper {
         return remoteViews;
     }
 
+    /**
+     * 创建通知消息体
+     *
+     * @param progress 进度
+     * @return Notification
+     */
     private Notification createNotification(int progress) {
         if (notification != null) {
             notification.contentView = getRemoteViews(progress);
             return notification;
         }
+
+        // android 8.0以上
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.remote_notification_view);
             remoteViews.setTextViewText(R.id.tvTitle, getApplicationContext().getText(R.string.app_update_app));
@@ -110,16 +120,21 @@ public class NotificationUtils extends ContextWrapper {
                     .setCustomContentView(getRemoteViews(progress))
                     .setSmallIcon(R.mipmap.ic_launcher).build();
         } else {
+            // android 8.0 以下
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setCustomContentView(getRemoteViews(progress))
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setOngoing(true);
-//                    .setChannel(id);//无效
             notification = notificationBuilder.build();
         }
         return notification;
     }
 
+    /**
+     * 显示通知消息
+     *
+     * @param progress 进度
+     */
     public void showNotification(int progress) {
         //下载成功或者失败
         if (progress == 100 || progress == -1) {
@@ -127,6 +142,16 @@ public class NotificationUtils extends ContextWrapper {
         } else {
             getManager().notify(1, createNotification(progress));
         }
+    }
+
+    /**
+     * 清除数据
+     */
+    private void clear() {
+        mManager = null;
+        channel = null;
+        notification = null;
+        remoteViews = null;
     }
 
 

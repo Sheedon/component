@@ -26,7 +26,7 @@ public class MainActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         super.initData();
-        UpgradeInstaller.setUp(this, () -> Log.v("SXD","onCompleted"));
+        UpgradeInstaller.setUp(this, () -> Log.v("SXD", "onCompleted"));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MainActivity extends BaseToolbarActivity {
 
 //        doNext();
 
-        UpgradeInstaller.upgradeApp(this,"10","http://file.yanhangtec.com/prodectfile/fileResource/upload/2ea4d6f8-a537-4295-be50-788f08dfd5ef.apk");
+        UpgradeInstaller.upgradeApp(this, "9", "http://file.yanhangtec.com/prodectfile/fileResource/upload/01abd093-bb46-49b6-8c9a-1a204a6e1587.apk");
 //        UpdateFragment
 //        NextActivity.show(this);
     }

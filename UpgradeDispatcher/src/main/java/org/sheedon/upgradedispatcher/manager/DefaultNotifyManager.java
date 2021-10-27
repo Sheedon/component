@@ -1,13 +1,7 @@
 package org.sheedon.upgradedispatcher.manager;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.widget.RemoteViews;
 
-import org.sheedon.upgradedispatcher.R;
 import org.sheedon.upgradedispatcher.listener.UpgradeListener;
 
 /**
@@ -26,12 +20,15 @@ public class DefaultNotifyManager extends UpgradeListener.UpgradeNotifyFactory {
     }
 
 
+    /**
+     * 通知窗体
+     */
     private static class NotificationWindow implements UpgradeListener {
 
-        private NotificationUtils utils;
+        private final NotificationWrapper utils;
 
         public NotificationWindow(Context context) {
-            this.utils = new NotificationUtils(context);
+            this.utils = new NotificationWrapper(context);
         }
 
 

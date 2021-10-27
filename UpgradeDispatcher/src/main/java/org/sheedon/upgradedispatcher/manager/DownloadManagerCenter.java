@@ -20,6 +20,11 @@ public interface DownloadManagerCenter {
     boolean isRunning();
 
 
+    /**
+     * 附加监听器
+     *
+     * @param listener 监听器
+     */
     void attachListener(DispatchListener listener);
 
     /**
