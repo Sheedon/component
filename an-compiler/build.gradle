@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
+
 dependencies {
     implementation 'com.squareup:javapoet:1.13.0'
     implementation project(':an-annotation')
@@ -22,7 +23,7 @@ afterEvaluate {
         publications {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
-//                from components.release
+                from components.java
                 groupId = 'org.sheedon.arouter'
                 artifactId = 'compiler'
                 version = '1.0'
