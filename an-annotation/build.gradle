@@ -1,8 +1,23 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+//                from components.release
+                groupId = 'org.sheedon.arouter'
+                artifactId = 'annotation'
+                version = '1.0'
+            }
+        }
+    }
 }
