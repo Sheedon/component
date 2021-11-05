@@ -57,8 +57,8 @@ dependencies {
     implementation project(':an-annotation')
     annotationProcessor project(':an-compiler')
 
-//    implementation ':com.github.Sheedon.component:annotation:0.4-alpha-2'
-//    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-2'
+//    implementation ':com.github.Sheedon.component:resource:0.4-alpha-3'
+//    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-3'
 
     implementation "com.alibaba:arouter-api:1.5.2"
     annotationProcessor "com.alibaba:arouter-compiler:1.5.2"

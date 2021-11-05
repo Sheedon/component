@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
 }
+apply plugin: 'com.github.dcendents.android-maven'
 
 
 dependencies {
@@ -18,16 +19,16 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.java
-                groupId = 'org.sheedon.arouter'
-                artifactId = 'compiler'
-                version = '1.0'
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.java
+//                groupId = 'org.sheedon.arouter'
+//                artifactId = 'compiler'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'maven-publish'
 }
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 30
@@ -32,16 +33,16 @@ dependencies {
 
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = 'org.sheedon.component'
-                artifactId = 'resource'
-                version = '1.0'
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            // Creates a Maven publication called "release".
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'org.sheedon.component'
+//                artifactId = 'resource'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}
