@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+
+    <string name="channel_name">消息推送</string>
+    <string name="channel_description">通知您最新任务或告警信息</string>
+
+
+    <string name="default_title">推送消息</string>
+    <string name="default_content">您有一条新消息，请注意查收!</string>
+
+</resources>

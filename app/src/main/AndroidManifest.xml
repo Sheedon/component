@@ -3,20 +3,36 @@
     package="org.sheedon.component">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kitviewmodel">
-
         <activity
-            android:name="org.sheedon.component.NextActivity"
+            android:name=".arouter.OtherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".arouter.SpareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".arouter.TargetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notification.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".upgrade.UpgradeActivity"
             android:exported="true" />
         <activity
-            android:name="org.sheedon.component.MainActivity"
-            android:exported="true">
+            android:name=".NextActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

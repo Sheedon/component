@@ -13,6 +13,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildFeatures {
@@ -44,5 +50,13 @@ dependencies {
 
     implementation project(':application')
     implementation project(':resource')
-    implementation project(':UpgradeDispatcher')
+    implementation project(':upgrade-dispatcher')
+    implementation project(':notification')
+
+
+    implementation project(':an-annotation')
+    annotationProcessor project(':an-compiler')
+
+    implementation "com.alibaba:arouter-api:1.5.2"
+    annotationProcessor "com.alibaba:arouter-compiler:1.5.2"
 }

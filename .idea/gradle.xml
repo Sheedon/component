@@ -10,10 +10,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/UpgradeDispatcher" />
+            <option value="$PROJECT_DIR$/an-annotation" />
+            <option value="$PROJECT_DIR$/an-compiler" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/application" />
+            <option value="$PROJECT_DIR$/application-mvvm" />
+            <option value="$PROJECT_DIR$/notification" />
             <option value="$PROJECT_DIR$/resource" />
+            <option value="$PROJECT_DIR$/upgrade-dispatcher" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
