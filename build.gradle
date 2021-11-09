@@ -8,18 +8,15 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.0"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 plugins {
-    id "com.jfrog.bintray" version "1.8.4"
+    id "com.jfrog.bintray" version "1.8.5"
     id "com.github.dcendents.android-maven" version "2.1"
 }
 
 allprojects {
-
     repositories {
         google()
         mavenCentral()
@@ -27,9 +24,4 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}
-
 apply plugin: 'android-reporting'

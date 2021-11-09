@@ -10,7 +10,11 @@ import android.view.View;
 import org.sheedon.component.MainActivity;
 import org.sheedon.component.R;
 import org.sheedon.notification.NotificationClient;
-import org.sheedon.notification.NotificationMessage;
+import org.sheedon.notification.model.ProgressBuilder;
+import org.sheedon.notification.model.SimpleBuilder;
+import org.sheedon.notification.pendingintent.ClickPendingIntentActivity;
+
+import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity {
 
@@ -32,9 +36,27 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     public void onTouchClick(View view) {
-        NotificationMessage message = new NotificationMessage.Builder()
-                .activityIntent(new Intent(this, MainActivity.class)).build();
+        ClickPendingIntentActivity activity = new ClickPendingIntentActivity(MainActivity.class, null, 0);
+        ProgressBuilder message = new ProgressBuilder()
+                .progress(0, 0)
+                .channelId(getString(R.string.default_channel_id))
+                .activityIntent(activity);
         client.sendNotification(message);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int index = 0; index < 100; index++) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    message.progress(100, index);
+                    client.sendNotification(message);
+                }
+            }
+        }).start();
 
     }
 }

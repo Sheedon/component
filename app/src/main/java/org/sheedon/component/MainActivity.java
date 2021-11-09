@@ -1,22 +1,12 @@
 package org.sheedon.component;
 
 import android.content.Intent;
-import android.transition.Slide;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.android.material.color.MaterialColors;
-import com.google.android.material.transition.Hold;
-import com.google.android.material.transition.MaterialContainerTransform;
 
 import org.sheedon.common.app.BaseToolbarActivity;
 import org.sheedon.component.arouter.NotificationClient;
 import org.sheedon.component.notification.NotificationActivity;
-import org.sheedon.upgradedispatcher.UpgradeInstaller;
 
 
 public class MainActivity extends BaseToolbarActivity {
@@ -46,9 +36,11 @@ public class MainActivity extends BaseToolbarActivity {
     private NotificationClient client = new NotificationClient();
     public void onTouchClick(View view) {
 
-        client.notifyInfo();
+
+//        channelClient.deleteChannel(this);
+//        client.notifyInfo();
 //        NextActivity.show(this);
-//        NotificationActivity.show(this);
+        NotificationActivity.show(this);
 
 //        ARouter.getInstance().build("/Test/TargetActivity")
 //                .withLong("id", 666L)

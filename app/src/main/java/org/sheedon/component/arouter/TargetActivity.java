@@ -19,7 +19,7 @@ public class TargetActivity extends AppCompatActivity {
     @Autowired(name = "id", desc = "设备ID")
     long id;
 
-    @Autowired(name = "name", desc = "设备ID")
+    @Autowired(name = "name", desc = "设备名称")
     String name;
 
     @Override

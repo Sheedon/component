@@ -7,5 +7,7 @@
 
     <string name="default_title">推送消息</string>
     <string name="default_content">您有一条新消息，请注意查收!</string>
+    <string name="default_channel_id">default_channel_id</string>
+
 
 </resources>

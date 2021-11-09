@@ -15,15 +15,15 @@ import java.util.Random;
  * @Email: sheedonsun@163.com
  * @Date: 2021/11/4 3:19 下午
  */
-@RouteStrategy(spareRoute = "/Test/SpareActivity", notificationType = "132")
+@RouteStrategy(/*spareRoute = "/Test/SpareActivity",*/ notificationType = "132")
 public class TestBindRouter extends BindRouterCard<String> {
 
-    @BindParameter(name = "id", desc = "设备ID")
+    @BindParameter(name = "id")
     public long getId() {
         return 666L;
     }
 
-    @BindParameter(name = "name", desc = "设备名称")
+    @BindParameter(name = "name")
     public String getName() {
         return "aaa";
     }
