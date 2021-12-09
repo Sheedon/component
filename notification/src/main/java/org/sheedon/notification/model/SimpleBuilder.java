@@ -55,7 +55,7 @@ public class SimpleBuilder {
         return this;
     }
 
-    public SimpleBuilder broadCastIntent(ClickPendingIntentBroadCast activityIntent) {
+    public SimpleBuilder broadCastIntent(ClickPendingIntentBroadCast broadCastIntent) {
         this.broadCastIntent = Objects.requireNonNull(broadCastIntent, "broadCastIntent == null");
         return this;
     }

@@ -57,8 +57,8 @@ public class ProgressBuilder extends SimpleBuilder {
     }
 
     @Override
-    public ProgressBuilder broadCastIntent(ClickPendingIntentBroadCast activityIntent) {
-        super.broadCastIntent(activityIntent);
+    public ProgressBuilder broadCastIntent(ClickPendingIntentBroadCast broadCastIntent) {
+        super.broadCastIntent(broadCastIntent);
         return this;
     }
 

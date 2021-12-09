@@ -55,8 +55,8 @@ public class CustomBuilder extends SimpleBuilder {
     }
 
     @Override
-    public CustomBuilder broadCastIntent(ClickPendingIntentBroadCast activityIntent) {
-        super.broadCastIntent(activityIntent);
+    public CustomBuilder broadCastIntent(ClickPendingIntentBroadCast broadCastIntent) {
+        super.broadCastIntent(broadCastIntent);
         return this;
     }
 
