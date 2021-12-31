@@ -5,7 +5,6 @@ import android.view.View;
 
 
 import org.sheedon.common.app.BaseToolbarActivity;
-import org.sheedon.component.arouter.NotificationClient;
 import org.sheedon.component.notification.NotificationActivity;
 
 
@@ -33,7 +32,6 @@ public class MainActivity extends BaseToolbarActivity {
 
     }
 
-    private NotificationClient client = new NotificationClient();
     public void onTouchClick(View view) {
 
 
@@ -41,17 +39,13 @@ public class MainActivity extends BaseToolbarActivity {
 //        client.notifyInfo();
 //        NextActivity.show(this);
         NotificationActivity.show(this);
+//        UpgradeActivity.show(this);
 
 //        ARouter.getInstance().build("/Test/TargetActivity")
 //                .withLong("id", 666L)
 //                .withString("name", "888")
 //                .navigation();
 
-    }
-
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
     }
 
 

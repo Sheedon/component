@@ -2,8 +2,8 @@ rootProject.name = "component"
 include ':app'
 include ':application'
 include ':resource'
-include ':upgrade-dispatcher'
+
 include ':application-mvvm'
 include ':notification'
-include ':an-annotation'
-include ':an-compiler'
+include ':application-support'
+include ':lifecycle'

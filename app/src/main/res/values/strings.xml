@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">kit-viewmodel</string>
+    <string name="title_lifecycle">生命周期控制</string>
 </resources>

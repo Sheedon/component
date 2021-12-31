@@ -25,7 +25,7 @@ import org.sheedon.common.handler.ConfigHandler;
  * @Email: sheedonsun@163.com
  * @Date: 2021/10/21 9:30 上午
  */
-public abstract class BaseToolbarActivity extends BaseVMActivity {
+public abstract class BaseToolbarActivity extends DataBindingActivity {
 
     private ViewDataBinding mToolbarBinding;
     private boolean appendToolbarParam = false;
@@ -56,7 +56,7 @@ public abstract class BaseToolbarActivity extends BaseVMActivity {
 
         ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(this), getChildContentLayoutId(),
                 ((LayoutToolbarBinding) parentBinding).flChild, true);
-        if(binding == null){
+        if (binding == null) {
             View.inflate(this, getChildContentLayoutId(), ((LayoutToolbarBinding) parentBinding).flChild);
             return;
         }
@@ -114,6 +114,10 @@ public abstract class BaseToolbarActivity extends BaseVMActivity {
 
         public ToolbarModel(int title) {
             this(title, View.GONE, View.VISIBLE);
+        }
+
+        public ToolbarModel(int title, String menuTitle) {
+            this(title, View.VISIBLE, View.VISIBLE, menuTitle);
         }
 
         public ToolbarModel(int title, int menuVisibility, int backVisibility) {

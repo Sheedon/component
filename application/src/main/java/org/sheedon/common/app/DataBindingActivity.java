@@ -2,10 +2,14 @@ package org.sheedon.common.app;
 
 import android.util.SparseArray;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.sheedon.common.data.DataBindingConfig;
+import org.sheedon.common.handler.ViewModelProviderHandler;
 
 /**
  * 数据绑定 Activity
@@ -19,6 +23,9 @@ public abstract class DataBindingActivity extends BaseActivity {
     private ViewDataBinding mBinding;
     // 绑定参数
     private final DataBindingConfig dataBindingConfig = new DataBindingConfig();
+
+    private ViewModelProvider mActivityProvider;
+    private ViewModelProvider mApplicationProvider;
 
     @Override
     protected void bindContentView(int layId) {
@@ -68,6 +75,30 @@ public abstract class DataBindingActivity extends BaseActivity {
      */
     protected void onViewDataBinding(ViewDataBinding binding) {
 
+    }
+
+    /**
+     * 获取Activity范围视图模型
+     *
+     * @param modelClass ViewModel's class
+     * @param <T>        ViewModel
+     * @return ViewModel
+     */
+    protected <T extends ViewModel> T getActivityScopeViewModel(@NonNull Class<T> modelClass) {
+        return ViewModelProviderHandler.getActivityScopeViewModel(mActivityProvider,
+                this, modelClass);
+    }
+
+    /**
+     * 获取全局范围视图模型
+     *
+     * @param modelClass ViewModel's class
+     * @param <T>        ViewModel
+     * @return ViewModel
+     */
+    protected <T extends ViewModel> T getApplicationScopeViewModel(@NonNull Class<T> modelClass) {
+        return ViewModelProviderHandler.getApplicationScopeViewModel(mApplicationProvider,
+                modelClass);
     }
 
     @Override

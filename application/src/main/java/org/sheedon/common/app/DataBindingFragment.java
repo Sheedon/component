@@ -10,8 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.sheedon.common.data.DataBindingConfig;
+import org.sheedon.common.handler.ViewModelProviderHandler;
 
 /**
  * 数据绑定 Fragment
@@ -27,6 +30,9 @@ public abstract class DataBindingFragment extends BaseFragment {
     // 绑定参数
     private final DataBindingConfig dataBindingConfig = new DataBindingConfig();
 
+    private ViewModelProvider mFragmentProvider;
+    private ViewModelProvider mActivityProvider;
+    private ViewModelProvider mApplicationProvider;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,6 +80,41 @@ public abstract class DataBindingFragment extends BaseFragment {
      */
     protected void onViewDataBinding(ViewDataBinding binding) {
 
+    }
+
+    /**
+     * 获取Fragment范围视图模型
+     *
+     * @param modelClass ViewModel's class
+     * @param <T>        ViewModel
+     * @return ViewModel
+     */
+    protected <T extends ViewModel> T getFragmentScopeViewModel(@NonNull Class<T> modelClass) {
+        return ViewModelProviderHandler.getFragmentScopeViewModel(mFragmentProvider, this, modelClass);
+    }
+
+    /**
+     * 获取Activity范围视图模型
+     *
+     * @param modelClass ViewModel's class
+     * @param <T>        ViewModel
+     * @return ViewModel
+     */
+    protected <T extends ViewModel> T getActivityScopeViewModel(@NonNull Class<T> modelClass) {
+        return ViewModelProviderHandler.getActivityScopeViewModel(mActivityProvider,
+                mActivity, modelClass);
+    }
+
+    /**
+     * 获取全局范围视图模型
+     *
+     * @param modelClass ViewModel's class
+     * @param <T>        ViewModel
+     * @return ViewModel
+     */
+    protected <T extends ViewModel> T getApplicationScopeViewModel(@NonNull Class<T> modelClass) {
+        return ViewModelProviderHandler.getApplicationScopeViewModel(mApplicationProvider,
+                modelClass);
     }
 
     @Override

@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation 'com.github.Sheedon.component:notification:0.4-alpha'
+//    implementation 'com.github.Sheedon.component:notification:0.4-alpha'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -52,12 +52,9 @@ dependencies {
 
     implementation project(':application')
     implementation project(':resource')
-    implementation project(':upgrade-dispatcher')
-//    implementation project(':notification')
+    implementation project(':notification')
 
-
-    implementation project(':an-annotation')
-    annotationProcessor project(':an-compiler')
+    implementation project(':lifecycle')
 
 //    implementation ':com.github.Sheedon.component:resource:0.4-alpha-3'
 //    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-3'

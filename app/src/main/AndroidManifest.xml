@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kitviewmodel">
         <activity
+            android:name=".lifecycle.LifecycleActivity"
+            android:exported="false" />
+        <activity
             android:name=".arouter.OtherActivity"
             android:exported="false" />
         <activity
