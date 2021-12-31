@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import org.sheedon.common.R;
 import org.sheedon.common.handler.ConfigHandler;
 import org.sheedon.common.handler.ILoadingDialogHandler;
 import org.sheedon.common.handler.NotifyAppStateHandler;
@@ -34,19 +35,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // 在界面未初始化之前调用的初始化窗口
         initWidows();
-        // 得到界面Id并设置到Activity界面中
-        int layId = getContentLayoutId();
-        bindContentView(layId);
-        initBefore();
-        initWidget();
-        initData();
-        NotifyAppStateHandler.addActivity(this);
+        if (initArgs(getIntent().getExtras())) {
+            // 得到界面Id并设置到Activity界面中
+            int layId = getContentLayoutId();
+            bindContentView(layId);
+            initBefore();
+            initWidget();
+            initData();
+            NotifyAppStateHandler.addActivity(this);
+        } else {
+            showError(getArgsMissing());
+            finish();
+        }
     }
 
     /**
      * 初始化窗口
      */
     protected void initWidows() {
+    }
+
+    /**
+     * 初始化相关参数
+     * 在需要传值的页面 只有参数完整 才去获取资源id，布局，数据
+     *
+     * @param bundle 传入参数
+     * @return 默认true 子类复写
+     */
+    protected boolean initArgs(Bundle bundle) {
+        return true;
+    }
+
+
+    /**
+     * 获取初始化相关参数缺失错误信息
+     *
+     * @return 缺失描述
+     */
+    @StringRes
+    protected int getArgsMissing() {
+        return R.string.common_args_missing;
     }
 
     /**
