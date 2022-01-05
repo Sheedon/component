@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
  *
  * @Author: sheedon
  * @Email: sheedonsun@163.com
- * @Date: 2021/10/21 9:45 上午
+ * @Date: 2022/1/5 10:09 下午
  */
 public class ViewModelProviderHandler implements ViewModelStoreOwner {
 
@@ -34,7 +34,7 @@ public class ViewModelProviderHandler implements ViewModelStoreOwner {
      * @param <T>               ViewModel
      * @return ViewModel
      */
-    public static <T extends ViewModel> T getFragmentScopeViewModel(@NonNull ViewModelProvider mFragmentProvider,
+    public static <T extends ViewModel> T getFragmentScopeViewModel(ViewModelProvider mFragmentProvider,
                                                                     @NonNull Fragment owner,
                                                                     @NonNull Class<T> modelClass) {
         if (mFragmentProvider == null) {
@@ -52,7 +52,7 @@ public class ViewModelProviderHandler implements ViewModelStoreOwner {
      * @param <T>               ViewModel
      * @return ViewModel
      */
-    public static <T extends ViewModel> T getActivityScopeViewModel(@NonNull ViewModelProvider mActivityProvider,
+    public static <T extends ViewModel> T getActivityScopeViewModel(ViewModelProvider mActivityProvider,
                                                                     @NonNull ComponentActivity owner,
                                                                     @NonNull Class<T> modelClass) {
         if (mActivityProvider == null) {
@@ -69,7 +69,7 @@ public class ViewModelProviderHandler implements ViewModelStoreOwner {
      * @param <T>                  ViewModel
      * @return ViewModel
      */
-    public static <T extends ViewModel> T getApplicationScopeViewModel(@NonNull ViewModelProvider mApplicationProvider,
+    public static <T extends ViewModel> T getApplicationScopeViewModel(ViewModelProvider mApplicationProvider,
                                                                        @NonNull Class<T> modelClass) {
         if (mApplicationProvider == null) {
             mApplicationProvider = new ViewModelProvider(INSTANCE);
