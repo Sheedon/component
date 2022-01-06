@@ -30,7 +30,7 @@ abstract class BaseActivity : AppCompatActivity() {
             initBefore()
             initWidget()
             initData()
-            NotifyAppStateHandler.addActivity(this);
+            NotifyAppStateHandler.addActivity(this)
         } else {
             showError(getArgsMissing())
             finish()
@@ -92,7 +92,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 初始化控件
      */
     protected open fun initWidget() {
-        ConfigHandler.setStatusBarMode(this);
+        ConfigHandler.setStatusBarMode(this)
     }
 
     /**

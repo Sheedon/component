@@ -1,4 +1,4 @@
-package org.sheedon.mvvm.viewmodel.actuator;
+package org.sheedon.mvvm.viewmodel.actuator
 
 /**
  * 基础执行器，将数据源发送到XML中和双向绑定
@@ -6,19 +6,19 @@ package org.sheedon.mvvm.viewmodel.actuator;
  *
  * @Author: sheedon
  * @Email: sheedonsun@163.com
- * @Date: 2021/11/1 3:48 下午
+ * @Date: 2022/1/6 12:33 下午
  */
-public class Actuator {
+open class Actuator {
 
-    public Actuator() {
-        initConfig();
+    init {
+        initConfig()
     }
 
-    protected void initConfig() {
+    protected open fun initConfig() {
 
     }
 
-    protected void onCleared(){
+    open fun onCleared() {
 
     }
 }

@@ -103,11 +103,12 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
 
     @SuppressLint("StaticFieldLeak")
     protected inner class ToolbarModel(
-        title: Int,
-        menuVisibility: Int = View.GONE,
-        backVisibility: Int = View.VISIBLE,
-        menuTitle: String = ""
+        _title: Int,
+        _menuVisibility: Int = View.GONE,
+        _backVisibility: Int = View.VISIBLE,
+        _menuTitle: String = ""
     ) : ViewModel(), IToolbarModel {
+        constructor(_title: Int) : this(_title, View.GONE, View.VISIBLE, "")
 
         // 标题
         private val title: MutableLiveData<Int> = MutableLiveData<Int>()
@@ -134,10 +135,10 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
         }
 
         init {
-            this.title.value = title
-            this.menuVisibility.set(menuVisibility)
-            this.backVisibility.set(backVisibility)
-            this.menuTitle.set(menuTitle)
+            this.title.value = _title
+            this.menuVisibility.set(_menuVisibility)
+            this.backVisibility.set(_backVisibility)
+            this.menuTitle.set(_menuTitle)
         }
 
 

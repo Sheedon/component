@@ -11,7 +11,7 @@ import android.os.Looper
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 5:28 下午
  */
-class BaseApplication : Application() {
+open class BaseApplication : Application() {
 
     // 转UI执行
     private val uiHandler = Handler(Looper.getMainLooper())

@@ -21,7 +21,7 @@ class DataBindingConfig {
         return bindingParams
     }
 
-    fun addBindingParam(variableId: Int, params: Any): DataBindingConfig {
+    fun addBindingParam(variableId: Int, params: Any?): DataBindingConfig {
         bindingParams.put(variableId, params)
         return this
     }

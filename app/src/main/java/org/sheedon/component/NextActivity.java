@@ -29,7 +29,6 @@ public class NextActivity extends BaseToolbarActivity {
 
     @Override
     protected void initViewModel() {
-
     }
 
     @Override
