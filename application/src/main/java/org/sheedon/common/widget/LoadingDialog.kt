@@ -11,6 +11,7 @@ import org.sheedon.common.databinding.DialogLoadingBinding
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.common.utils.DisplayUtil
+import org.sheedon.common.utils.checkIsFalse
 import org.sheedon.common.utils.checkIsTrue
 
 /**
@@ -47,9 +48,8 @@ class LoadingDialog(
     }
 
 
-    @Override
     override fun setTitle(title: CharSequence?) {
-        super.setTitle(title)
+        this.setTitle(title.toString())
     }
 
     fun setTitle(title: String) {
@@ -63,7 +63,7 @@ class LoadingDialog(
      */
     override fun showLoading(message: String) {
         setTitle(message)
-        isShowing.checkIsTrue { show() }
+        isShowing.checkIsFalse { show() }
     }
 
     /**
@@ -82,9 +82,16 @@ class LoadingDialog(
     }
 
 
-    data class LoadingModel(
-        var title: String = ResConvertHandler.getInstance().toString()
-    ) : ViewModel()
+    data class LoadingModel(val _title: String? = "") : ViewModel() {
+        var title = _title
+            get() {
+                return if (field.isNullOrEmpty()) {
+                    ResConvertHandler.getInstance().toString()
+                } else {
+                    field
+                }
+            }
+    }
 
 
 }

@@ -6,10 +6,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import org.sheedon.common.R
-import org.sheedon.common.handler.ILoadingDialogHandler
-import org.sheedon.common.handler.NotifyAppStateHandler
-import org.sheedon.common.handler.ResConvertHandler
-import org.sheedon.common.handler.ToastHandler
+import org.sheedon.common.handler.*
 
 /**
  * 基础Activity
@@ -95,21 +92,13 @@ abstract class BaseActivity : AppCompatActivity() {
      * 初始化控件
      */
     protected open fun initWidget() {
-
+        ConfigHandler.setStatusBarMode(this);
     }
 
     /**
      * 初始化数据
      */
     protected open fun initData() {
-
-    }
-
-    /**
-     * 显示加载框
-     */
-    protected open fun showLoading() {
-        showLoading("")
     }
 
     /**
@@ -126,7 +115,7 @@ abstract class BaseActivity : AppCompatActivity() {
      *
      * @param message 描述内容
      */
-    protected open fun showLoading(message: String) {
+    protected open fun showLoading(message: String = "") {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory

@@ -10,6 +10,7 @@ import androidx.databinding.ObservableInt
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.sheedon.common.BR
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.data.model.IToolbarModel
 import org.sheedon.common.databinding.LayoutToolbarBinding
@@ -28,15 +29,16 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     var appendToolbarParam = false
 
     override fun getContentLayoutId(): Int {
-        return ConfigHandler.getToolbarId();
+        return ConfigHandler.getToolbarId()
     }
 
     override fun appendBindingParam(): DataBindingConfig {
-        if (!appendToolbarParam) {
-//            return super.appendBindingParam()
-//                .addBindingParam(BR.toolbar, buildToolbarEvent());
+        return if (appendToolbarParam) {
+            super.appendBindingParam()
+        } else {
+            super.appendBindingParam()
+                .addBindingParam(BR.toolbar, buildToolbarEvent())
         }
-        return super.appendBindingParam()
     }
 
     /**
@@ -70,11 +72,11 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
         val bindingParams = bindingConfig.getBindingParams()
 
         bindingParams.forEach { key, value ->
-            binding.setVariable(key,value)
+            binding.setVariable(key, value)
         }
 
         onToolbarViewDataBinding(binding)
-        mToolbarBinding = binding;
+        mToolbarBinding = binding
     }
 
     /**

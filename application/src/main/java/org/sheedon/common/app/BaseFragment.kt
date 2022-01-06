@@ -30,7 +30,13 @@ abstract class BaseFragment : Fragment() {
         val layId = getContentLayoutId()
         val rootView = bindContentView(layId, inflater, container)
         initWidget(rootView)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // 当View创建完成后初始化数据
+        initData(view)
     }
 
     /**
@@ -99,7 +105,7 @@ abstract class BaseFragment : Fragment() {
      *
      * @param message 描述内容
      */
-    protected open fun showLoading(message: String) {
+    protected open fun showLoading(message: String = "") {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory

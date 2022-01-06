@@ -1,5 +1,7 @@
 package org.sheedon.common.app
 
+import androidx.core.util.forEach
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +30,18 @@ abstract class DataBindingActivity : BaseActivity() {
 
         initBeforeOfViewModel()
         initViewModel()
+
+        val binding: ViewDataBinding = DataBindingUtil.setContentView(this, layId)
+        binding.lifecycleOwner = this
+        val bindingConfig = appendBindingParam()
+        val bindingParams = bindingConfig.getBindingParams()
+        bindingParams.forEach { key, value ->
+            binding.setVariable(key, value)
+        }
+
+        onViewDataBinding(binding)
+        mBinding = binding
+
     }
 
     /**
