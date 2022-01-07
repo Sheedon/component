@@ -51,18 +51,14 @@ abstract class BaseActivity : AppCompatActivity() {
      * @param bundle 传入参数
      * @return 默认true 子类复写
      */
-    protected open fun initArgs(bundle: Bundle?): Boolean {
-        return true
-    }
+    protected open fun initArgs(bundle: Bundle?) = true
 
     /**
      * 获取初始化相关参数缺失错误信息
      *
      * @return 缺失描述
      */
-    protected open fun getArgsMissing(): Int {
-        return R.string.common_args_missing
-    }
+    protected open fun getArgsMissing() = R.string.common_args_missing
 
     /**
      * 得到当前界面的资源文件Id
@@ -182,6 +178,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        NotifyAppStateHandler.removeActivity(this);
+        NotifyAppStateHandler.removeActivity(this)
     }
 }

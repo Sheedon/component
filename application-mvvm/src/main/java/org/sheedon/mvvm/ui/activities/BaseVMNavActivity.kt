@@ -17,11 +17,11 @@ import org.sheedon.mvvm.viewmodel.BaseNavViewModel
  */
 abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity(){
 
-    private var mState: VM? = null
+    private lateinit var mState: VM
 
     override fun initViewModel() {
         mState = getActivityViewModel()
-        mState?.initActuators()
+        mState.initActuators()
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity(){
         super.initData()
 
         // 错误消息发送
-        mState?.getMessageEmitter()?.observeInActivity(this) {
+        mState.getMessageEmitter().observeInActivity(this) {
             hideLoading()
             it.isNullOrEmpty().checkIsFalse {
                 ToastHandler.showToast(it)
@@ -68,7 +68,7 @@ abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity(){
         }
 
         // 处理动作
-        mState?.getHandleAction()?.observeInActivity(this) { status ->
+        mState.getHandleAction().observeInActivity(this) { status ->
             hideLoading()
             status?.let {
                 onHandleAction(status)

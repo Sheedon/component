@@ -16,11 +16,11 @@ import org.sheedon.mvvm.viewmodel.BaseViewModel
  */
 abstract class BaseVMToolbarActivity<VM : BaseViewModel> : BaseToolbarActivity() {
 
-    private var mState: VM? = null
+    private lateinit var mState: VM
 
     override fun initViewModel() {
         mState = getActivityViewModel()
-        mState?.initActuators()
+        mState.initActuators()
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> : BaseToolbarActivity()
         super.initData()
 
         // 错误消息发送
-        mState?.getMessageEmitter()?.observe(this) {
+        mState.getMessageEmitter().observe(this) {
             hideLoading()
             it.isNullOrEmpty().checkIsFalse {
                 ToastHandler.showToast(it)
@@ -67,7 +67,7 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> : BaseToolbarActivity()
         }
 
         // 处理动作
-        mState?.getHandleAction()?.observe(this) { status ->
+        mState.getHandleAction().observe(this) { status ->
             hideLoading()
             status?.let {
                 onHandleAction(status)

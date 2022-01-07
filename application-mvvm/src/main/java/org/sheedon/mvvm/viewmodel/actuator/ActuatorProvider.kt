@@ -63,7 +63,7 @@ class ActuatorProvider(_factory: Factory = DefaultActuatorFactory.INSTANCE) {
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(key: String, modelClass: Class<T>): T {
+    fun <T : Actuator> get(key: String, modelClass: Class<T>):  T {
         var actuator = mMap[key]
 
         if (modelClass.isInstance(actuator)) {

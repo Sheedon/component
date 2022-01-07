@@ -59,7 +59,7 @@ interface ILoadingDialogHandler {
          * @param factory 弹窗工厂
          */
         fun attachLoadingDialogFactory(factory: LoadingDialogFactory) {
-            this.factory = factory;
+            this.factory = factory
         }
     }
 

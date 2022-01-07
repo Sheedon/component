@@ -16,11 +16,11 @@ import org.sheedon.mvvm.viewmodel.BaseViewModel
  */
 abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
 
-    private var mState: VM? = null
+    private lateinit var mState: VM
 
     override fun initViewModel() {
         mState = getFragmentViewModel()
-        mState?.initActuators()
+        mState.initActuators()
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
         super.initData()
 
         // 错误消息发送
-        mState?.getMessageEmitter()?.observe(this, {
+        mState.getMessageEmitter().observe(this, {
             hideLoading()
             it.isNullOrEmpty().checkIsFalse {
                 ToastHandler.showToast(it)
@@ -67,7 +67,7 @@ abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
         })
 
         // 处理动作
-        mState?.getHandleAction()?.observe(this, { status ->
+        mState.getHandleAction().observe(this, { status ->
             hideLoading()
             status?.let {
                 onHandleAction(status)

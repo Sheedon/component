@@ -1,6 +1,5 @@
 package org.sheedon.component;
 
-import android.content.Intent;
 import android.view.View;
 
 
@@ -56,7 +55,8 @@ public class MainActivity extends BaseToolbarActivity {
 
 //        UpgradeInstaller.upgradeApp(this, "9", "http://file.yanhangtec.com/prodectfile/fileResource/upload/01abd093-bb46-49b6-8c9a-1a204a6e1587.apk");
 //        UpdateFragment
-        NextActivity.show(this);
+//        NextActivity.show(this);
+        KotlinActivity.show(this);
     }
 
 }

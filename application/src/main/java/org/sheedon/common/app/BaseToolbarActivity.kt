@@ -28,9 +28,7 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     var mToolbarBinding: ViewDataBinding? = null
     var appendToolbarParam = false
 
-    override fun getContentLayoutId(): Int {
-        return ConfigHandler.getToolbarId()
-    }
+    override fun getContentLayoutId() = ConfigHandler.getToolbarId()
 
     override fun appendBindingParam(): DataBindingConfig {
         return if (appendToolbarParam) {
@@ -50,10 +48,13 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     override fun onViewDataBinding(parentBinding: ViewDataBinding) {
         super.onViewDataBinding(parentBinding)
 
-        val binding: ViewDataBinding? = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(this), getChildContentLayoutId(),
             (parentBinding as LayoutToolbarBinding).flChild, true
-        )
+        )?.apply {
+            lifecycleOwner = this@BaseToolbarActivity
+        }
+
         if (binding == null) {
             View.inflate(
                 this,
@@ -62,7 +63,6 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
             )
             return
         }
-        binding.lifecycleOwner = this
 
         // 清除父级 绑定的数据
         super.appendBindingParam().clear()

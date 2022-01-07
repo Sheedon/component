@@ -21,7 +21,7 @@ import org.sheedon.common.handler.ViewModelProviderHandler
  */
 abstract class DataBindingFragment : BaseFragment() {
 
-    protected var mActivity: DataBindingActivity? = null
+    protected lateinit var mActivity: DataBindingActivity
     private var mBinding: ViewDataBinding? = null
 
     // 绑定参数
@@ -43,8 +43,16 @@ abstract class DataBindingFragment : BaseFragment() {
     ): View {
         initViewModel()
 
-        val binding: ViewDataBinding = DataBindingUtil.inflate(inflater, layId, container, false)
-        binding.lifecycleOwner = this
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+            inflater,
+            layId,
+            container,
+            false
+        )
+            ?.apply {
+                lifecycleOwner = this@DataBindingFragment
+            } ?: return inflater.inflate(layId, container, false)
+
         val bindingConfig = appendBindingParam()
         val bindingParams = bindingConfig.getBindingParams()
         bindingParams.forEach { key, value ->
@@ -66,9 +74,7 @@ abstract class DataBindingFragment : BaseFragment() {
      *
      * @return SparseArray
      */
-    protected open fun appendBindingParam(): DataBindingConfig {
-        return dataBindingConfig
-    }
+    protected open fun appendBindingParam() = dataBindingConfig
 
     /**
      * ViewDataBinding 加载完成，建议只是在当前方法中使用，
@@ -105,7 +111,7 @@ abstract class DataBindingFragment : BaseFragment() {
     protected open fun <T : ViewModel> getActivityScopeViewModel(modelClass: Class<T>): T {
         return ViewModelProviderHandler.getActivityScopeViewModel(
             mActivityProvider,
-            mActivity!!, modelClass
+            mActivity, modelClass
         )
     }
 

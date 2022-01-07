@@ -25,10 +25,10 @@ class ToastHandler private constructor() {
             }
             if (Looper.myLooper() != INSTANCE.uiHandler.looper) {
                 INSTANCE.uiHandler.post {
-                    ToastUtils.showToast(BaseApplication.getInstance()!!, msg)
+                    ToastUtils.showToast(BaseApplication.getInstance(), msg)
                 }
             } else {
-                ToastUtils.showToast(BaseApplication.getInstance()!!, msg)
+                ToastUtils.showToast(BaseApplication.getInstance(), msg)
             }
         }
     }

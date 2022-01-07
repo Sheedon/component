@@ -1,6 +1,7 @@
 package org.sheedon.common.handler
 
 import android.graphics.Color
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import org.sheedon.common.R
 import org.sheedon.common.utils.BarUtils
@@ -36,8 +37,9 @@ class ConfigHandler private constructor() {
         /**
          * 获取 Toolbar ID
          */
-        fun getToolbarId(): Int {
-            return INSTANCE.toolbarId
+        fun getToolbarId() = INSTANCE.toolbarId
+        fun setToolbarId(@LayoutRes id: Int) {
+            INSTANCE.toolbarId = id
         }
     }
 

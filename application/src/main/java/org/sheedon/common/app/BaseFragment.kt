@@ -129,7 +129,7 @@ abstract class BaseFragment : Fragment() {
      * @param msg 错误信息
      */
     protected open fun showError(msg: String) {
-        hideLoading();
+        hideLoading()
         ToastHandler.showToast(msg)
     }
 

@@ -57,9 +57,7 @@ class SoftKeyboardStateHandler(
         }
     }
 
-    fun isSoftKeyboardOpened(): Boolean {
-        return isSoftKeyboardOpened
-    }
+    fun isSoftKeyboardOpened() = isSoftKeyboardOpened
 
     fun clear() {
         listeners.clear()

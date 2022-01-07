@@ -17,11 +17,11 @@ open class BaseApplication : Application() {
     private val uiHandler = Handler(Looper.getMainLooper())
 
     companion object {
-        private var instance: BaseApplication? = null
+        private lateinit var instance: BaseApplication
 
         fun getInstance() = instance
 
-        fun getUiHandler() = instance!!.uiHandler
+        fun getUiHandler() = instance.uiHandler
     }
 
     override fun onCreate() {

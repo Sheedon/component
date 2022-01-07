@@ -31,8 +31,16 @@ abstract class DataBindingActivity : BaseActivity() {
         initBeforeOfViewModel()
         initViewModel()
 
-        val binding: ViewDataBinding = DataBindingUtil.setContentView(this, layId)
-        binding.lifecycleOwner = this
+        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, layId)
+            ?.apply {
+                lifecycleOwner = this@DataBindingActivity
+            }
+
+        if (binding == null) {
+            setContentView(layId)
+            return
+        }
+
         val bindingConfig = appendBindingParam()
         val bindingParams = bindingConfig.getBindingParams()
         bindingParams.forEach { key, value ->
@@ -61,9 +69,7 @@ abstract class DataBindingActivity : BaseActivity() {
      *
      * @return SparseArray
      */
-    protected open fun appendBindingParam(): DataBindingConfig {
-        return dataBindingConfig
-    }
+    protected open fun appendBindingParam() = dataBindingConfig
 
     /**
      * ViewDataBinding 加载完成，建议只是在当前方法中使用，
