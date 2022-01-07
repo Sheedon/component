@@ -30,7 +30,7 @@ abstract class BaseActivity : AppCompatActivity() {
             initBefore()
             initWidget()
             initData()
-            NotifyAppStateHandler.addActivity(this)
+            NotifyAppStateHandler.pushActivity(this)
         } else {
             showError(getArgsMissing())
             finish()
@@ -178,6 +178,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        NotifyAppStateHandler.removeActivity(this)
+        NotifyAppStateHandler.popActivity(this)
     }
 }

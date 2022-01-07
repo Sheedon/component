@@ -86,7 +86,7 @@ class LoadingDialog(
         var title = _title
             get() {
                 return if (field.isNullOrEmpty()) {
-                    ResConvertHandler.getInstance().toString()
+                    ResConvertHandler.getInstance().convertString(R.string.prompt_loading)
                 } else {
                     field
                 }

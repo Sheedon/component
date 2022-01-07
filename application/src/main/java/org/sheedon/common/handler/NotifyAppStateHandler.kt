@@ -25,19 +25,19 @@ class NotifyAppStateHandler private constructor() {
         }
 
         /**
-         * 添加Activity
+         * activity入栈
          * @param activity Activity
          */
-        fun addActivity(activity:Activity){
-            instance.listener?.addActivity(activity)
+        fun pushActivity(activity:Activity){
+            instance.listener?.pushActivity(activity)
         }
 
         /**
-         * 移除Activity
+         * activity出栈
          * @param activity Activity
          */
-        fun removeActivity(activity:Activity){
-            instance.listener?.removeActivity(activity)
+        fun popActivity(activity:Activity){
+            instance.listener?.popActivity(activity)
         }
 
     }
@@ -46,8 +46,8 @@ class NotifyAppStateHandler private constructor() {
      * 通知更改监听器
      */
     interface OnNotifyChangeListener {
-        fun addActivity(activity: Activity)
+        fun pushActivity(activity: Activity)
 
-        fun removeActivity(activity: Activity)
+        fun popActivity(activity: Activity)
     }
 }

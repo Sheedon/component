@@ -33,6 +33,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : DataBindingActivity() {
     /**
      * 追加绑定xml中的ViewModel
      *
+     * <code>
      * <layout >
      * <data>
      * <variable
@@ -41,6 +42,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : DataBindingActivity() {
      * </data>
      * ...
      * </layout>
+     * </code>
      */
     override fun appendBindingParam(): DataBindingConfig {
         if (needAutoBindXml()) {
