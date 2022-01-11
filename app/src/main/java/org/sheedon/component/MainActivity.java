@@ -4,7 +4,7 @@ import android.view.View;
 
 
 import org.sheedon.common.app.BaseToolbarActivity;
-import org.sheedon.component.notification.NotificationActivity;
+import org.sheedon.component.recyclerlayout.EmptyActivity;
 
 
 public class MainActivity extends BaseToolbarActivity {
@@ -37,7 +37,8 @@ public class MainActivity extends BaseToolbarActivity {
 //        channelClient.deleteChannel(this);
 //        client.notifyInfo();
 //        NextActivity.show(this);
-        NotificationActivity.show(this);
+//        NotificationActivity.show(this);
+        EmptyActivity.show(this);
 //        UpgradeActivity.show(this);
 
 //        ARouter.getInstance().build("/Test/TargetActivity")

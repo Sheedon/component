@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <declare-styleable name="EmptyLayout">
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="comEmptyText" format="reference|string" />
+        <attr name="comEmptyDrawable" format="reference" />
+        <attr name="textMarginTop" format="integer" />
+        <attr name="imageMarginBottom" format="integer" />
+        <attr name="imageWidth" format="dimension" />
+        <attr name="imageHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SwipeRecyclerLayout" parent="EmptyLayout">
+        <attr name="needRefresh" format="boolean" />
+        <attr name="needLoadMore" format="boolean" />
+        <attr name="loadMoreLayout" format="string" />
+
+    </declare-styleable>
+</resources>

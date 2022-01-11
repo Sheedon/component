@@ -56,6 +56,7 @@ dependencies {
     implementation project(':notification')
 
     implementation project(':lifecycle')
+    implementation project(':application-layout')
 
 //    implementation ':com.github.Sheedon.component:resource:0.4-alpha-3'
 //    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-3'
