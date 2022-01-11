@@ -31,8 +31,7 @@ abstract class DataBindingActivity : BaseActivity() {
         initBeforeOfViewModel()
         initViewModel()
 
-        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, layId)
-            ?.apply {
+        val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, layId)?.apply {
                 lifecycleOwner = this@DataBindingActivity
             }
 

@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -57,6 +58,12 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         addView(emptyLayout);
     }
 
+    /**
+     * 附加参数
+     *
+     * @param types 类型数组
+     * @param attrs 属性集
+     */
     private void attachAttrs(TypedArray types, AttributeSet attrs) {
         setEnabled(types.getBoolean(R.styleable.SwipeRecyclerLayout_needRefresh, true));
         needLoadMore = types.getBoolean(R.styleable.SwipeRecyclerLayout_needLoadMore, true);
@@ -66,6 +73,12 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 创建加载更多的视图，根据类名反射拿到视图实例
+     *
+     * @param context   上下午
+     * @param className 全类名
+     */
     private void createLoadMoreLayout(Context context, String className) {
         if (className != null) {
             className = className.trim();
@@ -108,6 +121,13 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 获取完整的类名
+     *
+     * @param context   上下文
+     * @param className 类名
+     * @return 完整的类名
+     */
     private String getFullClassName(Context context, String className) {
         if (className.charAt(0) == '.') {
             return context.getPackageName() + className;
@@ -455,6 +475,11 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
 
     private boolean lastIsEmpty = true;
 
+    /**
+     * 通知是否信息为空，若数据为空，则显示空视图，否则显示列表视图
+     *
+     * @param isEmpty 是否为空
+     */
     public void notifyEmpty(boolean isEmpty) {
         if (lastIsEmpty == isEmpty)
             return;
@@ -471,4 +496,77 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
             }
         }
     }
+
+    /**
+     * 通知列表视图是否为空状态
+     *
+     * @param recyclerView SwipeRecyclerLayout 上下拉列表视图
+     * @param isEmpty      是否为空
+     */
+    @BindingAdapter(value = {"notifyEmptyStatus"}, requireAll = false)
+    public static void notifyEmptyStatus(SwipeRecyclerLayout recyclerView, boolean isEmpty) {
+        recyclerView.notifyEmpty(isEmpty);
+    }
+
+    /**
+     * 通知列表视图是否为空状态
+     *
+     * @param recyclerView SwipeRecyclerLayout 上下拉列表视图
+     * @param needRefresh  是否是需要刷新
+     * @param needLoadMore 是否需要加载
+     */
+    @BindingAdapter(value = {"needRefresh", "needLoadMore"}, requireAll = false)
+    public static void needRefreshOrLoadMore(SwipeRecyclerLayout recyclerView, boolean needRefresh, boolean needLoadMore) {
+        if (recyclerView == null) {
+            return;
+        }
+
+        if (recyclerView.emptyLayout != null) {
+            recyclerView.emptyLayout.setEnabled(needRefresh);
+        }
+
+        recyclerView.setNeedLoadMore(needLoadMore);
+    }
+
+    /**
+     * 设置刷新和加载监听器
+     *
+     * @param recyclerView     SwipeRecyclerLayout 上下拉列表视图
+     * @param refreshListener  刷新监听器
+     * @param loadMoreListener 加载监听器
+     */
+    @BindingAdapter(value = {"needRefresh", "needLoadMore"}, requireAll = false)
+    public static void setListener(SwipeRecyclerLayout recyclerView,
+                                   OnRefreshListener refreshListener,
+                                   SwipeRecyclerView.LoadMoreListener loadMoreListener) {
+        if (recyclerView == null) {
+            return;
+        }
+
+        recyclerView.setOnRefreshListener(refreshListener);
+        if (recyclerView.swipeRecyclerView != null) {
+            recyclerView.swipeRecyclerView.setLoadMoreListener(loadMoreListener);
+        }
+    }
+
+    /**
+     * 设置刷新和加载监听器
+     *
+     * @param recyclerView SwipeRecyclerLayout 上下拉列表视图
+     * @param dataEmpty    是否数据为空
+     * @param hasMore      是否有更多数据
+     */
+    @BindingAdapter(value = {"dataEmpty", "hasMore"}, requireAll = false)
+    public static void setListener(SwipeRecyclerLayout recyclerView,
+                                   boolean dataEmpty, boolean hasMore) {
+        if (recyclerView == null) {
+            return;
+        }
+
+        if (recyclerView.swipeRecyclerView != null) {
+            recyclerView.swipeRecyclerView.loadMoreFinish(dataEmpty, hasMore);
+        }
+    }
+
+
 }
