@@ -1,4 +1,4 @@
-package org.sheedon.common.utils
+package org.sheedon.tool
 
 import android.app.Activity
 import android.content.Context
@@ -70,14 +70,14 @@ object DisplayUtil {
      * @ 获取当前手机屏幕尺寸
      */
     fun getPingMuSize(context: Context): Float {
-        val xdpi = context.resources.displayMetrics.xdpi;
-        val ydpi = context.resources.displayMetrics.ydpi;
-        val width = context.resources.displayMetrics.widthPixels;
-        val height = context.resources.displayMetrics.heightPixels;
+        val xdpi = context.resources.displayMetrics.xdpi
+        val ydpi = context.resources.displayMetrics.ydpi
+        val width = context.resources.displayMetrics.widthPixels
+        val height = context.resources.displayMetrics.heightPixels
 
         // 这样可以计算屏幕的物理尺寸
-        val width2 = (width / xdpi) * (width / xdpi);
-        val height2 = (height / ydpi) * (width / xdpi);
+        val width2 = (width / xdpi) * (width / xdpi)
+        val height2 = (height / ydpi) * (width / xdpi)
 
 
         return (sqrt(width2 + height2))
@@ -99,7 +99,7 @@ object DisplayUtil {
      * @return 精度字符串
      */
     fun getPrecisionFormat(precision: Int): String {
-        return "%.${precision}f";
+        return "%.${precision}f"
     }
 
     fun getDisplay(context: Context): Display? {
@@ -130,15 +130,15 @@ object DisplayUtil {
      */
     fun measure(measureSpec:Int,defaultSize:Int):Int{
         var result = defaultSize
-        val specMode = View.MeasureSpec.getMode(measureSpec);
-        val specSize = View.MeasureSpec.getSize(measureSpec);
+        val specMode = View.MeasureSpec.getMode(measureSpec)
+        val specSize = View.MeasureSpec.getSize(measureSpec)
 
         if (specMode == View.MeasureSpec.EXACTLY) {
-            result = specSize;
+            result = specSize
         } else if (specMode == View.MeasureSpec.AT_MOST) {
-            result = min(result, specSize);
+            result = min(result, specSize)
         }
-        return result;
+        return result
     }
 
     /**
@@ -149,7 +149,7 @@ object DisplayUtil {
      */
     fun measureTextHeight(paint:Paint):Float{
         val fontMetrics = paint.fontMetrics
-        return (abs(fontMetrics.ascent) - fontMetrics.descent);
+        return (abs(fontMetrics.ascent) - fontMetrics.descent)
     }
 
 }

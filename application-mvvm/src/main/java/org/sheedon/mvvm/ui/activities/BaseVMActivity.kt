@@ -3,8 +3,8 @@ package org.sheedon.mvvm.ui.activities
 import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
-import org.sheedon.common.utils.checkIsFalse
 import org.sheedon.mvvm.BR
+import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.viewmodel.BaseViewModel
 
 /**

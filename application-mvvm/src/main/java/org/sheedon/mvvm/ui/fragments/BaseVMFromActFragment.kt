@@ -3,7 +3,7 @@ package org.sheedon.mvvm.ui.fragments
 import org.sheedon.common.app.DataBindingFragment
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
-import org.sheedon.common.utils.checkIsFalse
+import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.viewmodel.BaseNavViewModel
 

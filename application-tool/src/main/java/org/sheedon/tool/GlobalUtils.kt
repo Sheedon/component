@@ -1,4 +1,4 @@
-package org.sheedon.common.utils
+package org.sheedon.tool
 
 /**
  * 全局方法
