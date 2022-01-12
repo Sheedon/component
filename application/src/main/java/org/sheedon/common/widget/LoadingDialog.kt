@@ -11,6 +11,7 @@ import org.sheedon.common.databinding.DialogLoadingBinding
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.tool.checkValue
+import org.sheedon.tool.dip2px
 
 /**
  * 加载框
@@ -35,8 +36,8 @@ class LoadingDialog(
         super.onCreate(savedInstanceState)
         setCanceledOnTouchOutside(false)//点击外部不允许关闭dialog
         window?.setLayout(
-            org.sheedon.tool.DisplayUtil.dip2px(context, 120f),
-            org.sheedon.tool.DisplayUtil.dip2px(context, 120f)
+            context.dip2px(120f),
+            context.dip2px(120f)
         )
         val binding: DialogLoadingBinding = DataBindingUtil.inflate(
             LayoutInflater.from(context),

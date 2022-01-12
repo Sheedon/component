@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import org.sheedon.tool.DisplayUtil
+import org.sheedon.tool.dip2px
+import org.sheedon.tool.px2sp
 
 /**
  * 空视图，居中显示空图标和文字描述
@@ -66,7 +68,7 @@ class EmptyLayout : FrameLayout {
             R.styleable.EmptyLayout_imageMarginBottom,
             22
         ).toFloat()
-        imageLayoutParams.bottomMargin = DisplayUtil.dip2px(context, imageMarginBottom)
+        imageLayoutParams.bottomMargin = context.dip2px(imageMarginBottom)
 
         // 获取空图片
         val imageEmptyDrawable = types.getResourceId(
@@ -77,10 +79,10 @@ class EmptyLayout : FrameLayout {
         // 填充数据
         with(emptyImage) {
             layoutParams = imageLayoutParams
-            maxWidth = DisplayUtil.dip2px(context, 100F)
-            maxHeight = DisplayUtil.dip2px(context, 100F)
-            minimumWidth = DisplayUtil.dip2px(context, 48F)
-            minimumHeight = DisplayUtil.dip2px(context, 48F)
+            maxWidth = context.dip2px(100F)
+            maxHeight = context.dip2px(100F)
+            minimumWidth = context.dip2px(48F)
+            minimumHeight = context.dip2px(48F)
             setBackgroundResource(imageEmptyDrawable)
         }
     }
@@ -100,7 +102,7 @@ class EmptyLayout : FrameLayout {
             22
         ).toFloat()
 
-        textLayoutParams.topMargin = DisplayUtil.dip2px(context, textMarginTop)
+        textLayoutParams.topMargin = context.dip2px(textMarginTop)
 
 
         val color =
@@ -114,7 +116,7 @@ class EmptyLayout : FrameLayout {
         with(emptyText) {
             layoutParams = textLayoutParams
             setTextColor(ContextCompat.getColor(context, color))
-            textSize = DisplayUtil.px2sp(context, resources.getDimension(size)).toFloat()
+            textSize = context.px2sp(resources.getDimension(size)).toFloat()
             text = resources.getString(content)
         }
 
