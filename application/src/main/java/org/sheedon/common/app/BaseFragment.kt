@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import org.sheedon.common.app.center.IShowAndHideLoading
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.common.handler.ToastHandler
@@ -18,7 +19,7 @@ import org.sheedon.common.handler.ToastHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 9:06 下午
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(), IShowAndHideLoading {
 
     var loadingHandler: ILoadingDialogHandler? = null
 
@@ -96,7 +97,7 @@ abstract class BaseFragment : Fragment() {
      *
      * @param res 文字资源
      */
-    protected open fun showLoading(@StringRes res: Int) {
+    override fun showLoading(@StringRes res: Int) {
         showLoading(ResConvertHandler.getInstance().convertString(res))
     }
 
@@ -105,7 +106,7 @@ abstract class BaseFragment : Fragment() {
      *
      * @param message 描述内容
      */
-    protected open fun showLoading(message: String = "") {
+    override fun showLoading(message: String) {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory
@@ -136,7 +137,7 @@ abstract class BaseFragment : Fragment() {
     /**
      * 关闭弹窗
      */
-    fun hideLoading() {
+    override fun hideLoading() {
         loadingHandler?.hideLoading()
     }
 }

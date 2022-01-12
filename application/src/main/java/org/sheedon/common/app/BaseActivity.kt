@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import org.sheedon.common.R
+import org.sheedon.common.app.center.IShowAndHideLoading
 import org.sheedon.common.handler.*
 
 /**
@@ -15,7 +16,7 @@ import org.sheedon.common.handler.*
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 2:10 下午
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
 
     private var loadingHandler: ILoadingDialogHandler? = null
 
@@ -102,7 +103,7 @@ abstract class BaseActivity : AppCompatActivity() {
      *
      * @param res 文字资源
      */
-    protected open fun showLoading(@StringRes res: Int) {
+    override fun showLoading(@StringRes res: Int) {
         showLoading(ResConvertHandler.getInstance().convertString(res))
     }
 
@@ -111,7 +112,7 @@ abstract class BaseActivity : AppCompatActivity() {
      *
      * @param message 描述内容
      */
-    protected open fun showLoading(message: String = "") {
+    override fun showLoading(message: String) {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory
@@ -143,7 +144,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 关闭弹窗
      */
-    protected open fun hideLoading() {
+    override fun hideLoading() {
         loadingHandler?.hideLoading()
     }
 

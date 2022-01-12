@@ -7,6 +7,7 @@
         <entry key="UpgradeDispatcher/src/main/res/layout/remote_notification_view.xml" value="0.22554347826086957" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2640625" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2640625" />
+        <entry key="app/src/main/res/layout/activity_empty.xml" value="0.21784420289855072" />
         <entry key="app/src/main/res/layout/activity_kotlin.xml" value="0.17239583333333333" />
         <entry key="app/src/main/res/layout/activity_lifecycle.xml" value="0.22282608695652173" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15833333333333333" />
@@ -15,6 +16,9 @@
         <entry key="app/src/main/res/layout/activity_spare.xml" value="0.1838768115942029" />
         <entry key="app/src/main/res/layout/activity_target.xml" value="0.2210144927536232" />
         <entry key="app/src/main/res/layout/activity_upgrade.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/item_menu_main.xml" value="0.17708333333333334" />
+        <entry key="application-layout/src/main/res/drawable/img_empty.xml" value="0.17760416666666667" />
+        <entry key="application-mvvm/src/main/res/layout/layout_default.xml" value="0.22871376811594202" />
         <entry key="application/src/main/res/drawable/ic_arrow.xml" value="0.2898148148148148" />
         <entry key="application/src/main/res/layout/dialog_loading.xml" value="0.291213768115942" />
         <entry key="application/src/main/res/layout/layout_toolbar.xml" value="0.2966485507246377" />
