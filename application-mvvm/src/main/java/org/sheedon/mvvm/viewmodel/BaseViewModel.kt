@@ -1,9 +1,10 @@
 package org.sheedon.mvvm.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.sheedon.mvvm.viewmodel.actuator.Actuator
 import org.sheedon.mvvm.viewmodel.actuator.ActuatorProvider
+import org.sheedon.mvvm.viewmodel.livedata.IntLiveData
+import org.sheedon.mvvm.viewmodel.livedata.StringLiveData
 
 /**
  * 基础ViewModel
@@ -16,12 +17,12 @@ import org.sheedon.mvvm.viewmodel.actuator.ActuatorProvider
 abstract class BaseViewModel : ViewModel() {
 
     // 消息发送端
-    private val messageEmitter = MutableLiveData<String>()
-    fun getMessageEmitter(): MutableLiveData<String> = messageEmitter
+    private val messageEmitter = StringLiveData()
+    fun getMessageEmitter(): StringLiveData = messageEmitter
 
     // 执行动作发送器
-    private val handleAction = MutableLiveData<Int>()
-    fun getHandleAction(): MutableLiveData<Int> = handleAction
+    private val handleAction = IntLiveData()
+    fun getHandleAction(): IntLiveData = handleAction
 
     // 执行器提供者
     private var actuatorProvider: ActuatorProvider? = null

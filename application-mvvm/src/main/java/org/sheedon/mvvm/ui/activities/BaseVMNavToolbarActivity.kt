@@ -3,9 +3,9 @@ package org.sheedon.mvvm.ui.activities
 import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
-import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.viewmodel.BaseNavViewModel
+import org.sheedon.tool.checkValue
 
 /**
  * java类作用描述
@@ -60,9 +60,10 @@ abstract class BaseVMNavToolbarActivity<VM : BaseNavViewModel> : DataBindingActi
         // 错误消息发送
         mState.getMessageEmitter().observeInActivity(this) {
             hideLoading()
-            it.isNullOrEmpty().checkIsFalse {
-                ToastHandler.showToast(it)
-            }
+            it.isNullOrEmpty()
+                .checkValue {
+                    ToastHandler.showToast(it)
+                }
         }
 
         // 处理动作

@@ -3,9 +3,9 @@ package org.sheedon.mvvm.ui.activities
 import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
-import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.viewmodel.BaseNavViewModel
+import org.sheedon.tool.checkValue
 
 /**
  * ViewModel 包装类 Activity 类
@@ -15,7 +15,7 @@ import org.sheedon.mvvm.viewmodel.BaseNavViewModel
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 3:28 下午
  */
-abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity(){
+abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity() {
 
     private lateinit var mState: VM
 
@@ -62,7 +62,7 @@ abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity(){
         // 错误消息发送
         mState.getMessageEmitter().observeInActivity(this) {
             hideLoading()
-            it.isNullOrEmpty().checkIsFalse {
+            it.isNullOrEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
         }

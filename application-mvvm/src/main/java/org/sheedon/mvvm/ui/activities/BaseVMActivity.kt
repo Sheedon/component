@@ -4,8 +4,8 @@ import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.mvvm.BR
-import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.viewmodel.BaseViewModel
+import org.sheedon.tool.checkValue
 
 /**
  * ViewModel Activity 类
@@ -63,7 +63,7 @@ abstract class BaseVMActivity<VM : BaseViewModel> : DataBindingActivity() {
         // 错误消息发送
         mState.getMessageEmitter().observe(this, {
             hideLoading()
-            it.isNullOrEmpty().checkIsFalse {
+            it.isEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
         })

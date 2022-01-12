@@ -10,8 +10,7 @@ import org.sheedon.common.R
 import org.sheedon.common.databinding.DialogLoadingBinding
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
-import org.sheedon.tool.checkIsFalse
-import org.sheedon.tool.checkIsTrue
+import org.sheedon.tool.checkValue
 
 /**
  * 加载框
@@ -35,7 +34,10 @@ class LoadingDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCanceledOnTouchOutside(false)//点击外部不允许关闭dialog
-        window?.setLayout(org.sheedon.tool.DisplayUtil.dip2px(context, 120f), org.sheedon.tool.DisplayUtil.dip2px(context, 120f))
+        window?.setLayout(
+            org.sheedon.tool.DisplayUtil.dip2px(context, 120f),
+            org.sheedon.tool.DisplayUtil.dip2px(context, 120f)
+        )
         val binding: DialogLoadingBinding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.dialog_loading,
@@ -62,14 +64,14 @@ class LoadingDialog(
      */
     override fun showLoading(message: String) {
         setTitle(message)
-        isShowing.checkIsFalse { show() }
+        isShowing.checkValue { show() }
     }
 
     /**
      * 隐藏弹出窗
      */
     override fun hideLoading() {
-        isShowing.checkIsTrue { dismiss() }
+        isShowing.checkValue({ dismiss() })
     }
 
     /**

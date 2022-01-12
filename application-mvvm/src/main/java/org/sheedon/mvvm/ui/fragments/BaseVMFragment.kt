@@ -3,9 +3,9 @@ package org.sheedon.mvvm.ui.fragments
 import org.sheedon.common.app.DataBindingFragment
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
-import org.sheedon.tool.checkIsFalse
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.viewmodel.BaseViewModel
+import org.sheedon.tool.checkValue
 
 /**
  * ViewModel Fragment 类
@@ -61,7 +61,7 @@ abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
         // 错误消息发送
         mState.getMessageEmitter().observe(this, {
             hideLoading()
-            it.isNullOrEmpty().checkIsFalse {
+            it.isEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
         })
