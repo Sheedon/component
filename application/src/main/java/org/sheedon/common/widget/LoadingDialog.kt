@@ -10,8 +10,8 @@ import org.sheedon.common.R
 import org.sheedon.common.databinding.DialogLoadingBinding
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
-import org.sheedon.tool.checkValue
-import org.sheedon.tool.dip2px
+import org.sheedon.tool.ext.checkValue
+import org.sheedon.tool.ext.dip2px
 
 /**
  * 加载框

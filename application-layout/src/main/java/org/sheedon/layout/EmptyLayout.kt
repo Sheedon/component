@@ -9,9 +9,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import org.sheedon.tool.DisplayUtil
-import org.sheedon.tool.dip2px
-import org.sheedon.tool.px2sp
+import org.sheedon.tool.ext.dip2px
+import org.sheedon.tool.ext.px2sp
 
 /**
  * 空视图，居中显示空图标和文字描述

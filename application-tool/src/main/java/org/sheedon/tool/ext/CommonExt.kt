@@ -1,11 +1,14 @@
-package org.sheedon.tool
+package org.sheedon.tool.ext
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.Context
 import android.graphics.Paint
+import android.provider.Settings
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.Display
-import android.view.WindowManager
+import android.view.View
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -115,9 +118,8 @@ fun Activity.getScreenPhysicalSize(): Double {
 
 
 fun Context.getDefaultDisplay(): Display? {
-    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
     @Suppress("DEPRECATION")
-    return windowManager.defaultDisplay
+    return windowManager?.defaultDisplay
 }
 
 /**
@@ -141,3 +143,56 @@ fun Paint.measureTextHeight(): Float {
     return (abs(fontMetrics.ascent) - fontMetrics.descent)
 }
 
+/**
+ * 复制文本到粘贴板
+ */
+fun Context.copyToClipboard(text: String, label: String = "") {
+    val clipData = ClipData.newPlainText(label, text)
+    clipboardManager?.setPrimaryClip(clipData)
+}
+
+/**
+ * 检查是否启用无障碍服务
+ */
+fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
+    Settings.Secure.getString(
+        applicationContext.contentResolver,
+        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+    )
+    var result = false
+    val splitter = TextUtils.SimpleStringSplitter(':')
+    while (splitter.hasNext()) {
+        if (splitter.next().equals(serviceName, true)) {
+            result = true
+            break
+        }
+    }
+    return result
+}
+
+/**
+ * 设置点击事件
+ * @param views 需要设置点击事件的view
+ * @param onClick 点击触发的方法
+ */
+fun setOnclick(vararg views: View?, onClick: (View) -> Unit) {
+    views.forEach {
+        it?.setOnClickListener { view ->
+            onClick.invoke(view)
+        }
+    }
+}
+
+/**
+ * 设置防止重复点击事件
+ * @param views 需要设置点击事件的view集合
+ * @param interval 时间间隔 默认0.5秒
+ * @param onClick 点击触发的方法
+ */
+fun setOnclickNoRepeat(vararg views: View?, interval: Long = 500, onClick: (View) -> Unit) {
+    views.forEach {
+        it?.clickNoRepeat(interval = interval) { view ->
+            onClick.invoke(view)
+        }
+    }
+}

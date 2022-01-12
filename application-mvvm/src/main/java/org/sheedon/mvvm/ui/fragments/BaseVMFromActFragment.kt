@@ -5,7 +5,7 @@ import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.viewmodel.BaseNavViewModel
-import org.sheedon.tool.checkValue
+import org.sheedon.tool.ext.checkValue
 
 /**
  * ViewModel 来自于 Activity 的 Fragment 类
