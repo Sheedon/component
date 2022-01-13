@@ -11,7 +11,7 @@ import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.component.R
 import org.sheedon.component.databinding.ActivityNavigationBinding
 
-class NavigationActivity : DataBindingActivity<ActivityNavigationBinding>() {
+class NavigationActivity : DataBindingActivity() {
 
     override fun getContentLayoutId() = R.layout.activity_navigation
 

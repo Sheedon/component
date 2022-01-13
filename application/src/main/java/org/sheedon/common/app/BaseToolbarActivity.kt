@@ -23,7 +23,7 @@ import org.sheedon.common.handler.ConfigHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 9:53 下午
  */
-abstract class BaseToolbarActivity<DB : ViewDataBinding> : DataBindingActivity<DB>() {
+abstract class BaseToolbarActivity<DB : ViewDataBinding> : DataBindingActivity() {
 
     var mToolbarBinding: DB? = null
     var appendToolbarParam = false

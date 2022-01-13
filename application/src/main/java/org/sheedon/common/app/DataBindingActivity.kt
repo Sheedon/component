@@ -15,7 +15,7 @@ import org.sheedon.common.handler.ViewModelProviderHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 9:54 下午
  */
-abstract class DataBindingActivity<DB : ViewDataBinding> : BaseActivity() {
+abstract class DataBindingActivity : BaseActivity() {
 
     private var mBinding: ViewDataBinding? = null
 

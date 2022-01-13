@@ -16,7 +16,7 @@ import org.sheedon.tool.ext.checkValue
  * @Date: 2022/1/6 3:12 下午
  */
 abstract class BaseVMActivity<VM : BaseViewModel, DB : ViewDataBinding> :
-    DataBindingActivity<DB>() {
+    DataBindingActivity() {
 
     private lateinit var mState: VM
 

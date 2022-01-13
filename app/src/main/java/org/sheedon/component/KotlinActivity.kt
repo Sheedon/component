@@ -6,7 +6,7 @@ import androidx.databinding.ViewDataBinding
 import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.component.databinding.ActivityKotlinBinding
 
-class KotlinActivity : DataBindingActivity<ActivityKotlinBinding>() {
+class KotlinActivity : DataBindingActivity() {
 
     companion object {
 
