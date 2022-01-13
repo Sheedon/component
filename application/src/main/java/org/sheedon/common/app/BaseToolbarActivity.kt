@@ -23,9 +23,9 @@ import org.sheedon.common.handler.ConfigHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 9:53 下午
  */
-abstract class BaseToolbarActivity : DataBindingActivity() {
+abstract class BaseToolbarActivity<DB : ViewDataBinding> : DataBindingActivity<DB>() {
 
-    var mToolbarBinding: ViewDataBinding? = null
+    var mToolbarBinding: DB? = null
     var appendToolbarParam = false
 
     override fun getContentLayoutId() = ConfigHandler.getToolbarId()
@@ -48,7 +48,7 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     override fun onViewDataBinding(parentBinding: ViewDataBinding) {
         super.onViewDataBinding(parentBinding)
 
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+        val binding = DataBindingUtil.inflate<DB>(
             LayoutInflater.from(this), getChildContentLayoutId(),
             (parentBinding as LayoutToolbarBinding).flChild, true
         )?.apply {

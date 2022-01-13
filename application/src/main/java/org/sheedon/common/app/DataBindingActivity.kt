@@ -15,7 +15,7 @@ import org.sheedon.common.handler.ViewModelProviderHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 9:54 下午
  */
-abstract class DataBindingActivity : BaseActivity() {
+abstract class DataBindingActivity<DB : ViewDataBinding> : BaseActivity() {
 
     private var mBinding: ViewDataBinding? = null
 
@@ -26,14 +26,12 @@ abstract class DataBindingActivity : BaseActivity() {
     private var mApplicationProvider: ViewModelProvider? = null
 
     override fun bindContentView(layId: Int) {
-        super.bindContentView(layId)
-
         initBeforeOfViewModel()
         initViewModel()
 
         val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, layId)?.apply {
-                lifecycleOwner = this@DataBindingActivity
-            }
+            lifecycleOwner = this@DataBindingActivity
+        }
 
         if (binding == null) {
             setContentView(layId)

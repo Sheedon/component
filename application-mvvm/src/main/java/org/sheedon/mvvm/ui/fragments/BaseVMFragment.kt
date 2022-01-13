@@ -1,5 +1,6 @@
 package org.sheedon.mvvm.ui.fragments
 
+import androidx.databinding.ViewDataBinding
 import org.sheedon.common.app.DataBindingFragment
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
@@ -14,7 +15,8 @@ import org.sheedon.tool.ext.checkValue
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 2:34 下午
  */
-abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
+abstract class BaseVMFragment<VM : BaseViewModel, DB : ViewDataBinding> :
+    DataBindingFragment<DB>() {
 
     private lateinit var mState: VM
 

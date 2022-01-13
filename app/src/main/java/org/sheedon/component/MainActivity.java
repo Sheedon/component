@@ -1,13 +1,17 @@
 package org.sheedon.component;
 
+import android.util.Log;
 import android.view.View;
 
 
 import org.sheedon.common.app.BaseToolbarActivity;
+import org.sheedon.component.databinding.ActivityMainBinding;
 import org.sheedon.component.recyclerlayout.EmptyActivity;
 
+import java.util.TimeZone;
 
-public class MainActivity extends BaseToolbarActivity {
+
+public class MainActivity extends BaseToolbarActivity<ActivityMainBinding> {
 
     @Override
     protected ToolbarModel buildToolbarEvent() {
@@ -57,7 +61,11 @@ public class MainActivity extends BaseToolbarActivity {
 //        UpgradeInstaller.upgradeApp(this, "9", "http://file.yanhangtec.com/prodectfile/fileResource/upload/01abd093-bb46-49b6-8c9a-1a204a6e1587.apk");
 //        UpdateFragment
 //        NextActivity.show(this);
+
+
+
         KotlinActivity.show(this);
+
     }
 
 }

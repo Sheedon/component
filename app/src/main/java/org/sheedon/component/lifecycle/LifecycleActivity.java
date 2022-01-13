@@ -6,11 +6,12 @@ import android.content.Intent;
 
 import org.sheedon.common.app.BaseToolbarActivity;
 import org.sheedon.component.R;
+import org.sheedon.component.databinding.ActivityLifecycleBinding;
 
 /**
  * 自定义生命周期处理
  */
-public class LifecycleActivity extends BaseToolbarActivity {
+public class LifecycleActivity extends BaseToolbarActivity<ActivityLifecycleBinding> {
 
     private LifecycleViewModel mState;
 

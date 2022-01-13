@@ -19,10 +19,10 @@ import org.sheedon.common.handler.ViewModelProviderHandler
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/5 10:46 下午
  */
-abstract class DataBindingFragment : BaseFragment() {
+abstract class DataBindingFragment<DB : ViewDataBinding> : BaseFragment() {
 
-    protected lateinit var mActivity: DataBindingActivity
-    private var mBinding: ViewDataBinding? = null
+    protected lateinit var mActivity: DataBindingActivity<out DB>
+    private var mBinding: DB? = null
 
     // 绑定参数
     private val dataBindingConfig = DataBindingConfig()
@@ -33,7 +33,7 @@ abstract class DataBindingFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mActivity = context as DataBindingActivity
+        mActivity = context as DataBindingActivity<out DB>
     }
 
     override fun bindContentView(
@@ -43,7 +43,7 @@ abstract class DataBindingFragment : BaseFragment() {
     ): View {
         initViewModel()
 
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+        val binding = DataBindingUtil.inflate<DB>(
             inflater,
             layId,
             container,

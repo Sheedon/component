@@ -2,9 +2,11 @@ package org.sheedon.component
 
 import android.content.Context
 import android.content.Intent
+import androidx.databinding.ViewDataBinding
 import org.sheedon.common.app.DataBindingActivity
+import org.sheedon.component.databinding.ActivityKotlinBinding
 
-class KotlinActivity : DataBindingActivity() {
+class KotlinActivity : DataBindingActivity<ActivityKotlinBinding>() {
 
     companion object {
 

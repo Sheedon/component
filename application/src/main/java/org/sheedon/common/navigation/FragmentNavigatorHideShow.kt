@@ -20,6 +20,7 @@ import java.util.ArrayDeque
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/12 11:40 上午
  */
+@Navigator.Name("fragment")
 class FragmentNavigatorHideShow(
     private val context: Context,
     private val fragmentManager: FragmentManager,

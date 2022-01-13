@@ -1,5 +1,6 @@
 package org.sheedon.mvvm.ui.activities
 
+import androidx.databinding.ViewDataBinding
 import org.sheedon.common.app.BaseToolbarActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
@@ -14,7 +15,8 @@ import org.sheedon.tool.ext.checkValue
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 3:36 下午
  */
-abstract class BaseVMToolbarActivity<VM : BaseViewModel> : BaseToolbarActivity() {
+abstract class BaseVMToolbarActivity<VM : BaseViewModel, DB : ViewDataBinding> :
+    BaseToolbarActivity<DB>() {
 
     private lateinit var mState: VM
 
