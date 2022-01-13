@@ -15,6 +15,10 @@ import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
 abstract class BaseNavViewModel : ViewModel(){
 
     // 消息发送端
+    private val showLoading = UnPeekLiveData<String>()
+    fun getShowLoading(): UnPeekLiveData<String> = showLoading
+
+    // 消息发送端
     private val messageEmitter = UnPeekLiveData<String>()
     fun getMessageEmitter(): UnPeekLiveData<String> = messageEmitter
 

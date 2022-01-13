@@ -59,6 +59,9 @@ abstract class BaseVMNavActivity<VM : BaseNavViewModel> : DataBindingActivity() 
     override fun initData() {
         super.initData()
 
+        // 监听显示Loading
+        mState.getShowLoading().observeInActivity(this, this::showLoading)
+
         // 错误消息发送
         mState.getMessageEmitter().observeInActivity(this) {
             hideLoading()

@@ -60,6 +60,9 @@ abstract class BaseVMActivity<VM : BaseViewModel> : DataBindingActivity() {
     override fun initData() {
         super.initData()
 
+        // 监听显示Loading
+        mState.getShowLoading().observe(this, this::showLoading)
+
         // 错误消息发送
         mState.getMessageEmitter().observe(this, {
             hideLoading()

@@ -16,6 +16,10 @@ import org.sheedon.mvvm.viewmodel.livedata.StringLiveData
  */
 abstract class BaseViewModel : ViewModel() {
 
+    // 显示Loading
+    private val showLoading = StringLiveData()
+    fun getShowLoading(): StringLiveData = showLoading
+
     // 消息发送端
     private val messageEmitter = StringLiveData()
     fun getMessageEmitter(): StringLiveData = messageEmitter

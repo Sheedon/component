@@ -58,6 +58,9 @@ abstract class BaseVMFragment<VM : BaseViewModel> : DataBindingFragment() {
     override fun initData() {
         super.initData()
 
+        // 监听显示Loading
+        mState.getShowLoading().observe(this, this::showLoading)
+
         // 错误消息发送
         mState.getMessageEmitter().observe(this, {
             hideLoading()

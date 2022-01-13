@@ -7,9 +7,8 @@ package org.sheedon.mvvm.viewmodel.actuator
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 12:35 下午
  */
-class ActuatorProvider(_factory: Factory = DefaultActuatorFactory.INSTANCE) {
+class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) {
 
-    private val mFactory = _factory
     private val mMap = HashMap<String, Actuator>()
 
 
@@ -63,11 +62,11 @@ class ActuatorProvider(_factory: Factory = DefaultActuatorFactory.INSTANCE) {
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(key: String, modelClass: Class<T>):  T {
+    fun <T : Actuator> get(key: String, modelClass: Class<T>): T {
         var actuator = mMap[key]
 
         if (modelClass.isInstance(actuator)) {
-            return actuator as T
+            return modelClass.cast(actuator)!!
         }
         actuator = mFactory.create(modelClass)
         mMap[key] = actuator
