@@ -16,7 +16,7 @@ import org.sheedon.tool.ext.checkValue
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 3:28 下午
  */
-abstract class BaseVMNavActivity<VM : BaseNavViewModel, DB : ViewDataBinding> :
+abstract class BaseVMNavActivity<VM : BaseNavViewModel> :
     DataBindingActivity() {
 
     private lateinit var mState: VM

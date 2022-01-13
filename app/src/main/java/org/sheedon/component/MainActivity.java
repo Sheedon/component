@@ -11,7 +11,7 @@ import org.sheedon.component.recyclerlayout.EmptyActivity;
 import java.util.TimeZone;
 
 
-public class MainActivity extends BaseToolbarActivity<ActivityMainBinding> {
+public class MainActivity extends BaseToolbarActivity {
 
     @Override
     protected ToolbarModel buildToolbarEvent() {

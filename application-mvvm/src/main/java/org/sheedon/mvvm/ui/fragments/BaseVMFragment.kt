@@ -15,7 +15,7 @@ import org.sheedon.tool.ext.checkValue
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 2:34 下午
  */
-abstract class BaseVMFragment<VM : BaseViewModel, DB : ViewDataBinding> :
+abstract class BaseVMFragment<VM : BaseViewModel> :
     DataBindingFragment() {
 
     private lateinit var mState: VM

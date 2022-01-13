@@ -11,7 +11,7 @@ import org.sheedon.component.databinding.ActivityLifecycleBinding;
 /**
  * 自定义生命周期处理
  */
-public class LifecycleActivity extends BaseToolbarActivity<ActivityLifecycleBinding> {
+public class LifecycleActivity extends BaseToolbarActivity {
 
     private LifecycleViewModel mState;
 
