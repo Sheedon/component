@@ -2,12 +2,14 @@ package org.sheedon.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,6 +24,7 @@ import com.yanzhenjie.recyclerview.touch.OnItemStateChangedListener;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * 自带刷新加载和空页面的列表视图
@@ -503,8 +506,8 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param recyclerView SwipeRecyclerLayout 上下拉列表视图
      * @param isEmpty      是否为空
      */
-    @BindingAdapter(value = {"notifyEmptyStatus"}, requireAll = false)
-    public static void notifyEmptyStatus(SwipeRecyclerLayout recyclerView, boolean isEmpty) {
+    @BindingAdapter(value = {"bindEmptyView"}, requireAll = false)
+    public static void bindEmptyView(SwipeRecyclerLayout recyclerView, boolean isEmpty) {
         recyclerView.notifyEmpty(isEmpty);
     }
 
@@ -535,7 +538,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param refreshListener  刷新监听器
      * @param loadMoreListener 加载监听器
      */
-    @BindingAdapter(value = {"needRefresh", "needLoadMore"}, requireAll = false)
+    @BindingAdapter(value = {"refreshListener", "loadMoreListener"}, requireAll = false)
     public static void setListener(SwipeRecyclerLayout recyclerView,
                                    OnRefreshListener refreshListener,
                                    SwipeRecyclerView.LoadMoreListener loadMoreListener) {
@@ -550,15 +553,15 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     }
 
     /**
-     * 设置刷新和加载监听器
+     * 设置加载更多
      *
      * @param recyclerView SwipeRecyclerLayout 上下拉列表视图
      * @param dataEmpty    是否数据为空
      * @param hasMore      是否有更多数据
      */
     @BindingAdapter(value = {"dataEmpty", "hasMore"}, requireAll = false)
-    public static void setListener(SwipeRecyclerLayout recyclerView,
-                                   boolean dataEmpty, boolean hasMore) {
+    public static void loadMoreFinish(SwipeRecyclerLayout recyclerView,
+                                      boolean dataEmpty, boolean hasMore) {
         if (recyclerView == null) {
             return;
         }
@@ -568,5 +571,93 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 设置列表适配器
+     *
+     * @param recyclerView SwipeRecyclerLayout
+     * @param adapter      ListAdapter
+     */
+    @BindingAdapter(value = {"adapter"}, requireAll = false)
+    public static void setAdapter(SwipeRecyclerLayout recyclerView, ListAdapter adapter) {
+        recyclerView.setAdapter(adapter);
+    }
 
+    /**
+     * 设置列表适配器
+     *
+     * @param recyclerView SwipeRecyclerLayout
+     * @param adapter      ListAdapter
+     */
+    @BindingAdapter(value = {"adapter"}, requireAll = false)
+    public static void setAdapter(SwipeRecyclerLayout recyclerView, RecyclerView.Adapter adapter) {
+        if (recyclerView.swipeRecyclerView != null) {
+            recyclerView.swipeRecyclerView.setAdapter(adapter);
+        }
+    }
+
+    @BindingAdapter(value = {"submitList"}, requireAll = false)
+    public static void submitList(SwipeRecyclerLayout recyclerView, List list) {
+        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
+            ListAdapter adapter = (ListAdapter) recyclerView.swipeRecyclerView.getAdapter();
+            adapter.submitList(list);
+        }
+    }
+
+    @BindingAdapter(value = {"spaceTop", "spaceStart", "spaceBottom", "spaceEnd", "fillBorder", "spanCount"}, requireAll = false)
+    public static void setGridSpace(SwipeRecyclerLayout recyclerView, int spaceTop, int spaceStart, int spaceBottom, int spaceEnd, boolean fillBorder, int spanCount) {
+        if (recyclerView.swipeRecyclerView == null) {
+            return;
+        }
+        recyclerView.swipeRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent,
+                                       @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                if (fillBorder && spanCount != 0) {
+                    if (spaceTop != 0 && parent.getChildLayoutPosition(view) / spanCount != 0)
+                        outRect.top = spaceTop;
+
+                    if (spaceStart != 0 && parent.getChildLayoutPosition(view) % spanCount != 0)
+                        outRect.left = spaceStart;
+
+                    if (spaceBottom != 0 && parent.getChildLayoutPosition(view) > recyclerView.getChildCount() - spanCount)
+                        outRect.bottom = spaceBottom;
+
+                    if (spaceEnd != 0 && parent.getChildLayoutPosition(view) % spanCount != spanCount - 1)
+                        outRect.right = spaceEnd;
+                } else {
+                    if (spaceTop != 0)
+                        outRect.top = spaceTop;
+
+                    if (spaceStart != 0)
+                        outRect.left = spaceStart;
+
+                    if (spaceBottom != 0)
+                        outRect.bottom = spaceBottom;
+
+                    if (spaceEnd != 0)
+                        outRect.right = spaceEnd;
+                }
+            }
+        });
+    }
+
+    @BindingAdapter(value = {"autoScrollToTopWhenInsert", "autoScrollToBottomWhenInsert"}, requireAll = false)
+    public static void autoScroll(SwipeRecyclerLayout recyclerView,
+                                  boolean autoScrollToTopWhenInsert,
+                                  boolean autoScrollToBottomWhenInsert) {
+
+        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
+            recyclerView.swipeRecyclerView.getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    if (autoScrollToTopWhenInsert) {
+                        recyclerView.swipeRecyclerView.scrollToPosition(0);
+                    } else if (autoScrollToBottomWhenInsert) {
+                        recyclerView.swipeRecyclerView.scrollToPosition(recyclerView.swipeRecyclerView.getAdapter().getItemCount());
+                    }
+                }
+            });
+        }
+    }
 }
