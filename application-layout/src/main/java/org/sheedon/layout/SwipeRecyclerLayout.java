@@ -579,7 +579,9 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      */
     @BindingAdapter(value = {"adapter"}, requireAll = false)
     public static void setAdapter(SwipeRecyclerLayout recyclerView, ListAdapter adapter) {
-        recyclerView.setAdapter(adapter);
+        if (recyclerView.swipeRecyclerView != null) {
+            recyclerView.swipeRecyclerView.setAdapter(adapter);
+        }
     }
 
     /**
