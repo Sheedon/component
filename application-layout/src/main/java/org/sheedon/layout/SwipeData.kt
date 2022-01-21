@@ -1,6 +1,7 @@
 package org.sheedon.layout
 
 import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -11,12 +12,12 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/14 2:04 下午
  */
-data class SwipeData(
+data class SwipeData @JvmOverloads constructor(
     val needRefresh: Boolean = true,
     val needLoadMore: Boolean = true,
     val refreshListener: SwipeRefreshLayout.OnRefreshListener? = null,
     val loadMoreListener: SwipeRecyclerView.LoadMoreListener? = null,
     val dataEmpty: ObservableBoolean = ObservableBoolean(false),
-    val hasMore: ObservableBoolean = ObservableBoolean(false),
-    val layoutManagerName: String = "androidx.recyclerview.widget.LinearLayoutManager"
+    val hasMore: MutableLiveData<Boolean> = MutableLiveData(false),
+    val spanCount: Int = 1
 )

@@ -599,8 +599,9 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
 
     @BindingAdapter(value = {"submitList"}, requireAll = false)
     public static void submitList(SwipeRecyclerLayout recyclerView, List list) {
-        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
-            ListAdapter adapter = (ListAdapter) recyclerView.swipeRecyclerView.getAdapter();
+        recyclerView.setRefreshing(false);
+        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getOriginAdapter() != null) {
+            ListAdapter adapter = (ListAdapter) recyclerView.swipeRecyclerView.getOriginAdapter();
             adapter.submitList(list);
         }
     }
@@ -662,4 +663,6 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
             });
         }
     }
+
+
 }
