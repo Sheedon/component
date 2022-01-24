@@ -57,7 +57,7 @@ dependencies {
 //    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
 
     implementation project(':resource')
-    api project(':application-tool')
+    implementation project(':application-tool')
 }
 
 apply from: '../script/gradle-jcenter-push.gradle'
