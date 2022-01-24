@@ -23,9 +23,7 @@ import java.lang.reflect.Field;
  * 基于使用DataBinding时使用的库，可以减少大量的drawable.xml文件
  * 可参考https://github.com/whataa/noDrawable
  *
- * @Author: sheedon by hegaojian
- * @Email: sheedonsun@163.com
- * @Date: 2022/1/12 11:01 上午
+ * @author : sheedon by hegaojian
  */
 public class Drawables {
     private static final int INVALID = 0;

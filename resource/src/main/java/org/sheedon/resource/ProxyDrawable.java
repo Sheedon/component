@@ -6,9 +6,7 @@ import android.graphics.drawable.StateListDrawable;
 /**
  * 一个旨在减少99%的drawable.xml文件，可直接在布局文件中对任意View声明drawable属性。
  *
- * @Author: sheedon by hegaojian
- * @Email: sheedonsun@163.com
- * @Date: 2022/1/12 11:05 上午
+ * @author : sheedon by hegaojian
  */
 public class ProxyDrawable extends StateListDrawable {
 
