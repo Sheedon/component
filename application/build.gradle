@@ -54,7 +54,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
 
     // recyclerViewAdapter
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
+//    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
 
     implementation project(':resource')
     api project(':application-tool')
