@@ -19,9 +19,6 @@ abstract class DataBindingActivity : BaseActivity() {
 
     private var mBinding: ViewDataBinding? = null
 
-    // 绑定参数
-    private val dataBindingConfig = DataBindingConfig()
-
     private var mActivityProvider: ViewModelProvider? = null
     private var mApplicationProvider: ViewModelProvider? = null
 
@@ -66,7 +63,7 @@ abstract class DataBindingActivity : BaseActivity() {
      *
      * @return SparseArray
      */
-    protected open fun appendBindingParam() = dataBindingConfig
+    protected open fun appendBindingParam() = DataBindingConfig()
 
     /**
      * ViewDataBinding 加载完成，建议只是在当前方法中使用，

@@ -48,9 +48,11 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     override fun onViewDataBinding(parentBinding: ViewDataBinding) {
         super.onViewDataBinding(parentBinding)
 
+        val flChild = loadChildLayout(parentBinding)
+
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(this), getChildContentLayoutId(),
-            (parentBinding as LayoutToolbarBinding).flChild, true
+            flChild, true
         )?.apply {
             lifecycleOwner = this@BaseToolbarActivity
         }
@@ -59,16 +61,14 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
             View.inflate(
                 this,
                 getChildContentLayoutId(),
-                parentBinding.flChild
+                flChild
             )
             return
         }
 
-        // 清除父级 绑定的数据
-        super.appendBindingParam().clear()
-        // 之后获取的都是 toolbar 中的 DataBindingConfig
+        // 获取的都是 toolbar 中的 DataBindingConfig
         appendToolbarParam = true
-        val bindingConfig = appendBindingParam()
+        val bindingConfig = appendChildBindingParam()
         val bindingParams = bindingConfig.getBindingParams()
 
         bindingParams.forEach { key, value ->
@@ -79,10 +79,22 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
         mToolbarBinding = binding
     }
 
+
+    /**
+     * 加载子布局在当前layout中所占的位置
+     */
+    protected open fun loadChildLayout(binding: ViewDataBinding) =
+        (binding as LayoutToolbarBinding).flChild
+
     /**
      * 得到子界面的资源文件Id
      */
     protected abstract fun getChildContentLayoutId(): Int
+
+    /**
+     * 获取子DataBinding
+     */
+    protected open fun appendChildBindingParam() = DataBindingConfig()
 
     /**
      * ViewDataBinding 加载完成，建议只是在当前方法中使用，
@@ -102,7 +114,7 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
 
 
     @SuppressLint("StaticFieldLeak")
-    protected inner class ToolbarModel(
+    public inner class ToolbarModel(
         _title: Int,
         _menuVisibility: Int = View.GONE,
         _backVisibility: Int = View.VISIBLE,

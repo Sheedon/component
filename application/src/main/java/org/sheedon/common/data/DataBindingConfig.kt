@@ -25,11 +25,4 @@ class DataBindingConfig {
         bindingParams.put(variableId, params)
         return this
     }
-
-    /**
-     * 清除
-     */
-    fun clear(){
-        bindingParams.clear()
-    }
 }

@@ -43,12 +43,12 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
      * ...
      * </layout>
      */
-    override fun appendBindingParam(): DataBindingConfig {
+    override fun appendChildBindingParam(): DataBindingConfig {
         if (needAutoBindXml()) {
-            return super.appendBindingParam()
+            return super.appendChildBindingParam()
                 .addBindingParam(BR.vm, mState)
         }
-        return super.appendBindingParam()
+        return super.appendChildBindingParam()
     }
 
     /**
