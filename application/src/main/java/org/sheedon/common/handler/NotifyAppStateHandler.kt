@@ -20,6 +20,7 @@ class NotifyAppStateHandler private constructor() {
          * 附加监听器
          * @param listener 通知App状态更改监听器
          */
+        @JvmStatic
         fun attachListener(listener: OnNotifyChangeListener) {
             instance.listener = listener
         }
@@ -28,6 +29,7 @@ class NotifyAppStateHandler private constructor() {
          * activity入栈
          * @param activity Activity
          */
+        @JvmStatic
         fun pushActivity(activity:Activity){
             instance.listener?.pushActivity(activity)
         }
@@ -36,6 +38,7 @@ class NotifyAppStateHandler private constructor() {
          * activity出栈
          * @param activity Activity
          */
+        @JvmStatic
         fun popActivity(activity:Activity){
             instance.listener?.popActivity(activity)
         }

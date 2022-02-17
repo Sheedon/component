@@ -17,7 +17,28 @@ class ResConvertHandler private constructor() {
     companion object {
         private val INSTANCE = ResConvertHandler()
 
+        @JvmStatic
         fun getInstance() = INSTANCE
+
+        /**
+         * 文字资源转为String类型
+         *
+         * @param resId 文字资源
+         * @return 文字
+         */
+        fun convertString(@StringRes resId: Int): String {
+            return INSTANCE.convertString(resId)
+        }
+
+        /**
+         * 颜色资源转为颜色数值
+         *
+         * @param resId 颜色资源
+         * @return 颜色数值
+         */
+        fun convertColor(@ColorRes resId: Int): Int {
+            return INSTANCE.convertColor(resId)
+        }
     }
 
     /**

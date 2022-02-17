@@ -50,6 +50,7 @@ interface ILoadingDialogHandler {
         companion object {
             private val INSTANCE = LoadingDialogHandler()
 
+            @JvmStatic
             fun getInstance() = INSTANCE
         }
 

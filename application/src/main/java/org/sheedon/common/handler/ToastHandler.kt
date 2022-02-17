@@ -1,8 +1,10 @@
 package org.sheedon.common.handler
 
 import android.os.Looper
+import androidx.annotation.StringRes
 import org.sheedon.common.app.BaseApplication
 import org.sheedon.common.utils.ToastUtils
+import java.lang.Exception
 
 /**
  * 消息提示者
@@ -18,7 +20,18 @@ class ToastHandler private constructor() {
     companion object {
         private val INSTANCE = ToastHandler()
 
+        @JvmStatic
+        fun showToast(@StringRes res: Int) {
+            try {
+                val msg = ResConvertHandler.getInstance().convertString(res)
+                showToast(msg)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
+
+        @JvmStatic
         fun showToast(msg: String?) {
             if (msg.isNullOrEmpty()) {
                 return

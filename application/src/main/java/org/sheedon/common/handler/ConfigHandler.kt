@@ -24,11 +24,13 @@ class ConfigHandler private constructor() {
     companion object {
         private val INSTANCE = ConfigHandler()
 
+        @JvmStatic
         fun getInstance() = INSTANCE
 
         /**
          * 获取是否是亮模式
          */
+        @JvmStatic
         fun setStatusBarMode(activity: AppCompatActivity) {
             BarUtils.setStatusBarColor(activity, Color.TRANSPARENT)
             BarUtils.setStatusBarLightMode(activity, INSTANCE.lightModel)
@@ -37,7 +39,9 @@ class ConfigHandler private constructor() {
         /**
          * 获取 Toolbar ID
          */
+        @JvmStatic
         fun getToolbarId() = INSTANCE.toolbarId
+        @JvmStatic
         fun setToolbarId(@LayoutRes id: Int) {
             INSTANCE.toolbarId = id
         }

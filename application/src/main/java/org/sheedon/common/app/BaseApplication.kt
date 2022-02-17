@@ -19,8 +19,10 @@ open class BaseApplication : Application() {
     companion object {
         private lateinit var instance: BaseApplication
 
+        @JvmStatic
         fun getInstance() = instance
 
+        @JvmStatic
         fun getUiHandler() = instance.uiHandler
     }
 
