@@ -1,6 +1,7 @@
 package org.sheedon.mvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
+import org.sheedon.lifecycle.LifecycleManager
 import org.sheedon.mvvm.viewmodel.actuator.Actuator
 import org.sheedon.mvvm.viewmodel.actuator.ActuatorProvider
 import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
@@ -28,6 +29,9 @@ abstract class BaseNavViewModel : ViewModel(){
 
     // 执行器提供者
     private var actuatorProvider: ActuatorProvider? = null
+
+    private val lifecycleManager = LifecycleManager()
+    protected fun loadLifecycleManager() = lifecycleManager
 
     /**
      * 初始化创建数据分发执行器
@@ -64,5 +68,6 @@ abstract class BaseNavViewModel : ViewModel(){
         super.onCleared()
         actuatorProvider?.clear()
         actuatorProvider = null
+        lifecycleManager.onDestroy()
     }
 }
