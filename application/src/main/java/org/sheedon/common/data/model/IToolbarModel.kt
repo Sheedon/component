@@ -14,7 +14,7 @@ import androidx.lifecycle.MutableLiveData
 interface IToolbarModel {
 
     // 标题
-    fun getTitle(): MutableLiveData<Int>
+    fun getTitle(): MutableLiveData<String>
 
     // 菜单标题
     fun getMenuTitle(): ObservableField<String>
@@ -26,7 +26,7 @@ interface IToolbarModel {
     fun getBackVisibility(): Int
 
     // 设置标题
-    fun setTitle(title: Int)
+    fun setTitle(title: String)
 
     // 返回按钮触发
     fun onBackClick()
