@@ -13,7 +13,7 @@ import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/6 1:59 下午
  */
-abstract class BaseNavViewModel : ViewModel(){
+abstract class BaseNavViewModel : ViewModel() {
 
     // 消息发送端
     private val showLoading = UnPeekLiveData<String>()
@@ -56,7 +56,18 @@ abstract class BaseNavViewModel : ViewModel(){
         if (actuatorProvider == null) {
             actuatorProvider = create()
         }
-        return actuatorProvider!!.get(modelClass,value)
+        val values: Array<*> = value.let {
+            if (value.isNullOrEmpty()) {
+                loadActuatorParameter() ?: emptyArray()
+            } else {
+                value
+            }
+        }
+        return actuatorProvider!!.get(modelClass, values)
+    }
+
+    protected open fun loadActuatorParameter(): Array<*>? {
+        return null
     }
 
     /**

@@ -59,7 +59,18 @@ abstract class BaseViewModel : ViewModel() {
         if (actuatorProvider == null) {
             actuatorProvider = create()
         }
-        return actuatorProvider!!.get(modelClass, value)
+        val values: Array<*> = value.let {
+            if (value.isNullOrEmpty()) {
+                loadActuatorParameter() ?: emptyArray()
+            } else {
+                value
+            }
+        }
+        return actuatorProvider!!.get(modelClass, values)
+    }
+
+    protected open fun loadActuatorParameter(): Array<*>? {
+        return null
     }
 
     /**

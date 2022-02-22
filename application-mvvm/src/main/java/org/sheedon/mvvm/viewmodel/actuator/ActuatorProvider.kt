@@ -13,7 +13,7 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
 
 
     interface Factory {
-        fun <T : Actuator> create(modelClass: Class<T>, vararg value: Any?): T
+        fun <T : Actuator> create(modelClass: Class<T>, value: Array<out Any?>?): T
     }
 
     companion object {
@@ -30,9 +30,20 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
             val INSTANCE = DefaultActuatorFactory()
         }
 
-        override fun <T : Actuator> create(modelClass: Class<T>,vararg value: Any?): T {
+        override fun <T : Actuator> create(modelClass: Class<T>, value: Array<out Any?>?): T {
             try {
-                return modelClass.getDeclaredConstructor().newInstance(value)
+                return if (value == null || value.isEmpty()) {
+                    modelClass.getDeclaredConstructor().newInstance()
+                } else {
+                    val parameterTypes = value.map {
+                        if (it == null) {
+                            Any::class.java
+                        }else{
+                            it::class.java
+                        }
+                    }.toTypedArray()
+                    modelClass.getDeclaredConstructor(*parameterTypes).newInstance(*value)
+                }
             } catch (e: Exception) {
                 throw  RuntimeException("Cannot create an instance of $modelClass", e)
             }
@@ -47,7 +58,7 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(modelClass: Class<T>, vararg value: Any?): T {
+    fun <T : Actuator> get(modelClass: Class<T>, value: Array<out Any?>?): T {
         val canonicalName = modelClass.canonicalName
             ?: throw IllegalArgumentException("Local and anonymous classes can not be ViewModels")
         return get("$DEFAULT_KEY:$canonicalName", modelClass, value)
@@ -62,7 +73,7 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(key: String, modelClass: Class<T>, vararg value: Any?): T {
+    fun <T : Actuator> get(key: String, modelClass: Class<T>, value: Array<out Any?>?): T {
         var actuator = mMap[key]
 
         if (modelClass.isInstance(actuator)) {
