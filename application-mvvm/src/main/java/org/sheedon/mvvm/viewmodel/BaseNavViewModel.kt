@@ -52,11 +52,11 @@ abstract class BaseNavViewModel : ViewModel(){
      * @param <T>        Actuator
      * @return Actuator
      */
-    protected open fun <T : Actuator> getActuator(modelClass: Class<T>): T {
+    protected open fun <T : Actuator> getActuator(modelClass: Class<T>, vararg value: Any?): T {
         if (actuatorProvider == null) {
             actuatorProvider = create()
         }
-        return actuatorProvider!!.get(modelClass)
+        return actuatorProvider!!.get(modelClass,value)
     }
 
     /**

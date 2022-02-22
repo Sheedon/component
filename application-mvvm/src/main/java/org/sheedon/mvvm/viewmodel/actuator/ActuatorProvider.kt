@@ -13,7 +13,7 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
 
 
     interface Factory {
-        fun <T : Actuator> create(modelClass: Class<T>): T
+        fun <T : Actuator> create(modelClass: Class<T>, vararg value: Any?): T
     }
 
     companion object {
@@ -30,9 +30,9 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
             val INSTANCE = DefaultActuatorFactory()
         }
 
-        override fun <T : Actuator> create(modelClass: Class<T>): T {
+        override fun <T : Actuator> create(modelClass: Class<T>,vararg value: Any?): T {
             try {
-                return modelClass.getDeclaredConstructor().newInstance()
+                return modelClass.getDeclaredConstructor().newInstance(value)
             } catch (e: Exception) {
                 throw  RuntimeException("Cannot create an instance of $modelClass", e)
             }
@@ -47,10 +47,10 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(modelClass: Class<T>): T {
+    fun <T : Actuator> get(modelClass: Class<T>, vararg value: Any?): T {
         val canonicalName = modelClass.canonicalName
             ?: throw IllegalArgumentException("Local and anonymous classes can not be ViewModels")
-        return get("$DEFAULT_KEY:$canonicalName", modelClass)
+        return get("$DEFAULT_KEY:$canonicalName", modelClass, value)
     }
 
     /**
@@ -62,13 +62,13 @@ class ActuatorProvider(val mFactory: Factory = DefaultActuatorFactory.INSTANCE) 
      * @param <T>        Actuator
      * @return Actuator
      */
-    fun <T : Actuator> get(key: String, modelClass: Class<T>): T {
+    fun <T : Actuator> get(key: String, modelClass: Class<T>, vararg value: Any?): T {
         var actuator = mMap[key]
 
         if (modelClass.isInstance(actuator)) {
             return modelClass.cast(actuator)!!
         }
-        actuator = mFactory.create(modelClass)
+        actuator = mFactory.create(modelClass, value)
         mMap[key] = actuator
         return actuator
     }
