@@ -65,20 +65,29 @@ abstract class BaseVMActivity<VM : BaseViewModel> :
         mState.getShowLoading().observe(this, this::showLoading)
 
         // 错误消息发送
-        mState.getMessageEmitter().observe(this, {
+        mState.getMessageEmitter().observe(this) {
             hideLoading()
             it.isEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
-        })
+        }
 
         // 处理动作
-        mState.getHandleAction().observe(this, { status ->
+        mState.getHandleAction().observe(this) { status ->
             hideLoading()
             status?.let {
                 onHandleAction(status)
             }
-        })
+        }
+
+        notifyInitVMData()
+    }
+
+    /**
+     * 通知初始化ViewModel的数据
+     */
+    protected open fun notifyInitVMData() {
+        mState.initData()
     }
 
     /**

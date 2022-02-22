@@ -77,6 +77,15 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
                 onHandleAction(status)
             }
         }
+
+        notifyInitVMData()
+    }
+
+    /**
+     * 通知初始化ViewModel的数据
+     */
+    protected open fun notifyInitVMData() {
+        mState.initData()
     }
 
     /**
