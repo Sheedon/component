@@ -41,7 +41,7 @@ abstract class BaseNavViewModel : ViewModel() {
     /**
      * 初始化数据
      */
-    fun initData() {
+    open fun initData() {
 
     }
 
