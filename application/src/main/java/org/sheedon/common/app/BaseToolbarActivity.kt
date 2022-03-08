@@ -84,7 +84,7 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
      * 加载子布局在当前layout中所占的位置
      */
     protected open fun loadChildLayout(binding: ViewDataBinding) =
-        (binding as LayoutToolbarBinding).flChild
+        ConfigHandler.getInstance().getFlChild(binding)
 
     /**
      * 得到子界面的资源文件Id

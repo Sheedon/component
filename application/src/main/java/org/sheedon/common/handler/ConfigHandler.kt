@@ -3,7 +3,10 @@ package org.sheedon.common.handler
 import android.graphics.Color
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ViewDataBinding
 import org.sheedon.common.R
+import org.sheedon.common.data.model.Toolbar
+import org.sheedon.common.databinding.LayoutToolbarBinding
 import org.sheedon.common.utils.BarUtils
 
 /**
@@ -19,7 +22,7 @@ class ConfigHandler private constructor() {
     private var lightModel = true
 
     // toolbar资源id
-    private var toolbarId = R.layout.layout_toolbar
+    private var toolbar = Toolbar()
 
     companion object {
         private val INSTANCE = ConfigHandler()
@@ -40,11 +43,13 @@ class ConfigHandler private constructor() {
          * 获取 Toolbar ID
          */
         @JvmStatic
-        fun getToolbarId() = INSTANCE.toolbarId
+        fun getToolbarId() = INSTANCE.toolbar.toolbarId
+
         @JvmStatic
-        fun setToolbarId(@LayoutRes id: Int) {
-            INSTANCE.toolbarId = id
+        fun setToolbar(toolbar: Toolbar) {
+            INSTANCE.toolbar = toolbar
         }
+
     }
 
     /**
@@ -56,5 +61,5 @@ class ConfigHandler private constructor() {
         this.lightModel = lightModel
     }
 
-
+    internal fun getFlChild(binding: ViewDataBinding) = toolbar.getFlChild(binding)
 }
