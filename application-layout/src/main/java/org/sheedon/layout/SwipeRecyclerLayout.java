@@ -664,5 +664,14 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         }
     }
 
+    @BindingAdapter(value = {"scrollingEnabled"}, requireAll = false)
+    public static void scrollingEnabled(SwipeRecyclerLayout recyclerView,
+                                  boolean scrollingEnabled) {
+
+        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
+            recyclerView.swipeRecyclerView.setNestedScrollingEnabled(scrollingEnabled);
+        }
+    }
+
 
 }
