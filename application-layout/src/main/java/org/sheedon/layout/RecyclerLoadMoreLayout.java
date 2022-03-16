@@ -37,7 +37,7 @@ import java.util.List;
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/11 3:18 下午
  */
-public class SwipeRecyclerLayout extends SwipeRefreshLayout {
+public class RecyclerLoadMoreLayout extends RelativeLayout {
 
     private static final Class<?>[] LAYOUT_LOAD_MORE = new Class<?>[]{Context.class};
 
@@ -47,15 +47,19 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     private SwipeRecyclerView swipeRecyclerView;
     private boolean needLoadMore;
 
-    public SwipeRecyclerLayout(@NonNull Context context) {
+    public RecyclerLoadMoreLayout(@NonNull Context context) {
         this(context, null);
     }
 
-    public SwipeRecyclerLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public RecyclerLoadMoreLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         emptyLayout = new EmptyLayout(context, attrs);
+        emptyLayout.setLayoutParams(new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT));
         swipeRecyclerView = new SwipeRecyclerView(context, attrs);
+        swipeRecyclerView.setLayoutParams(new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT));
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SwipeRecyclerLayout, 0, 0);
         attachAttrs(typedArray, attrs);
@@ -142,7 +146,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         if (className.contains(".")) {
             return className;
         }
-        return SwipeRecyclerLayout.class.getPackage().getName() + '.' + className;
+        return RecyclerLoadMoreLayout.class.getPackage().getName() + '.' + className;
     }
 
     /**
@@ -313,7 +317,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * Add view at the headers.
      */
     public void addHeaderView(View view) {
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         swipeRecyclerView.addHeaderView(view);
     }
 
@@ -520,7 +524,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param isEmpty      是否为空
      */
     @BindingAdapter(value = {"bindEmptyView"}, requireAll = false)
-    public static void bindEmptyView(SwipeRecyclerLayout recyclerView, boolean isEmpty) {
+    public static void bindEmptyView(RecyclerLoadMoreLayout recyclerView, boolean isEmpty) {
         recyclerView.notifyEmpty(isEmpty);
     }
 
@@ -532,7 +536,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param needLoadMore 是否需要加载
      */
     @BindingAdapter(value = {"needRefresh", "needLoadMore"}, requireAll = false)
-    public static void needRefreshOrLoadMore(SwipeRecyclerLayout recyclerView, boolean needRefresh, boolean needLoadMore) {
+    public static void needRefreshOrLoadMore(RecyclerLoadMoreLayout recyclerView, boolean needRefresh, boolean needLoadMore) {
         if (recyclerView == null) {
             return;
         }
@@ -548,18 +552,14 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * 设置刷新和加载监听器
      *
      * @param recyclerView     SwipeRecyclerLayout 上下拉列表视图
-     * @param refreshListener  刷新监听器
      * @param loadMoreListener 加载监听器
      */
-    @BindingAdapter(value = {"refreshListener", "loadMoreListener"}, requireAll = false)
-    public static void setListener(SwipeRecyclerLayout recyclerView,
-                                   OnRefreshListener refreshListener,
+    @BindingAdapter(value = {"loadMoreListener"}, requireAll = false)
+    public static void setListener(RecyclerLoadMoreLayout recyclerView,
                                    SwipeRecyclerView.LoadMoreListener loadMoreListener) {
         if (recyclerView == null) {
             return;
         }
-
-        recyclerView.setOnRefreshListener(refreshListener);
         if (recyclerView.swipeRecyclerView != null) {
             recyclerView.swipeRecyclerView.setLoadMoreListener(loadMoreListener);
         }
@@ -573,7 +573,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param hasMore      是否有更多数据
      */
     @BindingAdapter(value = {"dataEmpty", "hasMore"}, requireAll = false)
-    public static void loadMoreFinish(SwipeRecyclerLayout recyclerView,
+    public static void loadMoreFinish(RecyclerLoadMoreLayout recyclerView,
                                       boolean dataEmpty, boolean hasMore) {
         if (recyclerView == null) {
             return;
@@ -591,7 +591,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param adapter      ListAdapter
      */
     @BindingAdapter(value = {"adapter"}, requireAll = false)
-    public static void setAdapter(SwipeRecyclerLayout recyclerView, ListAdapter adapter) {
+    public static void setAdapter(RecyclerLoadMoreLayout recyclerView, ListAdapter adapter) {
         if (recyclerView.swipeRecyclerView != null) {
             recyclerView.swipeRecyclerView.setAdapter(adapter);
         }
@@ -604,15 +604,14 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param adapter      ListAdapter
      */
     @BindingAdapter(value = {"adapter"}, requireAll = false)
-    public static void setAdapter(SwipeRecyclerLayout recyclerView, RecyclerView.Adapter adapter) {
+    public static void setAdapter(RecyclerLoadMoreLayout recyclerView, RecyclerView.Adapter adapter) {
         if (recyclerView.swipeRecyclerView != null) {
             recyclerView.swipeRecyclerView.setAdapter(adapter);
         }
     }
 
     @BindingAdapter(value = {"submitList"}, requireAll = false)
-    public static void submitList(SwipeRecyclerLayout recyclerView, List list) {
-        recyclerView.setRefreshing(false);
+    public static void submitList(RecyclerLoadMoreLayout recyclerView, List list) {
         if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getOriginAdapter() != null) {
             ListAdapter adapter = (ListAdapter) recyclerView.swipeRecyclerView.getOriginAdapter();
             adapter.submitList(list);
@@ -620,7 +619,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     }
 
     @BindingAdapter(value = {"spaceTop", "spaceStart", "spaceBottom", "spaceEnd", "fillBorder", "spanCount"}, requireAll = false)
-    public static void setGridSpace(SwipeRecyclerLayout recyclerView, int spaceTop, int spaceStart, int spaceBottom, int spaceEnd, boolean fillBorder, int spanCount) {
+    public static void setGridSpace(RecyclerLoadMoreLayout recyclerView, int spaceTop, int spaceStart, int spaceBottom, int spaceEnd, boolean fillBorder, int spanCount) {
         if (recyclerView.swipeRecyclerView == null) {
             return;
         }
@@ -659,7 +658,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     }
 
     @BindingAdapter(value = {"autoScrollToTopWhenInsert", "autoScrollToBottomWhenInsert"}, requireAll = false)
-    public static void autoScroll(SwipeRecyclerLayout recyclerView,
+    public static void autoScroll(RecyclerLoadMoreLayout recyclerView,
                                   boolean autoScrollToTopWhenInsert,
                                   boolean autoScrollToBottomWhenInsert) {
 
@@ -678,7 +677,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     }
 
     @BindingAdapter(value = {"scrollingEnabled"}, requireAll = false)
-    public static void scrollingEnabled(SwipeRecyclerLayout recyclerView,
+    public static void scrollingEnabled(RecyclerLoadMoreLayout recyclerView,
                                         boolean scrollingEnabled) {
 
         if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
@@ -687,7 +686,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
     }
 
     @BindingAdapter(value = {"attachHeader"}, requireAll = false)
-    public static void attachHeader(SwipeRecyclerLayout recyclerView,
+    public static void attachHeader(RecyclerLoadMoreLayout recyclerView,
                                     @LayoutRes int viewId) {
         recyclerView.addHeaderView(viewId);
     }
