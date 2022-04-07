@@ -36,7 +36,9 @@ abstract class BaseNavViewModel : ViewModel() {
     /**
      * 初始化创建数据分发执行器
      */
-    abstract fun initActuators()
+    open fun initActuators() {
+
+    }
 
     /**
      * 初始化数据
