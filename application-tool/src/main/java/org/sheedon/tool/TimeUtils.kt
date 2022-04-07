@@ -138,4 +138,11 @@ object TimeUtils {
         return format.format(currYearLast)
     }
 
+    /**
+     * 转换时间
+     */
+    fun convertTime(date: Date, format: SimpleDateFormat = format_y_m_d): String {
+        return format.format(date)
+    }
+
 }
