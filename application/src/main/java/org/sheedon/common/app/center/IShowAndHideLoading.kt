@@ -18,12 +18,6 @@ interface IShowAndHideLoading {
     fun showLoading(@StringRes res: Int)
 
     /**
-     * 显示加载框信息
-     * @param message 描述信息
-     */
-    fun showLoading(message: String = "")
-
-    /**
      * 隐藏加载框
      */
     fun hideLoading()

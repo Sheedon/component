@@ -51,11 +51,7 @@ class LoadingDialog(
 
 
     override fun setTitle(title: CharSequence?) {
-        this.setTitle(title.toString())
-    }
-
-    fun setTitle(title: String) {
-        model.title = title
+        model.title = title?.toString()
     }
 
     /**
@@ -63,7 +59,7 @@ class LoadingDialog(
      *
      * @param message 描述
      */
-    override fun showLoading(message: String) {
+    override fun showLoading(message: String?) {
         setTitle(message)
         isShowing.checkValue { show() }
     }

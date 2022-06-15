@@ -87,13 +87,6 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
 
     /**
      * 显示加载框
-     */
-    protected open fun showLoading() {
-        showLoading("")
-    }
-
-    /**
-     * 显示加载框
      *
      * @param res 文字资源
      */
@@ -106,7 +99,8 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      *
      * @param message 描述内容
      */
-    override fun showLoading(message: String) {
+    @JvmOverloads
+    open fun showLoading(message: String? = null) {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory

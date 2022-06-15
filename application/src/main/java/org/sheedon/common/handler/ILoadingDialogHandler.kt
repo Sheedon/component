@@ -17,7 +17,7 @@ interface ILoadingDialogHandler {
      *
      * @param message 描述
      */
-    fun showLoading(message: String)
+    fun showLoading(message: String? = null)
 
     /**
      * 隐藏弹窗

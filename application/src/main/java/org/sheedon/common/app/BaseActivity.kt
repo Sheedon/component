@@ -28,7 +28,6 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
             // 得到界面Id并设置到Activity界面中
             val layId = getContentLayoutId()
             bindContentView(layId)
-            initBefore()
             initWidget()
             initData()
             NotifyAppStateHandler.pushActivity(this)
@@ -42,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      * 初始化窗口
      */
     protected open fun initWidows() {
-
+        ConfigHandler.setStatusBarMode(this)
     }
 
     /**
@@ -79,17 +78,10 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
     }
 
     /**
-     * 初始化控件调用之前
-     */
-    protected open fun initBefore() {
-
-    }
-
-    /**
      * 初始化控件
      */
     protected open fun initWidget() {
-        ConfigHandler.setStatusBarMode(this)
+
     }
 
     /**
@@ -112,7 +104,8 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      *
      * @param message 描述内容
      */
-    override fun showLoading(message: String) {
+    @JvmOverloads
+    open fun showLoading(message: String? = null) {
         if (loadingHandler == null) {
             val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
             val factory = dialogHandler.factory
@@ -137,7 +130,6 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      */
     protected open fun showError(msg: String) {
         hideLoading()
-        hideFragmentLoading()
         ToastHandler.showToast(msg)
     }
 
@@ -146,6 +138,7 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      */
     override fun hideLoading() {
         loadingHandler?.hideLoading()
+        hideFragmentLoading()
     }
 
     /**

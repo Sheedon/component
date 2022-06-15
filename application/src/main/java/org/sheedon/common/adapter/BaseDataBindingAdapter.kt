@@ -25,6 +25,7 @@ abstract class BaseDataBindingAdapter<M, B : ViewDataBinding>(
 
     // 单击监听器
     protected var mOnItemClickListener: OnItemClickListener<M>? = null
+    protected var mOnBindViewClickListener: OnBindViewClickListener<M, B>? = null
 
     // 长按监听器
     protected var mOnItemLongClickListener: OnItemLongClickListener<M>? = null
@@ -48,6 +49,7 @@ abstract class BaseDataBindingAdapter<M, B : ViewDataBinding>(
         holder.itemView.setOnClickListener {
             val position = holder.bindingAdapterPosition
             mOnItemClickListener?.onItemClick(holder.itemView.id, getItem(position), position)
+            mOnBindViewClickListener?.onItemClick(binding, getItem(position), position)
         }
 
         holder.itemView.setOnLongClickListener {
@@ -67,7 +69,7 @@ abstract class BaseDataBindingAdapter<M, B : ViewDataBinding>(
     /**
      * 创建ViewHolder后，可配置处理binding数据
      */
-    protected fun onCreateViewHolder(binding: B) {
+    protected open fun onCreateViewHolder(binding: B) {
 
     }
 
@@ -98,6 +100,10 @@ abstract class BaseDataBindingAdapter<M, B : ViewDataBinding>(
 
     interface OnItemClickListener<M> {
         fun onItemClick(viewId: Int, item: M, position: Int)
+    }
+
+    interface OnBindViewClickListener<M, B> {
+        fun onItemClick(binding: B, item: M, position: Int)
     }
 
     interface OnItemLongClickListener<M> {
