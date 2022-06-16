@@ -136,8 +136,15 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      * 关闭弹窗
      */
     override fun hideLoading() {
-        loadingHandler?.hideLoading()
+        hideActivityLoading()
         hideFragmentLoading()
+    }
+
+    /**
+     * 隐藏当前Activity的加载框
+     */
+    internal fun hideActivityLoading() {
+        loadingHandler?.hideLoading()
     }
 
     /**

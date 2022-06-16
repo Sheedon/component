@@ -22,6 +22,7 @@ import org.sheedon.common.handler.ToastHandler
 abstract class BaseFragment : Fragment(), IShowAndHideLoading {
 
     var loadingHandler: ILoadingDialogHandler? = null
+    private var firstLoad = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +39,14 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
         super.onViewCreated(view, savedInstanceState)
         // 当View创建完成后初始化数据
         initData(view)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (firstLoad) {
+            firstLoad = false
+            onFirstLoadData()
+        }
     }
 
     /**
@@ -82,7 +91,12 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      * 初始化数据
      */
     protected open fun initData() {
+    }
 
+    /**
+     * 页面显示后，首次加载数据
+     */
+    protected open fun onFirstLoadData() {
     }
 
     /**
@@ -129,9 +143,16 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
     }
 
     /**
-     * 关闭弹窗
+     * 关闭当前Fragment弹窗，并且尝试关闭Activity中的弹窗
      */
     override fun hideLoading() {
         loadingHandler?.hideLoading()
+
+        // 并且尝试关闭activity中的弹窗
+        val currentActivity = activity
+        if (currentActivity is BaseActivity) {
+            currentActivity.hideActivityLoading()
+        }
     }
+
 }
