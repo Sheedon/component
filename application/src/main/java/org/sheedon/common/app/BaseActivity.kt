@@ -30,7 +30,6 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
             bindContentView(layId)
             initWidget()
             initData()
-            NotifyAppStateHandler.pushActivity(this)
         } else {
             showError(getArgsMissing())
             finish()
@@ -167,11 +166,5 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        NotifyAppStateHandler.popActivity(this)
     }
 }
