@@ -1,16 +1,20 @@
 package org.sheedon.common.app
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import org.sheedon.common.app.center.IShowAndHideLoading
 import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.common.handler.ToastHandler
+import org.sheedon.tool.ext.hideSoftKeyboard
 
 /**
  * 基础Fragment
@@ -21,7 +25,18 @@ import org.sheedon.common.handler.ToastHandler
  */
 abstract class BaseFragment : Fragment(), IShowAndHideLoading {
 
-    var loadingHandler: ILoadingDialogHandler? = null
+    // 用于延迟处理动作
+    private val handler = Handler(Looper.getMainLooper())
+
+    // 加载框处理者
+    private val loadingHandler: ILoadingDialogHandler by lazy {
+        ILoadingDialogHandler.LoadingDialogHandler
+            .getInstance()
+            .factory!!
+            .createLoadingDialog(requireContext())
+    }
+
+    // 是否第一次加载
     private var firstLoad = true
 
     override fun onCreateView(
@@ -39,14 +54,6 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
         super.onViewCreated(view, savedInstanceState)
         // 当View创建完成后初始化数据
         initData(view)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (firstLoad) {
-            firstLoad = false
-            onFirstLoadData()
-        }
     }
 
     /**
@@ -88,15 +95,33 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
     }
 
     /**
-     * 初始化数据
+     * 初始化数据，建议这个方法用于一系列监听行为
      */
     protected open fun initData() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onVisible()
+    }
+
+    /**
+     * 是否需要懒加载
+     */
+    private fun onVisible() {
+        if (lifecycle.currentState == Lifecycle.State.STARTED && firstLoad) {
+            // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
+            firstLoad = false
+            handler.postDelayed({
+                lazyLoadData()
+            }, lazyLoadTime())
+        }
     }
 
     /**
      * 页面显示后，首次加载数据
      */
-    protected open fun onFirstLoadData() {
+    protected open fun lazyLoadData() {
     }
 
     /**
@@ -115,12 +140,7 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      */
     @JvmOverloads
     open fun showLoading(message: String? = null) {
-        if (loadingHandler == null) {
-            val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
-            val factory = dialogHandler.factory
-            loadingHandler = factory?.createLoadingDialog(requireContext())
-        }
-        loadingHandler?.showLoading(message)
+        loadingHandler.showLoading(message)
     }
 
     /**
@@ -146,13 +166,34 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      * 关闭当前Fragment弹窗，并且尝试关闭Activity中的弹窗
      */
     override fun hideLoading() {
-        loadingHandler?.hideLoading()
+        loadingHandler.hideLoading()
 
         // 并且尝试关闭activity中的弹窗
         val currentActivity = activity
         if (currentActivity is BaseActivity) {
             currentActivity.hideActivityLoading()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideLoading()
+        hideSoftKeyboard(activity)
+    }
+
+    /**
+     * 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿  bug
+     * 这里传入你想要延迟的时间，延迟时间可以设置比转场动画时间长一点 单位： 毫秒
+     * 不传默认 300毫秒
+     * @return Long
+     */
+    open fun lazyLoadTime(): Long {
+        return 300
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 
 }

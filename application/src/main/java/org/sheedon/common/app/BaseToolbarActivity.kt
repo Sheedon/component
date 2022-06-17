@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel
 import org.sheedon.common.BR
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.data.model.IToolbarModel
-import org.sheedon.common.databinding.LayoutToolbarBinding
 import org.sheedon.common.handler.ConfigHandler
 
 /**
@@ -25,13 +24,19 @@ import org.sheedon.common.handler.ConfigHandler
  */
 abstract class BaseToolbarActivity : DataBindingActivity() {
 
+    // toolbar 视图绑定对象
     var mToolbarBinding: ViewDataBinding? = null
-    var appendToolbarParam = false
 
+    /**
+     * 获取视图资源ID
+     */
     override fun getContentLayoutId() = ConfigHandler.getToolbarId()
 
+    /**
+     * 追加参数的绑定
+     */
     override fun appendBindingParam(): DataBindingConfig {
-        return if (appendToolbarParam) {
+        return if (customizeToolbarParam()) {
             super.appendBindingParam()
         } else {
             super.appendBindingParam()
@@ -42,13 +47,20 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     /**
      * 构建标题栏事件
      */
-    protected abstract fun buildToolbarEvent(): ToolbarModel
+    protected abstract fun buildToolbarEvent(): IToolbarModel
 
 
-    override fun onViewDataBinding(parentBinding: ViewDataBinding) {
-        super.onViewDataBinding(parentBinding)
+    /**
+     * 视图绑定对象处理方法
+     * 1.加载布局FrameLayout
+     * 2.绑定lifecycleOwner
+     * 3.若视图若为非添加ViewDataBinding的XML视图，则采用[View.inflate]加载视图，否则得到子布局的binding参数，
+     * 实现结构绑定。
+     */
+    override fun onViewDataBinding(toolbarBinding: ViewDataBinding) {
+        super.onViewDataBinding(toolbarBinding)
 
-        val flChild = loadChildLayout(parentBinding)
+        val flChild = loadChildLayout(toolbarBinding)
 
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(this), getChildContentLayoutId(),
@@ -67,7 +79,6 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
         }
 
         // 获取的都是 toolbar 中的 DataBindingConfig
-        appendToolbarParam = true
         val bindingConfig = appendChildBindingParam()
         val bindingParams = bindingConfig.getBindingParams()
 
@@ -105,6 +116,11 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     protected open fun onToolbarViewDataBinding(binding: ViewDataBinding) {
 
     }
+
+    /**
+     * 是否启用自定义toolbar参数
+     */
+    protected open fun customizeToolbarParam(): Boolean = false
 
     override fun onDestroy() {
         super.onDestroy()

@@ -18,7 +18,10 @@ import org.sheedon.common.handler.*
  */
 abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
 
-    private var loadingHandler: ILoadingDialogHandler? = null
+    private val loadingHandler: ILoadingDialogHandler by lazy {
+        ILoadingDialogHandler.LoadingDialogHandler.getInstance()
+            .factory!!.createLoadingDialog(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,12 +108,7 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      */
     @JvmOverloads
     open fun showLoading(message: String? = null) {
-        if (loadingHandler == null) {
-            val dialogHandler = ILoadingDialogHandler.LoadingDialogHandler.getInstance()
-            val factory = dialogHandler.factory
-            loadingHandler = factory?.createLoadingDialog(this)
-        }
-        loadingHandler?.showLoading(message)
+        loadingHandler.showLoading(message)
     }
 
     /**
@@ -144,7 +142,7 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      * 隐藏当前Activity的加载框
      */
     internal fun hideActivityLoading() {
-        loadingHandler?.hideLoading()
+        loadingHandler.hideLoading()
     }
 
     /**
