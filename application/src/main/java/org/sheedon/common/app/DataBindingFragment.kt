@@ -27,9 +27,20 @@ abstract class DataBindingFragment : BaseFragment() {
     // 绑定参数
     private val dataBindingConfig = DataBindingConfig()
 
-    private var mFragmentProvider: ViewModelProvider? = null
-    private var mActivityProvider: ViewModelProvider? = null
-    private var mApplicationProvider: ViewModelProvider? = null
+    // 获取Fragment持有的ViewModel
+    private val mFragmentProvider: ViewModelProvider by lazy {
+        ViewModelProvider(this)
+    }
+
+    // 获取Activity持有的ViewModel
+    private val mActivityProvider: ViewModelProvider by lazy {
+        ViewModelProvider(mActivity)
+    }
+
+    // 获取Application持有的ViewModel
+    private val mApplicationProvider: ViewModelProvider by lazy {
+        ViewModelProvider(ViewModelProviderHandler.instance)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -96,7 +107,6 @@ abstract class DataBindingFragment : BaseFragment() {
     protected open fun <T : ViewModel> getFragmentScopeViewModel(modelClass: Class<T>): T {
         return ViewModelProviderHandler.getFragmentScopeViewModel(
             mFragmentProvider,
-            this,
             modelClass
         )
     }
@@ -110,8 +120,7 @@ abstract class DataBindingFragment : BaseFragment() {
      */
     protected open fun <T : ViewModel> getActivityScopeViewModel(modelClass: Class<T>): T {
         return ViewModelProviderHandler.getActivityScopeViewModel(
-            mActivityProvider,
-            mActivity, modelClass
+            mActivityProvider, modelClass
         )
     }
 

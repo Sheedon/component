@@ -19,9 +19,23 @@ abstract class DataBindingActivity : BaseActivity() {
 
     private var mBinding: ViewDataBinding? = null
 
-    private var mActivityProvider: ViewModelProvider? = null
-    private var mApplicationProvider: ViewModelProvider? = null
+    // 获取Activity持有的ViewModel
+    private val mActivityProvider: ViewModelProvider by lazy {
+        ViewModelProvider(this)
+    }
 
+    // 获取全局持有的ViewModel
+    private val mApplicationProvider: ViewModelProvider by lazy {
+        ViewModelProvider(ViewModelProviderHandler.instance)
+    }
+
+    /**
+     * 绑定内容布局，首先对ViewModel初始化，
+     * 其次关联资源，若并不是通过ViewDataBinding配置，则采用[setContentView]设置，否则提取[appendBindingParam]
+     * 依次[setVariable]，将数据和视图关联。
+     *
+     * @param layId 资源ID
+     */
     override fun bindContentView(layId: Int) {
         initBeforeOfViewModel()
         initViewModel()
@@ -84,8 +98,7 @@ abstract class DataBindingActivity : BaseActivity() {
      */
     protected open fun <T : ViewModel> getActivityScopeViewModel(modelClass: Class<T>): T {
         return ViewModelProviderHandler.getActivityScopeViewModel(
-            mActivityProvider,
-            this, modelClass
+            mActivityProvider, modelClass
         )
     }
 
