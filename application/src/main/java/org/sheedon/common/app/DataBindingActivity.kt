@@ -110,10 +110,7 @@ abstract class DataBindingActivity : BaseActivity() {
      * @return ViewModel
      */
     protected open fun <T : ViewModel> getApplicationScopeViewModel(modelClass: Class<T>): T {
-        return ViewModelProviderHandler.getApplicationScopeViewModel(
-            mApplicationProvider,
-            modelClass
-        )
+        return ViewModelProviderHandler.getApplicationScopeViewModel(modelClass, application)
     }
 
     override fun onDestroy() {

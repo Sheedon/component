@@ -1,9 +1,11 @@
 package org.sheedon.common.handler
 
+import android.app.Application
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.sheedon.common.app.BaseApplication
 
 /**
  * ViewModelProvider 调度者
@@ -14,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider
  */
 class ViewModelProviderHandler private constructor() : ViewModelStoreOwner {
     private val mAppViewModelStore: ViewModelStore = ViewModelStore()
+    private var mFactory: ViewModelProvider.Factory? = null
+
     override fun getViewModelStore(): ViewModelStore {
         return mAppViewModelStore
     }
@@ -60,11 +64,27 @@ class ViewModelProviderHandler private constructor() : ViewModelStoreOwner {
          * @return ViewModel
         </T> */
         fun <T : ViewModel?> getApplicationScopeViewModel(
-            mApplicationProvider: ViewModelProvider,
-            modelClass: Class<T>
+            modelClass: Class<T>,
+            application: Application = BaseApplication.getInstance()
         ): T {
-            return mApplicationProvider[modelClass]
+            return instance.getAppViewModelProvider(application)[modelClass]
         }
+    }
+
+
+    /**
+     * 获取一个全局的ViewModel
+     */
+    private fun getAppViewModelProvider(application: Application = BaseApplication.getInstance()): ViewModelProvider {
+        return ViewModelProvider(this, this.getAppFactory(application))
+    }
+
+    private fun getAppFactory(application: Application)
+            : ViewModelProvider.Factory {
+        if (mFactory == null) {
+            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        }
+        return mFactory as ViewModelProvider.Factory
     }
 
 }

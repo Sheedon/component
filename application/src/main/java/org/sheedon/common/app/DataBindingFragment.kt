@@ -133,8 +133,7 @@ abstract class DataBindingFragment : BaseFragment() {
      */
     protected open fun <T : ViewModel> getApplicationScopeViewModel(modelClass: Class<T>): T {
         return ViewModelProviderHandler.getApplicationScopeViewModel(
-            mApplicationProvider,
-            modelClass
+            modelClass, activity?.application ?: BaseApplication.getInstance()
         )
     }
 
