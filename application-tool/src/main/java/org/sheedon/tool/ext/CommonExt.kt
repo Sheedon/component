@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -193,6 +194,23 @@ fun setOnclickNoRepeat(vararg views: View?, interval: Long = 500, onClick: (View
     views.forEach {
         it?.clickNoRepeat(interval = interval) { view ->
             onClick.invoke(view)
+        }
+    }
+}
+
+/**
+ * 隐藏软键盘
+ */
+fun hideSoftKeyboard(activity: Activity?) {
+    activity?.let { act ->
+        val view = act.currentFocus
+        view?.let {
+            val inputMethodManager =
+                act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(
+                view.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
         }
     }
 }

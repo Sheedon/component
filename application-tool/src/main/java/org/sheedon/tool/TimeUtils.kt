@@ -26,8 +26,15 @@ object TimeUtils {
      * 获取昨天时间
      */
     fun yesterday(format: SimpleDateFormat = format_y_m_d): String {
+        return fromTodayDay(-1, format)
+    }
+
+    /**
+     * 获取距离今天为n天的日期
+     */
+    fun fromTodayDay(num: Int, format: SimpleDateFormat = format_y_m_d): String {
         val cal = Calendar.getInstance()
-        cal.add(Calendar.DATE, -1)
+        cal.add(Calendar.DATE, num)
         val time = cal.time
         return format.format(time)
     }
