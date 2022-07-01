@@ -4,6 +4,7 @@ import org.sheedon.common.app.BaseToolbarActivity
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.mvvm.BR
+import org.sheedon.mvvm.ext.getVmClazz
 import org.sheedon.mvvm.viewmodel.BaseViewModel
 import org.sheedon.tool.ext.checkValue
 
@@ -29,7 +30,9 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
      *
      * @return VM
      */
-    protected abstract fun getActivityViewModel(): VM
+    protected open fun getActivityViewModel(): VM {
+        return getActivityScopeViewModel(getVmClazz(this))
+    }
 
     /**
      * 追加绑定xml中的ViewModel
@@ -59,26 +62,33 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
     override fun initData() {
         super.initData()
 
+        registerVMObserver()
+        notifyInitVMData()
+    }
+
+    /**
+     * 注册ViewModel的订阅对象
+     */
+    protected open fun registerVMObserver() {
         // 监听显示Loading
-        mState.getShowLoading().observe(this, this::showLoading)
+        mState.getNotifier().getShowLoading().observe(this, this::showLoading)
+
+        // 监听隐藏Loading
+        mState.getNotifier().getDismissLoading().observe(this) { hideLoading() }
 
         // 错误消息发送
-        mState.getMessageEmitter().observe(this) {
-            hideLoading()
+        mState.getNotifier().getMessageEmitter().observe(this) {
             it.isEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
         }
 
         // 处理动作
-        mState.getHandleAction().observe(this) { status ->
-            hideLoading()
+        mState.getNotifier().getHandleAction().observe(this) { status ->
             status?.let {
                 onHandleAction(status)
             }
         }
-
-        notifyInitVMData()
     }
 
     /**

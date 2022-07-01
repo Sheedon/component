@@ -4,6 +4,7 @@ import org.sheedon.common.app.DataBindingFragment
 import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.mvvm.BR
+import org.sheedon.mvvm.ext.getVmClazz
 import org.sheedon.mvvm.viewmodel.BaseNavViewModel
 import org.sheedon.tool.ext.checkValue
 
@@ -29,7 +30,9 @@ abstract class BaseVMFromActFragment<VM : BaseNavViewModel> :
      *
      * @return VM
      */
-    protected abstract fun getFragmentViewModel(): VM
+    protected open fun getFragmentViewModel(): VM {
+        return getFragmentScopeViewModel(getVmClazz(this))
+    }
 
     /**
      * 追加绑定xml中的ViewModel
@@ -59,26 +62,34 @@ abstract class BaseVMFromActFragment<VM : BaseNavViewModel> :
     override fun initData() {
         super.initData()
 
+        registerVMObserver()
+        notifyInitVMData()
+    }
+
+
+    /**
+     * 注册ViewModel的订阅对象
+     */
+    protected open fun registerVMObserver() {
         // 监听显示Loading
-        mState.getShowLoading().observeInFragment(this, this::showLoading)
+        mState.getNotifier().getShowLoading().observeInFragment(this, this::showLoading)
+
+        // 监听隐藏Loading
+        mState.getNotifier().getDismissLoading().observeInFragment(this) { hideLoading() }
 
         // 错误消息发送
-        mState.getMessageEmitter().observeInFragment(this) {
-            hideLoading()
-            it.isNullOrEmpty().checkValue {
+        mState.getNotifier().getMessageEmitter().observeInFragment(this) {
+            it.isEmpty().checkValue {
                 ToastHandler.showToast(it)
             }
         }
 
         // 处理动作
-        mState.getHandleAction().observeInFragment(this) { status ->
-            hideLoading()
+        mState.getNotifier().getHandleAction().observeInFragment(this) { status ->
             status?.let {
                 onHandleAction(status)
             }
         }
-
-        notifyInitVMData()
     }
 
     /**

@@ -2,9 +2,9 @@ package org.sheedon.mvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
 import org.sheedon.lifecycle.LifecycleManager
+import org.sheedon.mvvm.event.SignalNavNotify
 import org.sheedon.mvvm.viewmodel.actuator.Actuator
 import org.sheedon.mvvm.viewmodel.actuator.ActuatorProvider
-import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
 
 /**
  * 内部包含Fragment的Activity，且内部Fragment也需要持有该ViewModel而使用
@@ -15,17 +15,9 @@ import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
  */
 abstract class BaseNavViewModel : ViewModel() {
 
-    // 消息发送端
-    private val showLoading = UnPeekLiveData<String>()
-    fun getShowLoading(): UnPeekLiveData<String> = showLoading
-
-    // 消息发送端
-    private val messageEmitter = UnPeekLiveData<String>()
-    fun getMessageEmitter(): UnPeekLiveData<String> = messageEmitter
-
-    // 执行动作发送器
-    private val handleAction = UnPeekLiveData<Int>()
-    fun getHandleAction(): UnPeekLiveData<Int> = handleAction
+    // 信号通知对象，用于通知「显示弹窗」、「隐藏弹窗」、「提示错误描述」、「处理动作」
+    private val notifier = SignalNavNotify()
+    fun getNotifier(): SignalNavNotify = notifier
 
     // 执行器提供者
     private var actuatorProvider: ActuatorProvider? = null
@@ -79,6 +71,35 @@ abstract class BaseNavViewModel : ViewModel() {
      */
     protected open fun create(): ActuatorProvider {
         return ActuatorProvider()
+    }
+
+    /**
+     * 发送加载框
+     */
+    @JvmOverloads
+    protected fun sendShowLoading(msg: String = "") {
+        notifier.showLoading(msg)
+    }
+
+    /**
+     * 隐藏弹窗
+     */
+    protected fun sendHideLoading(){
+        notifier.dismissDialog()
+    }
+
+    /**
+     * 发送处理动作
+     */
+    protected fun sendHandleAction(action: Int) {
+        getNotifier().sendHandleAction(action)
+    }
+
+    /**
+     * 发送提示消息
+     */
+    protected fun sendMessage(msg: String?) {
+        getNotifier().sendMessage(msg)
     }
 
     /**
