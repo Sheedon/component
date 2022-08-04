@@ -1,7 +1,6 @@
-package org.sheedon.common.data
+package org.sheedon.binging
 
 import android.util.SparseArray
-import androidx.core.util.putAll
 
 /**
  * tip:
