@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.sheedon.common.data.DataBindingConfig
+import org.sheedon.binging.DataBindingConfig
 import org.sheedon.common.handler.ViewModelProviderHandler
 
 /**

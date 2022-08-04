@@ -10,8 +10,8 @@ import androidx.databinding.ObservableInt
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.sheedon.binging.DataBindingConfig
 import org.sheedon.common.BR
-import org.sheedon.common.data.DataBindingConfig
 import org.sheedon.common.data.model.IToolbarModel
 import org.sheedon.common.handler.ConfigHandler
 
@@ -35,7 +35,7 @@ abstract class BaseToolbarActivity : DataBindingActivity() {
     /**
      * 追加参数的绑定
      */
-    override fun appendBindingParam(): DataBindingConfig {
+    override fun appendBindingParam(): org.sheedon.binging.DataBindingConfig {
         return if (customizeToolbarParam()) {
             super.appendBindingParam()
         } else {
