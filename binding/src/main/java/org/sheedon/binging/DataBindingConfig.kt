@@ -1,6 +1,7 @@
 package org.sheedon.binging
 
 import android.util.SparseArray
+import androidx.core.util.forEach
 
 /**
  * tip:
@@ -23,6 +24,13 @@ class DataBindingConfig {
 
     fun addBindingParam(variableId: Int, params: Any?): DataBindingConfig {
         bindingParams.put(variableId, params)
+        return this
+    }
+
+    fun addBindingParams(bindingParams: SparseArray<Any>): DataBindingConfig {
+        bindingParams.forEach { variableId, params ->
+            addBindingParam(variableId, params)
+        }
         return this
     }
 }
