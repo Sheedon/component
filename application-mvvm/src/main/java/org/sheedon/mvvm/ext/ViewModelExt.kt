@@ -2,8 +2,16 @@ package org.sheedon.mvvm.ext
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import org.sheedon.common.handler.ToastHandler
 import org.sheedon.common.handler.ViewModelProviderHandler
+import org.sheedon.mvvm.event.notify.NotifyStatus
+import org.sheedon.mvvm.ui.activities.AbstractModuleActivity
+import org.sheedon.mvvm.ui.fragments.AbstractModuleFragment
+import org.sheedon.mvvm.viewmodel.AbstractViewModel
 import org.sheedon.mvvm.viewmodel.BaseViewModel
+import org.sheedon.mvvm.viewmodel.livedata.ProtectedUnPeekLiveData
+import org.sheedon.tool.ext.checkValue
 import java.lang.reflect.ParameterizedType
 
 
@@ -13,6 +21,92 @@ import java.lang.reflect.ParameterizedType
 @Suppress("UNCHECKED_CAST")
 fun <VM> getVmClazz(obj: Any): VM {
     return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as VM
+}
+
+/**
+ * 在Activity中注册【显示隐藏弹窗】、【发送信号】、【发送错误消息】的观察者
+ */
+inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.registerObserver(
+    mState: VM,
+    crossinline actionHandler: (status: Int) -> Unit
+) {
+
+    val notifier = mState.getNotifier()
+
+    // 弹窗显示监听
+    val notifyStatus = notifier.getNotifyStatus()
+
+    if (notifyStatus is ProtectedUnPeekLiveData) {
+        notifyStatus.observeInActivity(this,
+            Observer {
+                sendSignalNotify(it, actionHandler)
+            })
+    } else {
+        notifyStatus.observe(this) {
+            sendSignalNotify(it, actionHandler)
+        }
+    }
+}
+
+inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.sendSignalNotify(
+    status: NotifyStatus,
+    crossinline actionHandler: (status: Int) -> Unit
+) {
+    when (status) {
+        is NotifyStatus.Loading -> showLoading(message = status.message)
+        is NotifyStatus.Dismiss -> hideLoading()
+        is NotifyStatus.DataError -> {
+            status.message.isEmpty().checkValue {
+                ToastHandler.showToast(status.message)
+            }
+        }
+        is NotifyStatus.SignalAction -> status.code?.let {
+            actionHandler(it)
+        }
+    }
+}
+
+/**
+ * 注册【显示隐藏弹窗】、【发送信号】、【发送错误消息】的观察者
+ */
+inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.registerObserver(
+    mState: VM,
+    crossinline actionHandler: (status: Int) -> Unit
+) {
+
+    val notifier = mState.getNotifier()
+
+    // 弹窗显示监听
+    val notifyStatus = notifier.getNotifyStatus()
+
+    if (notifyStatus is ProtectedUnPeekLiveData) {
+        notifyStatus.observeInFragment(this,
+            Observer {
+                sendSignalNotify(it, actionHandler)
+            })
+    } else {
+        notifyStatus.observe(this) {
+            sendSignalNotify(it, actionHandler)
+        }
+    }
+}
+
+inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.sendSignalNotify(
+    status: NotifyStatus,
+    crossinline actionHandler: (status: Int) -> Unit
+) {
+    when (status) {
+        is NotifyStatus.Loading -> showLoading(message = status.message)
+        is NotifyStatus.Dismiss -> hideLoading()
+        is NotifyStatus.DataError -> {
+            status.message.isEmpty().checkValue {
+                ToastHandler.showToast(status.message)
+            }
+        }
+        is NotifyStatus.SignalAction -> status.code?.let {
+            actionHandler(it)
+        }
+    }
 }
 
 /**
@@ -47,6 +141,8 @@ inline fun <reified VM : BaseViewModel> Fragment.getAppViewModel(): VM {
         }
     }
 }
+
+
 
 
 
