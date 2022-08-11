@@ -1,5 +1,6 @@
 package org.sheedon.common.widget.rootview
 
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import org.sheedon.common.data.model.IToolbarModel
 
@@ -15,6 +16,11 @@ import org.sheedon.common.data.model.IToolbarModel
  * @Date: 2022/8/11 22:48
  */
 interface IRootView {
+
+    /**
+     * 获取根布局
+     */
+    fun getRootView(): ViewGroup
 
     /**
      * 获取承载子布局的承载Layout

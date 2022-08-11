@@ -94,6 +94,10 @@ class NormalRootView @JvmOverloads constructor(
         (frameLayout.layoutParams as LayoutParams).behavior = AppBarLayout.ScrollingViewBehavior()
     }
 
+    /**
+     * 获取根布局
+     */
+    override fun getRootView(): ViewGroup = this
 
     /**
      * 获取承载子布局的承载Layout
