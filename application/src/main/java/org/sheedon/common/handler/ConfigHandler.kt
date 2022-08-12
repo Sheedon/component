@@ -1,13 +1,12 @@
 package org.sheedon.common.handler
 
+import android.content.Context
 import android.graphics.Color
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.ViewDataBinding
-import org.sheedon.common.R
-import org.sheedon.common.data.model.Toolbar
-import org.sheedon.common.databinding.LayoutToolbarBinding
+import org.sheedon.common.data.build.RootViewBuildFactory
 import org.sheedon.common.utils.BarUtils
+import org.sheedon.common.widget.rootview.IRootView
+import org.sheedon.common.widget.toolbar.IToolbarView
 
 /**
  * 配置处理器
@@ -21,8 +20,7 @@ class ConfigHandler private constructor() {
     // 是否为白天模式
     private var lightModel = true
 
-    // toolbar资源id
-    private var toolbar = Toolbar()
+    private var rootViewFactory = RootViewBuildFactory()
 
     companion object {
         private val INSTANCE = ConfigHandler()
@@ -40,15 +38,25 @@ class ConfigHandler private constructor() {
         }
 
         /**
-         * 获取 Toolbar ID
-         */
-        @JvmStatic
-        fun getToolbarId() = INSTANCE.toolbar.toolbarId
-
-        @JvmStatic
-        fun setToolbar(toolbar: Toolbar) {
-            INSTANCE.toolbar = toolbar
+         * 设置根布局构建工厂类
+         * */
+        fun setRootViewBuildFactory(factory: RootViewBuildFactory) {
+            INSTANCE.rootViewFactory = factory
         }
+
+        /**
+         * 加载基础根布局
+         * */
+        @JvmStatic
+        fun loadRootView(context: Context, toolbar: IToolbarView): IRootView =
+            INSTANCE.rootViewFactory.buildRootView(context, toolbar)
+
+        /**
+         * 加载基础标题布局
+         * */
+        @JvmStatic
+        fun loadToolbarView(context: Context): IToolbarView =
+            INSTANCE.rootViewFactory.buildToolbarView(context)
 
     }
 
@@ -60,6 +68,4 @@ class ConfigHandler private constructor() {
     fun attachLightModel(lightModel: Boolean) {
         this.lightModel = lightModel
     }
-
-    internal fun getFlChild(binding: ViewDataBinding) = toolbar.getFlChild(binding)
 }
