@@ -10,7 +10,7 @@ package org.sheedon.binging
  * @Email: sheedonsun@163.com
  * @Date: 2022/8/8 17:59
  */
-interface BindingConfigConverter<Provide> {
+interface BindingConfigConverter<Handler : EventHandler> {
 
     /**
      * 转化为【数据绑定配置参数的格式】
@@ -22,5 +22,5 @@ interface BindingConfigConverter<Provide> {
     /**
      * 加载事件的方法对象
      * */
-    fun loadProvider(): Provide?
+    fun loadProvider(): Handler?
 }
