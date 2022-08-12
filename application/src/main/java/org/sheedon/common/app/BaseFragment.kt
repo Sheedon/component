@@ -11,7 +11,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import org.sheedon.common.app.center.IShowAndHideLoading
-import org.sheedon.common.handler.ILoadingDialogHandler
+import org.sheedon.common.widget.loading.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.tool.ext.hideSoftKeyboard
