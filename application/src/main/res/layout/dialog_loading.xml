@@ -5,7 +5,7 @@
 
         <variable
             name="vm"
-            type="org.sheedon.common.widget.LoadingDialog.LoadingModel" />
+            type="org.sheedon.common.widget.loading.LoadingDialog.LoadingModel" />
 
     </data>
 
