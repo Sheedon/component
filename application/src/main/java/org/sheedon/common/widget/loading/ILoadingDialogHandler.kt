@@ -1,7 +1,6 @@
-package org.sheedon.common.handler
+package org.sheedon.common.widget.loading
 
 import android.content.Context
-import org.sheedon.common.widget.LoadingDialog
 
 /**
  * 加载弹窗处理者

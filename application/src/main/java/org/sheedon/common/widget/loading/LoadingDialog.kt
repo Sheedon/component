@@ -1,4 +1,4 @@
-package org.sheedon.common.widget
+package org.sheedon.common.widget.loading
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import org.sheedon.common.R
 import org.sheedon.common.databinding.DialogLoadingBinding
-import org.sheedon.common.handler.ILoadingDialogHandler
 import org.sheedon.common.handler.ResConvertHandler
 import org.sheedon.tool.ext.checkValue
 import org.sheedon.tool.ext.dip2px
@@ -80,7 +79,7 @@ class LoadingDialog(
     }
 
 
-    data class LoadingModel(val _title: String? = "") : ViewModel() {
+    data class LoadingModel(val _title: String? = "") {
         var title = _title
             get() {
                 return if (field.isNullOrEmpty()) {
