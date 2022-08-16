@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.sheedon.mvvm.viewmodel.livedata;
+package org.sheedon.mvvm.lifecycle.livedata;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

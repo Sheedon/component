@@ -1,4 +1,4 @@
-package org.sheedon.mvvm.viewmodel.livedata
+package org.sheedon.mvvm.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
 

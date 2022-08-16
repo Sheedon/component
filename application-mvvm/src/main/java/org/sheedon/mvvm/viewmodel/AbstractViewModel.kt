@@ -79,7 +79,6 @@ abstract class AbstractViewModel : ViewModel() {
 
     }
 
-
     /**
      * 加载通知执行者，由子类自定义创建
      * 用于执行显示隐藏弹窗、事件通知 和 错误消息通知。
