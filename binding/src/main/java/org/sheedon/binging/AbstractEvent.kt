@@ -14,7 +14,8 @@ package org.sheedon.binging
  * @Email: sheedonsun@163.com
  * @Date: 2022/8/10 15:03
  */
-abstract class AbstractEvent<Handler : EventHandler> {
+abstract class AbstractEvent<Callback : EventCallback>
+@JvmOverloads constructor(var callback: Callback? = null) {
 
     /**
      * 得到转化为数据绑定的配置内容，将下图中的name与具体事件绑定。
@@ -32,7 +33,9 @@ abstract class AbstractEvent<Handler : EventHandler> {
     abstract fun convertDataBindingConfig(): DataBindingConfig
 
     /**
-     * 加载事件额外处理的提供对象，使得外部类可以调用该方法所得到处理对象。
+     * 销毁
      * */
-    abstract fun loadProvider(): Handler?
+    open fun destroy() {
+        callback = null
+    }
 }
