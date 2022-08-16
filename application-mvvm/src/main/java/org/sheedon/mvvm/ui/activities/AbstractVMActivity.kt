@@ -1,22 +1,20 @@
 package org.sheedon.mvvm.ui.activities
 
-import org.sheedon.common.app.BaseToolbarActivity
-import org.sheedon.common.data.DataBindingConfig
-import org.sheedon.common.handler.ToastHandler
+import org.sheedon.binging.DataBindingConfig
+import org.sheedon.common.app.DataBindingActivity
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.ext.getVmClazz
-import org.sheedon.mvvm.viewmodel.BaseViewModel
-import org.sheedon.tool.ext.checkValue
+import org.sheedon.mvvm.ext.registerObserver
+import org.sheedon.mvvm.viewmodel.AbstractViewModel
 
 /**
- * ViewModel Toolbar Activity 类
- *
+ * 绑定ViewModel的抽象类
  * @Author: sheedon
  * @Email: sheedonsun@163.com
- * @Date: 2022/1/6 3:36 下午
+ * @Date: 2022/8/16 14:03
  */
-abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
-    BaseToolbarActivity() {
+abstract class AbstractVMActivity<VM : AbstractViewModel>
+    : DataBindingActivity() {
 
     protected lateinit var mState: VM
 
@@ -37,6 +35,7 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
     /**
      * 追加绑定xml中的ViewModel
      *
+     * <code>
      * <layout >
      * <data>
      * <variable
@@ -45,13 +44,15 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
      * </data>
      * ...
      * </layout>
+     * </code>
      */
-    override fun appendChildBindingParam(): DataBindingConfig {
-        if (needAutoBindXml()) {
-            return super.appendChildBindingParam()
+    override fun appendBindingParam(): DataBindingConfig {
+        return if (needAutoBindXml()) {
+            super.appendBindingParam()
                 .addBindingParam(BR.vm, mState)
+        } else {
+            super.appendBindingParam()
         }
-        return super.appendChildBindingParam()
     }
 
     /**
@@ -63,38 +64,21 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
         super.initData()
 
         registerVMObserver()
-        notifyInitVMData()
+        initVMData()
     }
 
     /**
      * 注册ViewModel的订阅对象
      */
     protected open fun registerVMObserver() {
-        // 监听显示Loading
-        mState.getNotifier().getShowLoading().observe(this, this::showLoading)
-
-        // 监听隐藏Loading
-        mState.getNotifier().getDismissLoading().observe(this) { hideLoading() }
-
-        // 错误消息发送
-        mState.getNotifier().getMessageEmitter().observe(this) {
-            it.isEmpty().checkValue {
-                ToastHandler.showToast(it)
-            }
-        }
-
-        // 处理动作
-        mState.getNotifier().getHandleAction().observe(this) { status ->
-            status?.let {
-                onHandleAction(status)
-            }
-        }
+        registerObserver(mState, this::onHandleAction)
     }
+
 
     /**
      * 通知初始化ViewModel的数据
      */
-    protected open fun notifyInitVMData() {
+    protected open fun initVMData() {
         mState.initData()
     }
 
@@ -106,4 +90,5 @@ abstract class BaseVMToolbarActivity<VM : BaseViewModel> :
     protected open fun onHandleAction(status: Int) {
 
     }
+
 }

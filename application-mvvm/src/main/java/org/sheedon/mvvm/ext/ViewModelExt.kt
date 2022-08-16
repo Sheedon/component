@@ -6,11 +6,10 @@ import androidx.lifecycle.Observer
 import org.sheedon.common.handler.ToastHandler
 import org.sheedon.common.handler.ViewModelProviderHandler
 import org.sheedon.mvvm.event.notify.NotifyStatus
-import org.sheedon.mvvm.ui.activities.AbstractModuleActivity
-import org.sheedon.mvvm.ui.fragments.AbstractModuleFragment
 import org.sheedon.mvvm.viewmodel.AbstractViewModel
-import org.sheedon.mvvm.viewmodel.BaseViewModel
-import org.sheedon.mvvm.viewmodel.livedata.ProtectedUnPeekLiveData
+import org.sheedon.mvvm.lifecycle.livedata.ProtectedUnPeekLiveData
+import org.sheedon.mvvm.ui.activities.AbstractVMActivity
+import org.sheedon.mvvm.ui.fragments.AbstractVMFragment
 import org.sheedon.tool.ext.checkValue
 import java.lang.reflect.ParameterizedType
 
@@ -26,7 +25,7 @@ fun <VM> getVmClazz(obj: Any): VM {
 /**
  * 在Activity中注册【显示隐藏弹窗】、【发送信号】、【发送错误消息】的观察者
  */
-inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.registerObserver(
+inline fun <VM : AbstractViewModel> AbstractVMActivity<out VM>.registerObserver(
     mState: VM,
     crossinline actionHandler: (status: Int) -> Unit
 ) {
@@ -48,7 +47,7 @@ inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.registerObser
     }
 }
 
-inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.sendSignalNotify(
+inline fun <VM : AbstractViewModel> AbstractVMActivity<out VM>.sendSignalNotify(
     status: NotifyStatus,
     crossinline actionHandler: (status: Int) -> Unit
 ) {
@@ -69,7 +68,7 @@ inline fun <VM : AbstractViewModel> AbstractModuleActivity<out VM>.sendSignalNot
 /**
  * 注册【显示隐藏弹窗】、【发送信号】、【发送错误消息】的观察者
  */
-inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.registerObserver(
+inline fun <VM : AbstractViewModel> AbstractVMFragment<out VM>.registerObserver(
     mState: VM,
     crossinline actionHandler: (status: Int) -> Unit
 ) {
@@ -91,7 +90,7 @@ inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.registerObser
     }
 }
 
-inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.sendSignalNotify(
+inline fun <VM : AbstractViewModel> AbstractVMFragment<out VM>.sendSignalNotify(
     status: NotifyStatus,
     crossinline actionHandler: (status: Int) -> Unit
 ) {
@@ -112,7 +111,7 @@ inline fun <VM : AbstractViewModel> AbstractModuleFragment<out VM>.sendSignalNot
 /**
  * 在Activity中得到Application上下文的ViewModel
  */
-inline fun <reified VM : BaseViewModel> AppCompatActivity.getAppViewModel(): VM {
+inline fun <reified VM : AbstractViewModel> AppCompatActivity.getAppViewModel(): VM {
     this.application.let {
         if (it == null) {
             throw NullPointerException("Your Application is null")
@@ -129,7 +128,7 @@ inline fun <reified VM : BaseViewModel> AppCompatActivity.getAppViewModel(): VM 
  * 在Fragment中得到Application上下文的ViewModel
  * 提示，在fragment中调用该方法时，请在该Fragment onCreate以后调用或者请用by lazy方式懒加载初始化调用，不然会提示requireActivity没有导致错误
  */
-inline fun <reified VM : BaseViewModel> Fragment.getAppViewModel(): VM {
+inline fun <reified VM : AbstractViewModel> Fragment.getAppViewModel(): VM {
     (this.requireActivity().application).let {
         if (it == null) {
             throw NullPointerException("Your Application is null")

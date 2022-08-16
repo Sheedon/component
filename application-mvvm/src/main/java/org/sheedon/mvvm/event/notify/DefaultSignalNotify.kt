@@ -1,7 +1,7 @@
 package org.sheedon.mvvm.event.notify
 
 import androidx.lifecycle.MutableLiveData
-import org.sheedon.mvvm.viewmodel.livedata.UnPeekLiveData
+import org.sheedon.mvvm.lifecycle.livedata.UnPeekLiveData
 
 /**
  * 默认的信号通知实现类

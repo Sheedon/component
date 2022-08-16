@@ -1,21 +1,21 @@
 package org.sheedon.mvvm.ui.fragments
 
+import org.sheedon.binging.*
 import org.sheedon.common.app.DataBindingFragment
-import org.sheedon.common.data.DataBindingConfig
-import org.sheedon.common.handler.ToastHandler
 import org.sheedon.mvvm.BR
 import org.sheedon.mvvm.ext.getVmClazz
-import org.sheedon.mvvm.viewmodel.BaseViewModel
-import org.sheedon.tool.ext.checkValue
+import org.sheedon.mvvm.ext.registerObserver
+import org.sheedon.mvvm.viewmodel.AbstractViewModel
 
 /**
- * ViewModel Fragment 类
+ * 基础模块的Fragment
+ * 用于组合不同模块的Fragment，以减少重复编写具体功能的Fragment。
  *
  * @Author: sheedon
  * @Email: sheedonsun@163.com
- * @Date: 2022/1/6 2:34 下午
+ * @Date: 2022/7/1 16:49
  */
-abstract class BaseVMFragment<VM : BaseViewModel> :
+abstract class AbstractVMFragment<VM : AbstractViewModel> :
     DataBindingFragment() {
 
     protected lateinit var mState: VM
@@ -47,11 +47,12 @@ abstract class BaseVMFragment<VM : BaseViewModel> :
      * </layout>
      */
     override fun appendBindingParam(): DataBindingConfig {
-        if (needAutoBindXml()) {
-            return super.appendBindingParam()
+        return if (needAutoBindXml()) {
+            super.appendBindingParam()
                 .addBindingParam(BR.vm, mState)
+        } else {
+            super.appendBindingParam()
         }
-        return super.appendBindingParam()
     }
 
     /**
@@ -63,38 +64,20 @@ abstract class BaseVMFragment<VM : BaseViewModel> :
         super.initData()
 
         registerVMObserver()
-        notifyInitVMData()
+        initVMData()
     }
 
     /**
      * 注册ViewModel的订阅对象
      */
     protected open fun registerVMObserver() {
-        // 监听显示Loading
-        mState.getNotifier().getShowLoading().observe(this, this::showLoading)
-
-        // 监听隐藏Loading
-        mState.getNotifier().getDismissLoading().observe(this) { hideLoading() }
-
-        // 错误消息发送
-        mState.getNotifier().getMessageEmitter().observe(this) {
-            it.isEmpty().checkValue {
-                ToastHandler.showToast(it)
-            }
-        }
-
-        // 处理动作
-        mState.getNotifier().getHandleAction().observe(this) { status ->
-            status?.let {
-                onHandleAction(status)
-            }
-        }
+        registerObserver(mState, this::onHandleAction)
     }
 
     /**
      * 通知初始化ViewModel的数据
      */
-    protected open fun notifyInitVMData() {
+    protected open fun initVMData() {
         mState.initData()
     }
 
@@ -106,5 +89,4 @@ abstract class BaseVMFragment<VM : BaseViewModel> :
     protected open fun onHandleAction(status: Int) {
 
     }
-
 }
