@@ -52,6 +52,7 @@ abstract class DataBindingFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): View {
+        initBeforeOfViewModel()
         initViewModel()
 
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
@@ -73,6 +74,13 @@ abstract class DataBindingFragment : BaseFragment() {
         onViewDataBinding(binding)
         mBinding = binding
         return binding.root
+    }
+
+    /**
+     * 初始化ViewModel之前操作
+     */
+    protected open fun initBeforeOfViewModel() {
+
     }
 
     /**

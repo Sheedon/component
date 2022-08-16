@@ -1,5 +1,7 @@
 package org.sheedon.common.app
 
+import android.view.LayoutInflater
+import android.widget.FrameLayout
 import androidx.core.util.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -39,13 +41,16 @@ abstract class DataBindingActivity : BaseActivity() {
     override fun bindContentView(layId: Int) {
         initBeforeOfViewModel()
         initViewModel()
+        super.bindContentView(layId)
+    }
 
+    override fun attachContentView(layId: Int) {
         val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, layId)?.apply {
             lifecycleOwner = this@DataBindingActivity
         }
 
         if (binding == null) {
-            setContentView(layId)
+            super.attachContentView(layId)
             return
         }
 
@@ -57,7 +62,36 @@ abstract class DataBindingActivity : BaseActivity() {
 
         onViewDataBinding(binding)
         mBinding = binding
+    }
 
+    /**
+     * 附加存在子布局
+     * @param layId 资源ID
+     * @param attachView 承载子布局的View
+     * */
+    override fun attachChildContentView(layId: Int, attachView: FrameLayout) {
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(this),
+            layId, attachView, true
+        )?.apply {
+            lifecycleOwner = this@DataBindingActivity
+        }
+
+        // 若未采用ViewBinding配置，则获取不到 binding ，如若如此，则采用父方法。
+        if (binding == null) {
+            super.attachChildContentView(layId, attachView)
+            return
+        }
+
+        // 绑定视图绑定参数
+        val bindingConfig = appendBindingParam()
+        val bindingParams = bindingConfig.getBindingParams()
+        bindingParams.forEach { key, value ->
+            binding.setVariable(key, value)
+        }
+
+        onViewDataBinding(binding)
+        mBinding = binding
     }
 
     /**
