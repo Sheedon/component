@@ -49,18 +49,25 @@ abstract class AbstractModuleActivity<VM : AbstractModuleViewModel<Callback, Han
      */
     override fun appendBindingParam(): DataBindingConfig {
         return super.appendBindingParam()
-            .also {
-                // 附加模块参数配置项
-                // 将ViewModel中的事件监听，注入到事件组合类中
-                eventComponent.inject(mState.loadCallback())
-
-                // 得到数据绑定配置项，添加到视图中
-                val bindingConfig = eventComponent.loadDataBindingConfig()
-                it.addBindingParams(bindingConfig.getBindingParams())
-
-                // 将事件组合类的处理者注入到ViewModel，用于执行完成事件后，通知改变其行为。
-                mState.inject(eventComponent.provideHandler())
+            .apply {
+                loadModuleConfig(this)
             }
+    }
+
+    /**
+     * 加载模块配置项
+     * */
+    protected open fun loadModuleConfig(config: DataBindingConfig) {
+        // 附加模块参数配置项
+        // 将ViewModel中的事件监听，注入到事件组合类中
+        eventComponent.inject(mState.loadCallback())
+
+        // 得到数据绑定配置项，添加到视图中
+        val bindingConfig = eventComponent.loadDataBindingConfig()
+        config.addBindingParams(bindingConfig.getBindingParams())
+
+        // 将事件组合类的处理者注入到ViewModel，用于执行完成事件后，通知改变其行为。
+        mState.inject(eventComponent.provideHandler())
     }
 
     /**
