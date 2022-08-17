@@ -16,11 +16,11 @@ abstract class AbstractEventComponent<Callback : EventCallback,
     /**
      * 事件集合
      * */
-    private val events: LinkedList<AbstractEventConverter<out EventHandler>> by lazy {
+    private val events: ArrayList<AbstractEventConverter<out EventHandler>> by lazy {
         loadEventArray()
     }
 
-    protected abstract fun loadEventArray(): LinkedList<AbstractEventConverter<out EventHandler>>
+    protected abstract fun loadEventArray(): ArrayList<AbstractEventConverter<out EventHandler>>
 
 
     /**

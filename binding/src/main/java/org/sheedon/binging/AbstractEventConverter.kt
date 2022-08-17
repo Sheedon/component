@@ -19,7 +19,7 @@ abstract class AbstractEventConverter<Handler : EventHandler> {
     private var activity: ComponentActivity? = null
     private var fragment: Fragment? = null
     private var callback: EventCallback? = null
-    private val event: AbstractEvent<out EventCallback> by lazy {
+    protected val event: AbstractEvent<out EventCallback> by lazy {
         when {
             activity != null -> {
                 createRealEvent(activity!!, callback)
@@ -64,7 +64,7 @@ abstract class AbstractEventConverter<Handler : EventHandler> {
      * 创建真实的事件
      * */
     @Throws(RuntimeException::class)
-    protected fun createRealEvent(
+    protected open fun createRealEvent(
         activity: ComponentActivity,
         callback: EventCallback?
     ): AbstractEvent<out EventCallback> {
@@ -75,7 +75,7 @@ abstract class AbstractEventConverter<Handler : EventHandler> {
      * 创建真实的事件
      * */
     @Throws(RuntimeException::class)
-    protected fun createRealEvent(
+    protected open fun createRealEvent(
         fragment: Fragment,
         callback: EventCallback?
     ): AbstractEvent<out EventCallback> {
@@ -86,7 +86,7 @@ abstract class AbstractEventConverter<Handler : EventHandler> {
      * 创建真实的事件
      * */
     @Throws(RuntimeException::class)
-    protected fun createRealEvent(
+    protected open fun createRealEvent(
         callback: EventCallback?
     ): AbstractEvent<out EventCallback> {
         throw RuntimeException("Not yet implemented!")
