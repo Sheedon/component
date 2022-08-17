@@ -2,6 +2,7 @@ package org.sheedon.common.widget.rootview
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,7 +13,6 @@ import org.sheedon.common.R
 import org.sheedon.common.data.model.IToolbarModel
 import org.sheedon.common.handler.ConfigHandler
 import org.sheedon.common.widget.toolbar.IToolbarView
-import org.sheedon.tool.ext.dip2px
 
 /**
  * 建议根布局
@@ -34,6 +34,8 @@ class NormalRootView @JvmOverloads constructor(
         overScrollMode = View.OVER_SCROLL_NEVER
         id = R.id.root_id
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+
+        initLayout()
     }
 
     /**
@@ -44,11 +46,12 @@ class NormalRootView @JvmOverloads constructor(
         val layout = initAppBarLayout()
         val toolbarView = toolbar.loadToolbarView()
         toolbarView.layoutParams =
-            LayoutParams(
+            CollapsingToolbarLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 convertDimen(R.dimen.navigationBarSize)
             ).apply {
                 this.topMargin = convertDimen(R.dimen.statusBarSize)
+                gravity = Gravity.NO_GRAVITY
             }
         layout.addView(toolbarView)
 
@@ -118,7 +121,7 @@ class NormalRootView @JvmOverloads constructor(
      * 转化后的px
      */
     private fun convertDimen(res: Int): Int {
-        return context.dip2px(context.resources.getDimension(res))
+        return context.resources.getDimension(res).toInt()
     }
 
     /**
