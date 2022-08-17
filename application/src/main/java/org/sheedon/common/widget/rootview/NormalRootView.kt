@@ -95,6 +95,7 @@ class NormalRootView @JvmOverloads constructor(
         frameLayout.layoutParams =
             LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         (frameLayout.layoutParams as LayoutParams).behavior = AppBarLayout.ScrollingViewBehavior()
+        this.addView(frameLayout)
     }
 
     /**
