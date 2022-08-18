@@ -379,4 +379,23 @@ public final class DeviceUtils {
                 Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0
         ) > 0;
     }
+
+
+    /**
+     * 获取品牌
+     *
+     * @param context 上下文
+     * @return 品牌名称
+     */
+    @SuppressLint("InlinedApi")
+    public static String getBrand(Context context) {
+        String brand = Settings.Global.getString(context.getContentResolver(),
+                Settings.Global.DEVICE_NAME);
+        if (brand == null || brand.isEmpty()) {
+            brand = Build.BRAND;
+        }
+        if (brand == null || brand.isEmpty())
+            return "";
+        return brand;
+    }
 }
