@@ -37,14 +37,13 @@ import java.util.List;
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/11 3:18 下午
  */
-public class SwipeRecyclerLayout extends SwipeRefreshLayout {
+public class SwipeRecyclerLayout extends RelativeLayout {
 
     private static final Class<?>[] LAYOUT_LOAD_MORE = new Class<?>[]{Context.class};
 
-    @SuppressWarnings("FieldMayBeFinal")
-    private EmptyLayout emptyLayout;
-    @SuppressWarnings("FieldMayBeFinal")
-    private SwipeRecyclerView swipeRecyclerView;
+    private final EmptyLayout emptyLayout;
+    private final SwipeRefreshLayout swipeRefreshLayout;
+    private final SwipeRecyclerView swipeRecyclerView;
     private boolean needLoadMore;
 
     public SwipeRecyclerLayout(@NonNull Context context) {
@@ -55,13 +54,24 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         super(context, attrs);
 
         emptyLayout = new EmptyLayout(context, attrs);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        emptyLayout.setLayoutParams(params);
+
+        swipeRefreshLayout = new SwipeRefreshLayout(context, attrs);
+        swipeRefreshLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT));
         swipeRecyclerView = new SwipeRecyclerView(context, attrs);
+        swipeRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SwipeRecyclerLayout, 0, 0);
         attachAttrs(typedArray, attrs);
         typedArray.recycle();
 
-        addView(swipeRecyclerView);
+        addView(swipeRefreshLayout);
+        swipeRefreshLayout.addView(swipeRecyclerView);
         addView(emptyLayout);
     }
 
@@ -313,8 +323,15 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * Add view at the headers.
      */
     public void addHeaderView(View view) {
-        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        swipeRecyclerView.addHeaderView(view);
+        view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        view.setId(View.generateViewId());
+        addView(view);
+
+        RelativeLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, view.getId());
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        swipeRecyclerView.setLayoutParams(params);
     }
 
     /**
@@ -489,7 +506,7 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
         swipeRecyclerView.loadMoreError(errorCode, errorMessage);
     }
 
-    private boolean lastIsEmpty = true;
+    private int lastIsEmpty = -1;
 
     /**
      * 通知是否信息为空，若数据为空，则显示空视图，否则显示列表视图
@@ -497,18 +514,25 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      * @param isEmpty 是否为空
      */
     public void notifyEmpty(boolean isEmpty) {
-        if (lastIsEmpty == isEmpty)
+        int emptyType = isEmpty ? 1 : 0;
+        if (lastIsEmpty == emptyType)
             return;
 
-        lastIsEmpty = isEmpty;
+        lastIsEmpty = emptyType;
 
         if (isEmpty) {
             if (emptyLayout != null) {
                 emptyLayout.setVisibility(View.VISIBLE);
             }
+            if (swipeRecyclerView != null) {
+                swipeRecyclerView.setVisibility(GONE);
+            }
         } else {
             if (emptyLayout != null) {
                 emptyLayout.setVisibility(View.GONE);
+            }
+            if (swipeRecyclerView != null) {
+                swipeRecyclerView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -553,13 +577,13 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
      */
     @BindingAdapter(value = {"refreshListener", "loadMoreListener"}, requireAll = false)
     public static void setListener(SwipeRecyclerLayout recyclerView,
-                                   OnRefreshListener refreshListener,
+                                   SwipeRefreshLayout.OnRefreshListener refreshListener,
                                    SwipeRecyclerView.LoadMoreListener loadMoreListener) {
         if (recyclerView == null) {
             return;
         }
 
-        recyclerView.setOnRefreshListener(refreshListener);
+        recyclerView.swipeRefreshLayout.setOnRefreshListener(refreshListener);
         if (recyclerView.swipeRecyclerView != null) {
             recyclerView.swipeRecyclerView.setLoadMoreListener(loadMoreListener);
         }
@@ -612,11 +636,16 @@ public class SwipeRecyclerLayout extends SwipeRefreshLayout {
 
     @BindingAdapter(value = {"submitList"}, requireAll = false)
     public static void submitList(SwipeRecyclerLayout recyclerView, List list) {
-        recyclerView.setRefreshing(false);
+        recyclerView.swipeRefreshLayout.setRefreshing(false);
         if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getOriginAdapter() != null) {
             ListAdapter adapter = (ListAdapter) recyclerView.swipeRecyclerView.getOriginAdapter();
             adapter.submitList(list);
         }
+    }
+
+    @BindingAdapter(value = {"enableRefresh"}, requireAll = false)
+    public static void enableRefresh(SwipeRecyclerLayout recyclerView, boolean enable) {
+        recyclerView.swipeRefreshLayout.setEnabled(enable);
     }
 
     @BindingAdapter(value = {"spaceTop", "spaceStart", "spaceBottom", "spaceEnd", "fillBorder", "spanCount"}, requireAll = false)
