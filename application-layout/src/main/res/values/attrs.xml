@@ -9,6 +9,7 @@
         <attr name="imageMarginBottom" format="integer" />
         <attr name="imageWidth" format="dimension" />
         <attr name="imageHeight" format="dimension" />
+        <attr name="imageTint" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SwipeRecyclerLayout" parent="EmptyLayout">
@@ -17,4 +18,17 @@
         <attr name="loadMoreLayout" format="string" />
 
     </declare-styleable>
+
+    <declare-styleable name="ArcProgressBar">
+        <attr name="arcDistance" format="integer" />
+        <attr name="arcBgColor" format="color" />
+        <attr name="fillingColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="arcWidth" format="float" />
+        <attr name="lineDistance" format="integer" />
+        <attr name="progressMax" format="integer" />
+        <attr name="progressTextSize" format="integer" />
+        <attr name="iconRes" format="reference" />
+    </declare-styleable>
+    
 </resources>
