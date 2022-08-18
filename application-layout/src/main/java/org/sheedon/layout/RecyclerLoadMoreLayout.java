@@ -1,5 +1,6 @@
 package org.sheedon.layout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -15,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.yanzhenjie.recyclerview.OnItemClickListener;
 import com.yanzhenjie.recyclerview.OnItemLongClickListener;
@@ -55,12 +55,15 @@ public class RecyclerLoadMoreLayout extends RelativeLayout {
         super(context, attrs);
 
         emptyLayout = new EmptyLayout(context, attrs);
-        emptyLayout.setLayoutParams(new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT));
+        RelativeLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        emptyLayout.setLayoutParams(params);
         swipeRecyclerView = new SwipeRecyclerView(context, attrs);
         swipeRecyclerView.setLayoutParams(new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT));
 
+        @SuppressLint("CustomViewStyleable")
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SwipeRecyclerLayout, 0, 0);
         attachAttrs(typedArray, attrs);
         typedArray.recycle();
@@ -318,7 +321,14 @@ public class RecyclerLoadMoreLayout extends RelativeLayout {
      */
     public void addHeaderView(View view) {
         view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        swipeRecyclerView.addHeaderView(view);
+        view.setId(View.generateViewId());
+        addView(view);
+
+        RelativeLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, view.getId());
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        swipeRecyclerView.setLayoutParams(params);
     }
 
     /**
