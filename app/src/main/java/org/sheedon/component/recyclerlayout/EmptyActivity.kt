@@ -32,7 +32,6 @@ class EmptyActivity : AppCompatActivity() {
         binding =
             DataBindingUtil.setContentView<ActivityEmptyBinding>(this, R.layout.activity_empty)
                 .also {
-                    it.recycler.setOnRefreshListener(mRefreshListener)
                     it.recycler.setSwipeLayoutManager(LinearLayoutManager(this))
                     it.recycler.setAdapter(mAdapter)
 
@@ -82,8 +81,6 @@ class EmptyActivity : AppCompatActivity() {
     private fun loadData() {
         mDataList = createDataList(0)
         mAdapter.notifyDataSetChanged(mDataList)
-
-        binding.recycler.isRefreshing = false
 
         // 第一次加载数据：一定要掉用这个方法。
         // 第一个参数：表示此次数据是否为空，假如你请求到的list为空(== null || list.size == 0)，那么这里就要true。

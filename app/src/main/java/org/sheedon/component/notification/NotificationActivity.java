@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.sheedon.component.MainActivity;
 import org.sheedon.component.R;

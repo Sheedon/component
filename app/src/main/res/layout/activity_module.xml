@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="org.sheedon.component.module.ModuleViewModel" />
+
+        <variable
+            name="search"
+            type="org.sheedon.component.module.search.SearchEvent" />
+
+        <variable
+            name="scanEvent"
+            type="org.sheedon.component.module.scan.ScanListener" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        tools:context=".MainActivity">
+
+        <include
+            layout="@layout/lay_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacingSize"
+            android:layout_weight="1"
+            app:search="@{search}" />
+
+        <include
+            layout="@layout/lay_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingSize"
+            android:layout_marginEnd="@dimen/spacingSize"
+            app:scanEvent="@{scanEvent}" />
+
+
+    </LinearLayout>
+</layout>

@@ -3,15 +3,9 @@ package org.sheedon.component;
 
 import android.content.Context;
 import android.content.Intent;
-import android.transition.AutoTransition;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.view.Gravity;
-import android.view.Window;
+import org.sheedon.common.app.DataBindingActivity;
 
-import org.sheedon.common.app.BaseToolbarActivity;
-
-public class NextActivity extends BaseToolbarActivity {
+public class NextActivity extends DataBindingActivity {
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, NextActivity.class));
@@ -22,8 +16,9 @@ public class NextActivity extends BaseToolbarActivity {
         return new ToolbarModel(R.string.prompt_error);
     }
 
+
     @Override
-    protected int getChildContentLayoutId() {
+    protected int getContentLayoutId() {
         return R.layout.activity_next;
     }
 

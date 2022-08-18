@@ -5,22 +5,22 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "org.sheedon.component"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [AROUTER_MODULE_NAME: project.getName()]
+//            }
+//        }
     }
 
     buildFeatures {
@@ -53,6 +53,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation project(path: ':application-mvvm')
+
 //    implementation 'com.github.Sheedon.component:notification:0.4-alpha'
 
     testImplementation 'junit:junit:4.+'
@@ -69,6 +72,6 @@ dependencies {
 //    implementation ':com.github.Sheedon.component:resource:0.4-alpha-3'
 //    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-3'
 
-    implementation "com.alibaba:arouter-api:1.5.2"
-    annotationProcessor "com.alibaba:arouter-compiler:1.5.2"
+//    implementation "com.alibaba:arouter-api:1.5.2"
+//    annotationProcessor "com.alibaba:arouter-compiler:1.5.2"
 }

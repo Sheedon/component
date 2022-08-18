@@ -4,14 +4,15 @@ package org.sheedon.component.lifecycle;
 import android.content.Context;
 import android.content.Intent;
 
-import org.sheedon.common.app.BaseToolbarActivity;
+import androidx.annotation.NonNull;
+
+import org.sheedon.common.app.DataBindingActivity;
 import org.sheedon.component.R;
-import org.sheedon.component.databinding.ActivityLifecycleBinding;
 
 /**
  * 自定义生命周期处理
  */
-public class LifecycleActivity extends BaseToolbarActivity {
+public class LifecycleActivity extends DataBindingActivity {
 
     private LifecycleViewModel mState;
 
@@ -24,13 +25,14 @@ public class LifecycleActivity extends BaseToolbarActivity {
         mState = getActivityScopeViewModel(LifecycleViewModel.class);
     }
 
+    @NonNull
     @Override
     protected ToolbarModel buildToolbarEvent() {
         return new ToolbarModel(R.string.title_lifecycle);
     }
 
     @Override
-    protected int getChildContentLayoutId() {
+    protected int getContentLayoutId() {
         return R.layout.activity_lifecycle;
     }
 
