@@ -19,6 +19,15 @@ object NumberUtils {
     }
 
     /**
+     * 核实数值是否为空，若为空则返回默认值
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun toInt(number: String?, defaultValue: Int = 0): Int {
+        return toInt(number?.toIntOrNull(), defaultValue)
+    }
+
+    /**
      * 核实数值是否为空/Int类型，若为空或不为Int则返回默认值
      */
     @JvmStatic
@@ -39,6 +48,15 @@ object NumberUtils {
     @JvmOverloads
     fun toLong(number: Long?, defaultValue: Long = 0): Long {
         return number ?: defaultValue
+    }
+
+    /**
+     * 核实数值是否为空，若为空则返回默认值
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun toLong(number: String?, defaultValue: Long = 0): Long {
+        return toLong(number?.toLongOrNull(), defaultValue)
     }
 
     /**
@@ -65,6 +83,15 @@ object NumberUtils {
     }
 
     /**
+     * 核实数值是否为空，若为空则返回默认值
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun toFloat(number: String?, defaultValue: Float = 0F): Float {
+        return toFloat(number?.toFloatOrNull(), defaultValue)
+    }
+
+    /**
      * 核实数值是否为空/Float类型，若为空或不为Float则返回默认值
      */
     @JvmStatic
@@ -85,6 +112,15 @@ object NumberUtils {
     @JvmOverloads
     fun toDouble(number: Double?, defaultValue: Double = 0.0): Double {
         return number ?: defaultValue
+    }
+
+    /**
+     * 核实数值是否为空，若为空则返回默认值
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun toDouble(number: String?, defaultValue: Double = 0.0): Double {
+        return toDouble(number?.toDoubleOrNull(), defaultValue)
     }
 
     /**
