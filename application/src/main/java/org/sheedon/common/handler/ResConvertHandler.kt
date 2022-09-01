@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import org.sheedon.common.app.BaseApplication
 
 /**
@@ -92,7 +93,7 @@ class ResConvertHandler private constructor() {
      * @return 颜色数值
      */
     fun convertColor(@ColorRes resId: Int): Int {
-        return getApplication().resources.getColor(resId)
+        return ContextCompat.getColor(getApplication(),resId)
     }
 
     /**
@@ -103,7 +104,10 @@ class ResConvertHandler private constructor() {
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun convertDrawable(@DrawableRes resId: Int): Drawable {
-        return getApplication().resources.getDrawable(resId)
+        return getApplication().resources.getDrawable(
+            resId,
+            getApplication().theme
+        )
     }
 
 }
