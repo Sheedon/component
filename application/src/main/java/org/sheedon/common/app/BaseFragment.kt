@@ -178,7 +178,7 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
     override fun onPause() {
         super.onPause()
         hideLoading()
-        hideSoftKeyboard(activity)
+        activity?.hideSoftKeyboard()
     }
 
     /**
