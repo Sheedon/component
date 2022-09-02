@@ -1,4 +1,4 @@
-package org.sheedon.tool;
+package org.sheedon.tool.utils;
 
 import static android.Manifest.permission.ACCESS_WIFI_STATE;
 import static android.Manifest.permission.CHANGE_WIFI_STATE;
@@ -18,7 +18,6 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
 
 import java.io.File;
@@ -61,7 +60,6 @@ public final class DeviceUtils {
      *
      * @return {@code true}: yes<br>{@code false}: no
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static boolean isAdbEnabled(Application app) {
         return Settings.Secure.getInt(
                 app.getContentResolver(),
@@ -358,13 +356,10 @@ public final class DeviceUtils {
         Intent intent = new Intent();
         intent.setData(Uri.parse(url));
         intent.setAction(Intent.ACTION_DIAL);
-        boolean checkDial = intent.resolveActivity(app.getPackageManager()) == null;
-        if (checkDial) return true;
+        return intent.resolveActivity(app.getPackageManager()) == null;
 
 //        boolean checkDebuggerConnected = Debug.isDebuggerConnected();
 //        if (checkDebuggerConnected) return true;
-
-        return false;
     }
 
     /**
@@ -372,7 +367,6 @@ public final class DeviceUtils {
      *
      * @return whether user has enabled development settings.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static boolean isDevelopmentSettingsEnabled(Application app) {
         return Settings.Global.getInt(
                 app.getContentResolver(),

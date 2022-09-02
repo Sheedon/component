@@ -1,4 +1,4 @@
-package org.sheedon.tool
+package org.sheedon.tool.utils
 
 import android.content.Context
 import android.content.pm.PackageInfo

@@ -1,4 +1,4 @@
-package org.sheedon.tool
+package org.sheedon.tool.utils
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
