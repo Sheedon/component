@@ -14,3 +14,11 @@ fun Any.convertString(): String {
 
     return toString()
 }
+
+fun Any?.notNull(notNullAction: (value: Any) -> Unit, nullAction1: () -> Unit) {
+    if (this != null) {
+        notNullAction.invoke(this)
+    } else {
+        nullAction1.invoke()
+    }
+}

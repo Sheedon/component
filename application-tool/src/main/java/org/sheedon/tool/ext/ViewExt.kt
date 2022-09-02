@@ -1,7 +1,9 @@
 package org.sheedon.tool.ext
 
+import android.app.Service
 import android.graphics.Bitmap
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 /**
  * View 的 扩展函数
@@ -28,10 +30,10 @@ fun View.invisible() {
 /**
  * 根据条件设置view显示隐藏 为true 显示，为false 隐藏
  */
-fun View.visibleOrGone(flag:Boolean) {
-    visibility = if(flag){
+fun View.visibleOrGone(flag: Boolean) {
+    visibility = if (flag) {
         View.VISIBLE
-    }else{
+    } else {
         View.GONE
     }
 }
@@ -39,10 +41,10 @@ fun View.visibleOrGone(flag:Boolean) {
 /**
  * 根据条件设置view显示隐藏 为true 显示，为false 隐藏
  */
-fun View.visibleOrInvisible(flag:Boolean) {
-    visibility = if(flag){
+fun View.visibleOrInvisible(flag: Boolean) {
+    visibility = if (flag) {
         View.VISIBLE
-    }else{
+    } else {
         View.INVISIBLE
     }
 }
@@ -85,11 +87,7 @@ fun View.clickNoRepeat(interval: Long = 500, action: (view: View) -> Unit) {
     }
 }
 
-
-fun Any?.notNull(notNullAction:(value:Any) ->Unit,nullAction1:() ->Unit){
-    if(this!=null){
-        notNullAction.invoke(this)
-    }else{
-        nullAction1.invoke()
-    }
+fun View.showKeyboard() {
+    (this.context.getSystemService(Service.INPUT_METHOD_SERVICE) as? InputMethodManager)
+        ?.showSoftInput(this, 0)
 }
