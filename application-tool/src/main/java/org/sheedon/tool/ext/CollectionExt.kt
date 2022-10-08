@@ -10,7 +10,7 @@ package org.sheedon.tool.ext
 /**
  * 将List<String>合并，并且以[regex]分割符
  */
-fun Collection<String>.merge(regex: String): String {
+fun Collection<String>?.merge(regex: String): String {
     if (this.isNullOrEmpty()) {
         return ""
     }
