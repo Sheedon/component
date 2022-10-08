@@ -15,7 +15,7 @@ import org.sheedon.common.databinding.LayToolbarBinding
  * @Email: sheedonsun@163.com
  * @Date: 2022/8/11 22:00
  */
-class NormalToolbarView(
+class NormalToolbarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

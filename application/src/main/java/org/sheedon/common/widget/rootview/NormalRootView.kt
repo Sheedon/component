@@ -13,6 +13,7 @@ import org.sheedon.common.R
 import org.sheedon.common.data.model.IToolbarModel
 import org.sheedon.common.handler.ConfigHandler
 import org.sheedon.common.widget.toolbar.IToolbarView
+import org.sheedon.tool.ext.screenHeight
 
 /**
  * 建议根布局
@@ -33,8 +34,7 @@ class NormalRootView @JvmOverloads constructor(
         // 设置CoordinatorLayout基本配置
         overScrollMode = View.OVER_SCROLL_NEVER
         id = R.id.root_id
-        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, context.screenHeight)
         initLayout()
     }
 
@@ -93,7 +93,10 @@ class NormalRootView @JvmOverloads constructor(
     private fun initFrameLayout() {
         frameLayout = FrameLayout(context)
         frameLayout.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                context.screenHeight - convertDimen(R.dimen.navigationBarAndStatusBarSize)-1
+            )
         (frameLayout.layoutParams as LayoutParams).behavior = AppBarLayout.ScrollingViewBehavior()
         this.addView(frameLayout)
     }
