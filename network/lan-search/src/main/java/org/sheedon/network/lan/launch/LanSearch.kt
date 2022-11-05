@@ -1,6 +1,7 @@
 package org.sheedon.network.lan.launch
 
 import android.content.Context
+import org.sheedon.network.lan.listener.OnDeviceProgressListener
 import org.sheedon.network.lan.listener.OnDeviceScanListener
 import org.sheedon.network.lan.manager.Converter
 import org.sheedon.network.lan.manager.ScanDeviceManager
@@ -20,9 +21,14 @@ class LanSearch(val factory: Converter.Factory) {
      */
     private fun createScanDeviceManager(
         context: Context,
-        listener: OnDeviceScanListener
+        listener: OnDeviceScanListener,
+        progressListener: OnDeviceProgressListener? = null
     ): ScanDeviceManager {
-        return ScanDeviceManager(listener, factory.createManufactureConverter(context))
+        return ScanDeviceManager(
+            listener,
+            progressListener,
+            factory.createManufactureConverter(context)
+        )
     }
 
     companion object {
@@ -37,7 +43,7 @@ class LanSearch(val factory: Converter.Factory) {
             context: Context,
             listener: OnDeviceScanListener
         ): ScanDeviceManager {
-           return search.createScanDeviceManager(context, listener)
+            return search.createScanDeviceManager(context, listener)
         }
     }
 }

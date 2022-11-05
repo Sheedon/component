@@ -11,14 +11,15 @@ import org.sheedon.network.lan.R
 import org.sheedon.network.lan.client.UdpClient
 import org.sheedon.network.lan.data.LanDeviceModel
 import org.sheedon.network.lan.data.State
+import org.sheedon.network.lan.listener.OnDeviceProgressListener
 import org.sheedon.network.lan.listener.OnDeviceScanListener
 import org.sheedon.network.lan.utils.NetworkUtils
 import java.io.*
 import java.net.SocketTimeoutException
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 /**
  * 设备搜索管理者
@@ -28,6 +29,7 @@ import java.util.regex.Pattern
  */
 class ScanDeviceManager(
     val listener: OnDeviceScanListener,
+    val progressListener: OnDeviceProgressListener? = null,
     val converter: Converter<String, String>
 ) {
 
@@ -51,18 +53,18 @@ class ScanDeviceManager(
         val isSuccess = loadIps(context)
         if (!isSuccess) return@withContext
         // 查询操作
+        progressListener?.onProgress(PROGRESS_READY)
         sendQuery()
+        progressListener?.onProgress(PROGRESS_START)
         delay(500)
         // 读取操作
         receiveProcessing()
-
-        val model =
-            LanDeviceModel(localIp, NetworkUtils.getMac(context), "", curDev = true, root = false)
-        ipMacInLan.add(model)
-        listener.onDevicesResult(model)
-
+        // 添加当前设备的信息
+        addLocalModel(context)
         // 进一步的扫描
         furtherScan(context)
+        progressListener?.onProgress(PROGRESS_COMPLETE)
+        progressListener?.onCompleteResult(ArrayList(ipMacInLan))
     }
 
     /**
@@ -81,16 +83,19 @@ class ScanDeviceManager(
     private suspend fun receiveProcessing() = withContext(Dispatchers.IO) {
         ipMacInLan.clear()
         try {
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 readIpNeigh()
+                progressListener?.onProgress(PROGRESS_RECEIVE + PROGRESS_START)
                 delay(500)
                 readIpNeigh()
+                progressListener?.onProgress(PROGRESS_RECEIVE_TOTAL + PROGRESS_START)
                 delay(500)
             } else {
                 readIpMacFromFile()
+                progressListener?.onProgress(PROGRESS_RECEIVE + PROGRESS_START)
                 delay(500)
                 readIpMacFromFile()
+                progressListener?.onProgress(PROGRESS_RECEIVE_TOTAL + PROGRESS_START)
                 delay(500)
             }
         } catch (e: IOException) {
@@ -100,27 +105,33 @@ class ScanDeviceManager(
         }
     }
 
+
+    private var position = AtomicInteger()
+    private var total = 1
+
     /**
      * 进一步扫描，获取更详细的信息
      */
+    @Suppress("DeferredResultUnused")
     private suspend fun furtherScan(context: Context) = withContext(Dispatchers.IO) {
 
         if (ipMacInLan.isEmpty()) return@withContext
         val size = ipMacInLan.size
-
         position.set(0)
+        total = size
         for (index in 0 until size) {
             val model = ipMacInLan[index]
             async { updateDeviceInfo(context, model) }
         }
     }
 
-    private var position = AtomicInteger()
+    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun updateDeviceInfo(context: Context, model: LanDeviceModel) {
 
         if (!NetworkUtils.isPingOk(model.ip)
             && !NetworkUtils.isAnyPortOk(model.ip)
         ) {
+            updateProgress()
             return
         }
 
@@ -139,6 +150,16 @@ class ScanDeviceManager(
         model.convert(converter, deviceName)
 
         listener.onDevicesResult(model)
+        updateProgress()
+    }
+
+    /**
+     * 更新进度
+     */
+    private fun updateProgress() {
+        val start = PROGRESS_RECEIVE_TOTAL + PROGRESS_START
+        val progress = start + (position.incrementAndGet() * 1.0 / total).toInt()
+        progressListener?.onProgress(progress)
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
@@ -190,7 +211,7 @@ class ScanDeviceManager(
             while (bufferedReader.readLine().also { line = it } != null) {
                 ip = line!!.substring(0, line!!.indexOf(" "))
                 pattern = Pattern.compile(REG_EXP)
-                matcher = pattern.matcher(line)
+                matcher = pattern.matcher(line!!)
                 if (matcher.find()) {
                     mac = matcher.group(1) as String
                     if (mac == "INCOMPLETE" || mac == "00:00:00:00:00:00") continue
@@ -239,6 +260,19 @@ class ScanDeviceManager(
         return true
     }
 
+    /**
+     * 添加当前设备信息
+     */
+    private fun addLocalModel(context: Context) {
+        val model =
+            LanDeviceModel(
+                localIp, NetworkUtils.getMac(context),
+                "", curDev = true, root = false
+            )
+        ipMacInLan.add(model)
+        listener.onDevicesResult(model)
+    }
+
     companion object {
 
         // 137端口的主要作用是在局域网中提供计算机的名字或IP地址查询服务
@@ -261,7 +295,15 @@ class ScanDeviceManager(
         private const val COMMAND = "ip neigh show"
         private const val ARP_FILE = "/proc/net/arp"
 
+        @Suppress("RegExpDuplicateCharacterInClass")
         private const val REG_EXP = "((([0-9,A-F,a-f]{1,2}" + ":" + "){1,5})[0-9,A-F,a-f]{1,2})"
+
+        private const val PROGRESS_READY = 0
+        private const val PROGRESS_START = 10
+        private const val PROGRESS_RECEIVE_TOTAL = 30
+        private const val PROGRESS_RECEIVE = 15
+        private const val PROGRESS_FURTHER_TOTAL = 60
+        private const val PROGRESS_COMPLETE = 100
     }
 
 
