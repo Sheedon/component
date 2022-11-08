@@ -10,6 +10,8 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
+import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableField
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -62,7 +64,7 @@ class RadarView @JvmOverloads constructor(
     private var mScaleCenterX = 0
 
     // 线条数
-    private val mDottedLineCount = 160
+    private var mDottedLineCount = 160
 
     // 内部虚线的外部半径
     private var mExternalDottedLineRadius = 0F
@@ -285,6 +287,116 @@ class RadarView @JvmOverloads constructor(
             mAnimator.removeAllListeners()
         }
         mStartAngle = 0F
+    }
+
+    /**
+     * 设置外轮廓/刻度/圆心的背景色
+     */
+    fun setRadarBackgroundColor(res: Int) {
+        mBackgroundColor = ContextCompat.getColor(context, res)
+        mOutlinePaint.color = mBackgroundColor
+        mScalePaint.color = mBackgroundColor
+        mDotPaint.color = mBackgroundColor
+    }
+
+    /**
+     * 设置扇形扫描的背景色
+     */
+    fun setScanBackgroundColor(res: Int) {
+        mBackgroundColor = ContextCompat.getColor(context, res)
+        mScanPaint.color = mBackgroundColor
+    }
+
+    /**
+     * 设置外轮廓的宽度
+     */
+    fun setOutlineWidth(width: Float) {
+        this.mOutlineWidth = width
+        setParamUpdate()
+        this.mOutlinePaint.strokeWidth = mOutlineWidth
+    }
+
+    fun setScaleWidth(width: Float) {
+        this.mScaleWidth = width
+        this.mScalePaint.strokeWidth = width
+    }
+
+    fun setDottedLineCount(count: Int) {
+        this.mDottedLineCount = count
+    }
+
+    fun setDotRadius(radius: Float) {
+        this.mDotRadius = radius
+    }
+
+    enum class AnimateType {
+        START, STOP, NONE
+    }
+
+    companion object {
+
+
+        @JvmStatic
+        @BindingAdapter("setAnimate")
+        fun setAnimate(radarView: RadarView, type: AnimateType?) {
+            if (type == null || type == AnimateType.NONE) return
+
+            if (type == AnimateType.START) {
+                radarView.start()
+            } else if (type == AnimateType.STOP) {
+                radarView.stop()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("updateAnimate")
+        fun updateAnimate(radarView: RadarView, type: ObservableField<AnimateType?>) {
+            val animateType = type.get()
+            if (animateType == AnimateType.NONE) return
+
+            if (animateType == AnimateType.START) {
+                radarView.start()
+            } else if (animateType == AnimateType.STOP) {
+                radarView.stop()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("radarBackgroundColor")
+        fun setRadarBackgroundColor(radarView: RadarView, res: Int) {
+            radarView.setRadarBackgroundColor(res)
+        }
+
+        @JvmStatic
+        @BindingAdapter("scanBackgroundColor")
+        fun setScanBackgroundColor(radarView: RadarView, res: Int) {
+            radarView.setScanBackgroundColor(res)
+        }
+
+        @JvmStatic
+        @BindingAdapter("outlineWidth")
+        fun setOutlineWidth(radarView: RadarView, width: Float) {
+            radarView.setOutlineWidth(width)
+        }
+
+        @JvmStatic
+        @BindingAdapter("scaleWidth")
+        fun setScaleWidth(radarView: RadarView, width: Float) {
+            radarView.setScaleWidth(width)
+        }
+
+        @JvmStatic
+        @BindingAdapter("lineCount")
+        fun setDottedLineCount(radarView: RadarView, count: Int) {
+            radarView.setDottedLineCount(count)
+        }
+
+        @JvmStatic
+        @BindingAdapter("dotRadius")
+        fun setDotRadius(radarView: RadarView, radius: Float) {
+            radarView.setDotRadius(radius)
+        }
+
     }
 
 }
