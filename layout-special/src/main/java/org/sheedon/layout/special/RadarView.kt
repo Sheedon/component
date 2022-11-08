@@ -3,6 +3,7 @@ package org.sheedon.layout.special
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
@@ -293,7 +294,25 @@ class RadarView @JvmOverloads constructor(
      * 设置外轮廓/刻度/圆心的背景色
      */
     fun setRadarBackgroundColor(res: Int) {
-        mBackgroundColor = ContextCompat.getColor(context, res)
+        val color = ContextCompat.getColor(context, res)
+        setRealRadarBackgroundColor(color)
+    }
+
+    /**
+     * 设置外轮廓/刻度/圆心的背景色
+     */
+    fun setRealRadarBackgroundColor(res: Int) {
+        mBackgroundColor = res
+        mOutlinePaint.color = mBackgroundColor
+        mScalePaint.color = mBackgroundColor
+        mDotPaint.color = mBackgroundColor
+    }
+
+    /**
+     * 设置外轮廓/刻度/圆心的背景色
+     */
+    fun setRadarBackgroundColor(res: String) {
+        mBackgroundColor = Color.parseColor(res)
         mOutlinePaint.color = mBackgroundColor
         mScalePaint.color = mBackgroundColor
         mDotPaint.color = mBackgroundColor
@@ -303,7 +322,15 @@ class RadarView @JvmOverloads constructor(
      * 设置扇形扫描的背景色
      */
     fun setScanBackgroundColor(res: Int) {
-        mBackgroundColor = ContextCompat.getColor(context, res)
+        val color = ContextCompat.getColor(context, res)
+        setRealScanBackgroundColor(color)
+    }
+
+    /**
+     * 设置扇形扫描的背景色
+     */
+    fun setRealScanBackgroundColor(res: Int) {
+        mBackgroundColor = res
         mScanPaint.color = mBackgroundColor
     }
 
@@ -364,13 +391,13 @@ class RadarView @JvmOverloads constructor(
         @JvmStatic
         @BindingAdapter("radarBackgroundColor")
         fun setRadarBackgroundColor(radarView: RadarView, res: Int) {
-            radarView.setRadarBackgroundColor(res)
+            radarView.setRealRadarBackgroundColor(res)
         }
 
         @JvmStatic
         @BindingAdapter("scanBackgroundColor")
         fun setScanBackgroundColor(radarView: RadarView, res: Int) {
-            radarView.setScanBackgroundColor(res)
+            radarView.setRealScanBackgroundColor(res)
         }
 
         @JvmStatic
