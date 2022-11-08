@@ -13,12 +13,12 @@ import androidx.databinding.BindingAdapter
 object ViewAdapter {
 
     @JvmStatic
-    @BindingAdapter(value = ["listenVisibility"], requireAll = false)
-    fun listenVisibility(
+    @BindingAdapter(value = ["visible"], requireAll = false)
+    fun visible(
         view: View,
-        isVisibility: Boolean
+        visible: Boolean
     ) {
-        if (isVisibility) {
+        if (visible) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
