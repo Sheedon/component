@@ -86,7 +86,7 @@ class RadarView @JvmOverloads constructor(
             style = Paint.Style.FILL
         }
     }
-    private var mStartAngle = 0F
+    private var mStartAngle = 120F
     private val mSweepAngle = -60F
 
     private val mScanBackgroundColor = ContextCompat.getColor(context, R.color.specialScanColor)
@@ -272,7 +272,7 @@ class RadarView @JvmOverloads constructor(
         animating = true
         mAnimator.addUpdateListener {
             val angle = it.animatedValue as Float
-            mStartAngle = angle
+            mStartAngle = 120 + angle
             postInvalidate()
         }
         mAnimator.start()
@@ -287,7 +287,7 @@ class RadarView @JvmOverloads constructor(
             mAnimator.cancel()
             mAnimator.removeAllListeners()
         }
-        mStartAngle = 0F
+        mStartAngle = 120F
     }
 
     /**
