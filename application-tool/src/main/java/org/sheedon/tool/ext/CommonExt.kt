@@ -38,6 +38,7 @@ fun Boolean.checkValue(trueAction: () -> Unit = {}, falseAction: () -> Unit = {}
 /**
  * 判断是否为空 并传入相关操作
  */
+@Deprecated("已迁移到Any扩展类中", ReplaceWith("Any -> notNull"))
 inline fun <reified T> T?.notNull(notNullAction: (T) -> Unit, nullAction: () -> Unit = {}) {
     if (this != null) {
         notNullAction.invoke(this)
