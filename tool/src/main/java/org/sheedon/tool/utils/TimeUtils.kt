@@ -1,6 +1,5 @@
 package org.sheedon.tool.utils
 
-import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +11,7 @@ import java.util.*
  */
 object TimeUtils {
 
-    @SuppressLint("SimpleDateFormat")
+    @Suppress("SimpleDateFormat")
     val format_y_m_d = SimpleDateFormat("yyyy-MM-dd")
 
     /**
@@ -129,7 +128,7 @@ object TimeUtils {
     /**
      * 获取本年的第一天
      * **/
-    @SuppressLint("SimpleDateFormat")
+    @Suppress("SimpleDateFormat")
     fun yearStart(): String {
         return SimpleDateFormat("yyyy").format(Date()) + "-01-01"
     }
