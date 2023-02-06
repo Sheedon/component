@@ -30,5 +30,137 @@
         <attr name="progressTextSize" format="integer" />
         <attr name="iconRes" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="DashView">
+        <attr name="dashWidth" format="dimension"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="lineHeight" format="dimension"/>
+        <attr name="lineColor" format="color"/>
+        <attr name="dashOrientation" format="integer"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+
+        <attr name="layoutManager" />
+        <attr name="android:orientation" />
+        <attr name="android:descendantFocusability" />
+        <attr name="android:clipToPadding" />
+        <attr name="spanCount" />
+        <attr name="reverseLayout" />
+        <attr name="stackFromEnd" />
+        <attr name="fastScrollEnabled" />
+        <attr name="fastScrollVerticalThumbDrawable" />
+        <attr name="fastScrollVerticalTrackDrawable" />
+        <attr name="fastScrollHorizontalThumbDrawable" />
+        <attr name="fastScrollHorizontalTrackDrawable" />
+
+        <attr name="android:src" />
+        <attr name="android:scaleType"/>
+        <attr name="android:adjustViewBounds"  />
+        <attr name="android:maxWidth"  />
+        <attr name="android:maxHeight"  />
+        <attr name="android:tint" />
+        <attr name="android:baselineAlignBottom"  />
+        <attr name="android:cropToPadding" />
+        <attr name="android:baseline"  />
+        <attr name="android:tintMode" />
+
+        <attr name="android:textAppearance" />
+        <attr name="android:bufferType" />
+        <attr name="android:text" />
+        <attr name="android:hint" />
+        <attr name="android:textColor" />
+        <attr name="android:textColorHighlight" />
+        <attr name="android:textColorHint" />
+        <attr name="android:textSize" />
+        <attr name="android:textScaleX" />
+        <attr name="android:typeface" />
+        <attr name="android:textStyle" />
+        <attr name="android:textFontWeight" />
+        <attr name="android:fontFamily" />
+        <attr name="android:textLocale" />
+        <attr name="android:textColorLink" />
+        <attr name="android:cursorVisible"  />
+        <attr name="android:maxLines" />
+        <attr name="android:lines" />
+        <attr name="android:height" />
+        <attr name="android:minLines" />
+        <attr name="android:minHeight" />
+        <attr name="android:maxEms" />
+        <attr name="android:ems" />
+        <attr name="android:width"  />
+        <attr name="android:minEms" />
+        <attr name="android:minWidth" />
+        <attr name="android:gravity" />
+        <attr name="android:scrollHorizontally"  />
+        <attr name="android:password" />
+        <attr name="android:singleLine" />
+        <attr name="android:enabled" />
+        <attr name="android:selectAllOnFocus" />
+        <attr name="android:includeFontPadding" />
+        <attr name="android:maxLength" />
+        <attr name="android:shadowColor" />
+        <attr name="android:shadowDx" />
+        <attr name="android:shadowDy" />
+        <attr name="android:shadowRadius" />
+        <attr name="android:autoLink" />
+        <attr name="android:linksClickable" />
+        <attr name="android:numeric" />
+        <attr name="android:digits"/>
+        <attr name="android:phoneNumber" />
+        <attr name="android:inputMethod" />
+        <attr name="android:capitalize" />
+        <attr name="android:autoText" />
+        <attr name="android:editable" />
+        <attr name="android:freezesText" />
+        <attr name="android:ellipsize" />
+        <attr name="android:drawableTop" />
+        <attr name="android:drawableBottom" />
+        <attr name="android:drawableLeft" />
+        <attr name="android:drawableRight"  />
+        <attr name="android:drawableStart"  />
+        <attr name="android:drawableEnd" />
+        <attr name="android:drawablePadding" />
+        <attr name="android:drawableTint" />
+        <attr name="android:drawableTintMode" />
+        <attr name="android:lineSpacingExtra" />
+        <attr name="android:lineSpacingMultiplier"  />
+        <attr name="android:lineHeight"  />
+        <attr name="android:firstBaselineToTopHeight"  />
+        <attr name="android:lastBaselineToBottomHeight"  />
+        <attr name="android:marqueeRepeatLimit"/>
+        <attr name="android:inputType" />
+        <attr name="android:allowUndo"  />
+        <attr name="android:imeOptions" />
+        <attr name="android:privateImeOptions"  />
+        <attr name="android:imeActionLabel" />
+        <attr name="android:imeActionId" />
+        <attr name="android:editorExtras" />
+        <attr name="android:textSelectHandleLeft" />
+        <attr name="android:textSelectHandleRight" />
+        <attr name="android:textSelectHandle" />
+        <attr name="android:textEditPasteWindowLayout" />
+        <attr name="android:textEditNoPasteWindowLayout" />
+        <attr name="android:textEditSidePasteWindowLayout" />
+        <attr name="android:textEditSideNoPasteWindowLayout" />
+        <attr name="android:textEditSuggestionItemLayout" />
+        <attr name="android:textCursorDrawable" />
+        <attr name="android:textIsSelectable" />
+        <attr name="android:textAllCaps" />
+        <attr name="android:elegantTextHeight" />
+        <attr name="android:fallbackLineSpacing"/>
+        <attr name="android:letterSpacing" />
+        <attr name="android:fontFeatureSettings" />
+        <attr name="android:fontVariationSettings" />
+        <attr name="android:breakStrategy" />
+        <attr name="android:hyphenationFrequency" />
+        <attr name="android:autoSizeTextType" />
+        <attr name="android:autoSizeStepGranularity"/>
+        <attr name="android:autoSizePresetSizes"/>
+        <attr name="android:autoSizeMinTextSize"  />
+        <attr name="android:autoSizeMaxTextSize"/>
+        <attr name="android:justificationMode"/>
+    </declare-styleable>
     
 </resources>
