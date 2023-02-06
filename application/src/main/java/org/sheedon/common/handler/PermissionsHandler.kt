@@ -176,6 +176,33 @@ class PermissionsHandler {
             }
     }
 
+
+    fun requestPermission(
+        context: Context,
+        desc: Int,
+        vararg permissions: String,
+        callback: OnPermissionCallback
+    ) {
+        if (permissions.isEmpty()) {
+            callbackPermissionResult(callback, true)
+            return
+        }
+        if (XXPermissions.isGranted(context, permissions)) {
+            callbackPermissionResult(callback, true)
+            return
+        }
+
+        val xxPermissions = XXPermissions.with(context)
+        permissions.forEach {
+            xxPermissions.permission(it)
+        }
+        xxPermissions
+            .request { _, all ->
+                showToast(context, all, desc)
+                callbackPermissionResult(callback, all)
+            }
+    }
+
     /**
      * 跳转到应用详情页
      *
