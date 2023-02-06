@@ -2,6 +2,7 @@ package org.sheedon.common.handler
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import org.sheedon.common.data.build.RootViewBuildFactory
 import org.sheedon.common.utils.BarUtils
@@ -20,6 +21,8 @@ class ConfigHandler private constructor() {
     // 是否为白天模式
     private var lightModel = true
 
+    private var color = Color.TRANSPARENT
+
     private var rootViewFactory = RootViewBuildFactory()
 
     companion object {
@@ -33,7 +36,7 @@ class ConfigHandler private constructor() {
          */
         @JvmStatic
         fun setStatusBarMode(activity: AppCompatActivity) {
-            BarUtils.setStatusBarColor(activity, Color.TRANSPARENT)
+            BarUtils.setStatusBarColor(activity, INSTANCE.color)
             BarUtils.setStatusBarLightMode(activity, INSTANCE.lightModel)
         }
 
@@ -57,6 +60,20 @@ class ConfigHandler private constructor() {
         @JvmStatic
         fun loadToolbarView(context: Context): IToolbarView =
             INSTANCE.rootViewFactory.buildToolbarView(context)
+
+        /**
+         * 加载标题栏+状态栏的背景
+         * */
+        @JvmStatic
+        internal fun loadToolbarBackground(context: Context): Drawable? =
+            INSTANCE.rootViewFactory.buildToolbarBackground(context)
+
+        /**
+         * 设置App状态颜色
+         */
+        fun setAppStatusColor(color: Int) {
+            INSTANCE.color = color
+        }
 
     }
 
