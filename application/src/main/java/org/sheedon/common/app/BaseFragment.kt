@@ -110,12 +110,17 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      */
     private fun onVisible() {
         if (lifecycle.currentState == Lifecycle.State.STARTED && firstLoad) {
+            startLoadAnimation()
             // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
             firstLoad = false
             handler.postDelayed({
                 lazyLoadData()
             }, lazyLoadTime())
         }
+    }
+
+    protected open fun startLoadAnimation() {
+
     }
 
     /**
