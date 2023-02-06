@@ -3,6 +3,7 @@ package org.sheedon.common.handler
 import android.annotation.SuppressLint
 import android.app.Application
 import android.graphics.drawable.Drawable
+import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -53,6 +54,16 @@ class ResConvertHandler private constructor() {
         fun convertDrawable(@DrawableRes resId: Int): Drawable {
             return INSTANCE.convertDrawable(resId)
         }
+
+        /**
+         * 数组资源转为数组数值
+         *
+         * @param resId 颜色资源
+         * @return 颜色数值
+         */
+        fun convertStringArray(@ArrayRes resId: Int): Array<String> {
+            return INSTANCE.convertStringArray(resId)
+        }
     }
 
     /**
@@ -93,7 +104,7 @@ class ResConvertHandler private constructor() {
      * @return 颜色数值
      */
     fun convertColor(@ColorRes resId: Int): Int {
-        return ContextCompat.getColor(getApplication(),resId)
+        return ContextCompat.getColor(getApplication(), resId)
     }
 
     /**
@@ -108,6 +119,10 @@ class ResConvertHandler private constructor() {
             resId,
             getApplication().theme
         )
+    }
+
+    fun convertStringArray(@ArrayRes resId: Int): Array<String> {
+        return getApplication().resources.getStringArray(resId)
     }
 
 }
