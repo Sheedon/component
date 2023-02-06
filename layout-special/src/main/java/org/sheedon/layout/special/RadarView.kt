@@ -356,10 +356,6 @@ class RadarView @JvmOverloads constructor(
         this.mDotRadius = radius
     }
 
-    enum class AnimateType {
-        START, STOP, NONE
-    }
-
     companion object {
 
 
