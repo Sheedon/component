@@ -17,31 +17,61 @@
             name="scanEvent"
             type="org.sheedon.component.module.scan.ScanListener" />
 
+        <variable
+            name="adapter"
+            type="androidx.recyclerview.widget.ListAdapter" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        tools:context=".MainActivity">
+        android:background="#F5F9FC"
+        android:orientation="vertical">
 
-        <include
-            layout="@layout/lay_search"
-            android:layout_width="0dp"
+        <org.sheedon.layout.RecyclerLoadMoreLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacingSize"
-            android:layout_weight="1"
-            app:search="@{search}" />
+            android:textSize="@dimen/bodyLittleSize"
+            android:layout_marginStart="@dimen/spacingDoubleSize"
+            android:layout_marginTop="@dimen/spacingDoubleSize"
+            android:layout_marginEnd="@dimen/spacingDoubleSize"
+            android:minHeight="@dimen/len_256"
+            app:adapter="@{adapter}"
+            app:layoutManager="org.sheedon.common.support.manager.WrapContentLinearLayoutNotCanScrollManager"
+            app:needLoadMore="false"
+            app:needRefresh="false" />
 
-        <include
-            layout="@layout/lay_scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacingSize"
-            android:layout_marginEnd="@dimen/spacingSize"
-            app:scanEvent="@{scanEvent}" />
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:baselineAligned="false"-->
+<!--            android:orientation="horizontal"-->
+<!--            tools:context=".MainActivity">-->
+
+<!--            <include-->
+<!--                layout="@layout/lay_search"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="@dimen/spacingSize"-->
+<!--                android:layout_weight="1"-->
+<!--                app:search="@{search}" />-->
+
+<!--            <include-->
+<!--                layout="@layout/lay_scan"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/spacingSize"-->
+<!--                android:layout_marginEnd="@dimen/spacingSize"-->
+<!--                app:scanEvent="@{scanEvent}" />-->
 
 
+<!--        </LinearLayout>-->
+
+<!--        <org.sheedon.layout.special.TimeProgressView-->
+<!--            android:id="@+id/radar"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"/>-->
     </LinearLayout>
+
 </layout>

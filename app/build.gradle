@@ -53,6 +53,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation project(path: ':application-mvvm')
 
@@ -68,6 +71,8 @@ dependencies {
 
     implementation project(':lifecycle')
     implementation project(':application-layout')
+    implementation project(':layout-special')
+    implementation project(':network:lan-search')
 
 //    implementation ':com.github.Sheedon.component:resource:0.4-alpha-3'
 //    annotationProcessor ':com.github.Sheedon.component:compiler:0.4-alpha-3'
