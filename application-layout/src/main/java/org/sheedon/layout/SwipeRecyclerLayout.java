@@ -46,6 +46,8 @@ public class SwipeRecyclerLayout extends RelativeLayout {
     private final SwipeRecyclerView swipeRecyclerView;
     private boolean needLoadMore;
 
+    private View headView;
+
     public SwipeRecyclerLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -323,6 +325,8 @@ public class SwipeRecyclerLayout extends RelativeLayout {
      * Add view at the headers.
      */
     public void addHeaderView(View view) {
+        headView = view;
+
         view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.setId(View.generateViewId());
         addView(view);
@@ -342,10 +346,19 @@ public class SwipeRecyclerLayout extends RelativeLayout {
         addHeaderView(view);
     }
 
+
+    @Nullable
+    public View loadHeadView() {
+        return headView;
+    }
+
     /**
      * Remove view from header.
      */
     public void removeHeaderView(View view) {
+        if(headView == view){
+            headView = null;
+        }
         swipeRecyclerView.removeHeaderView(view);
     }
 
@@ -504,6 +517,12 @@ public class SwipeRecyclerLayout extends RelativeLayout {
      */
     public void loadMoreError(int errorCode, String errorMessage) {
         swipeRecyclerView.loadMoreError(errorCode, errorMessage);
+    }
+
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener refreshListener){
+        if(swipeRefreshLayout != null){
+            swipeRefreshLayout.setOnRefreshListener(refreshListener);
+        }
     }
 
     private int lastIsEmpty = -1;
@@ -710,8 +729,12 @@ public class SwipeRecyclerLayout extends RelativeLayout {
     public static void scrollingEnabled(SwipeRecyclerLayout recyclerView,
                                         boolean scrollingEnabled) {
 
-        if (recyclerView.swipeRecyclerView != null && recyclerView.swipeRecyclerView.getAdapter() != null) {
+        if (recyclerView.swipeRecyclerView != null) {
             recyclerView.swipeRecyclerView.setNestedScrollingEnabled(scrollingEnabled);
+            if(!scrollingEnabled){
+                recyclerView.swipeRecyclerView.setHasFixedSize(true);
+                recyclerView.swipeRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+            }
         }
     }
 
