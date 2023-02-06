@@ -1,5 +1,6 @@
 package org.sheedon.tool.utils
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -9,10 +10,12 @@ import java.util.*
  * @Email: sheedonsun@163.com
  * @Date: 2022/3/18 10:59 上午
  */
+@Suppress("SimpleDateFormat")
 object TimeUtils {
 
-    @Suppress("SimpleDateFormat")
     val format_y_m_d = SimpleDateFormat("yyyy-MM-dd")
+    val format_y_m_d_h_m_s = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val format_y_m_d_h_m_s_s = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
     /**
      * 获取今天时间
@@ -149,6 +152,41 @@ object TimeUtils {
      */
     fun convertTime(date: Date, format: SimpleDateFormat = format_y_m_d): String {
         return format.format(date)
+    }
+
+    /**
+     * 转换时间
+     */
+    fun convertTime(
+        time: String,
+        currentFormat: SimpleDateFormat,
+        targetFormat: SimpleDateFormat
+    ): String {
+        return try {
+            val date = currentFormat.parse(time)
+            convertTime(date, targetFormat)
+        } catch (e: ParseException) {
+            time
+        }
+    }
+
+    fun convertDate(
+        time: String,
+        format: SimpleDateFormat = format_y_m_d
+    ): Date {
+        return try {
+            format.parse(time)
+        } catch (e: ParseException) {
+            Date()
+        }
+    }
+
+    fun convertToDay(time: String): String {
+        if (time.length > 10) {
+            return time.substring(0, 10)
+        }
+
+        return time
     }
 
 }

@@ -98,8 +98,8 @@ object NumberUtils {
     @JvmOverloads
     fun toFloat(number: Any?, defaultValue: Float = 0F): Float {
         val value = number ?: defaultValue
-        return if (value is Float) {
-            value
+        return if (value is Number) {
+            value.toFloat()
         } else {
             defaultValue
         }
