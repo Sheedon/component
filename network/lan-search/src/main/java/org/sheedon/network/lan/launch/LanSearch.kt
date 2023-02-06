@@ -21,7 +21,7 @@ class LanSearch(val factory: Converter.Factory) {
      */
     private fun createScanDeviceManager(
         context: Context,
-        listener: OnDeviceScanListener,
+        listener: OnDeviceScanListener? = null,
         progressListener: OnDeviceProgressListener? = null
     ): ScanDeviceManager {
         return ScanDeviceManager(
@@ -41,9 +41,10 @@ class LanSearch(val factory: Converter.Factory) {
 
         fun getScanDeviceManager(
             context: Context,
-            listener: OnDeviceScanListener
+            listener: OnDeviceScanListener? = null,
+            progressListener: OnDeviceProgressListener? = null
         ): ScanDeviceManager {
-            return search.createScanDeviceManager(context, listener)
+            return search.createScanDeviceManager(context, listener, progressListener)
         }
     }
 }

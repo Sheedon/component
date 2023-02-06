@@ -25,7 +25,7 @@ class DefaultManufactureConverter(context: Context) : Converter<String, String> 
             val properties = getProperties()
             val key = data.substring(0, 2) + data.substring(3, 5) + data.substring(6, 8)
 
-            properties.getProperty(key).also {
+            properties.getProperty(key.uppercase()).also {
                 String(it.toByteArray(charset("ISO8859-1")), Charset.forName("UTF-8"))
             }
 

@@ -16,9 +16,11 @@ import java.net.SocketTimeoutException
 class UdpTask {
     private var socket: DatagramSocket? = null
 
-    private val buffer = ByteArray(1024)
+    private var buffer = ByteArray(1024)
 
     private val lock = Any()
+
+    private var running = false
 
     @Throws(IOException::class)
     private fun loadSocket(): DatagramSocket {
@@ -41,6 +43,7 @@ class UdpTask {
      * @param data 数据
      */
     fun send(ip: String, port: Int, data: ByteArray) {
+        running = true
         try {
             val dp = DatagramPacket(data, data.size, InetAddress.getByName(ip), port)
             val datagramSocket = loadSocket()
@@ -48,6 +51,7 @@ class UdpTask {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+        running = false
     }
 
     /**
@@ -55,11 +59,16 @@ class UdpTask {
      */
     @Throws(IOException::class, SocketTimeoutException::class)
     fun receive(): DatagramPacket {
+        running = true
+        buffer = ByteArray(1024)
         val datagramSocket = loadSocket()
         val dp = DatagramPacket(buffer, buffer.size)
         datagramSocket.receive(dp)
+        running = false
         return dp
     }
+
+    fun isRunning() = running
 
     fun close() {
         socket?.close()

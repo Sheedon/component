@@ -2,10 +2,8 @@ package org.sheedon.network.lan.manager
 
 import android.content.Context
 import android.os.Build
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import android.util.Log
+import kotlinx.coroutines.*
 import org.sheedon.network.lan.NET_COUNT
 import org.sheedon.network.lan.R
 import org.sheedon.network.lan.client.UdpClient
@@ -28,7 +26,7 @@ import kotlin.collections.ArrayList
  * @Date: 2022/11/3 16:13
  */
 class ScanDeviceManager(
-    val listener: OnDeviceScanListener,
+    val listener: OnDeviceScanListener? = null,
     val progressListener: OnDeviceProgressListener? = null,
     val converter: Converter<String, String>
 ) {
@@ -149,7 +147,7 @@ class ScanDeviceManager(
             )
         model.convert(converter, deviceName)
 
-        listener.onDevicesResult(model)
+        listener?.onDevicesResult(model)
         updateProgress()
     }
 
@@ -158,7 +156,8 @@ class ScanDeviceManager(
      */
     private fun updateProgress() {
         val start = PROGRESS_RECEIVE_TOTAL + PROGRESS_START
-        val progress = start + (position.incrementAndGet() * 1.0 / total).toInt()
+        val progress =
+            start + (position.incrementAndGet() * 1.0 * PROGRESS_FURTHER_TOTAL / total).toInt()
         progressListener?.onProgress(progress)
     }
 
@@ -270,7 +269,7 @@ class ScanDeviceManager(
                 "", curDev = true, root = false
             )
         ipMacInLan.add(model)
-        listener.onDevicesResult(model)
+        listener?.onDevicesResult(model)
     }
 
     companion object {
