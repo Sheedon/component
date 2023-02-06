@@ -47,6 +47,8 @@ public class RecyclerLoadMoreLayout extends RelativeLayout {
     private SwipeRecyclerView swipeRecyclerView;
     private boolean needLoadMore;
 
+    private View headView;
+
     public RecyclerLoadMoreLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -320,6 +322,8 @@ public class RecyclerLoadMoreLayout extends RelativeLayout {
      * Add view at the headers.
      */
     public void addHeaderView(View view) {
+        headView = view;
+
         view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.setId(View.generateViewId());
         addView(view);
@@ -339,10 +343,18 @@ public class RecyclerLoadMoreLayout extends RelativeLayout {
         addHeaderView(view);
     }
 
+    @Nullable
+    public View loadHeadView() {
+        return headView;
+    }
+
     /**
      * Remove view from header.
      */
     public void removeHeaderView(View view) {
+        if(headView == view){
+            headView = null;
+        }
         swipeRecyclerView.removeHeaderView(view);
     }
 
