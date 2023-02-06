@@ -18,7 +18,7 @@ abstract class AbstractViewModel : ViewModel() {
 
     // 信号通知对象，用于通知「显示弹窗」、「隐藏弹窗」、「提示错误描述」、「处理动作」
     // 默认取子类创建的loadNotifier()，若未创建则加载默认的loadDefaultNotifier()方法
-    protected val signalNotify: ISignalNotify by lazy {
+    protected val signalNotify: ISignalNotify by lazy() {
         loadNotifier() ?: loadDefaultNotifier()
     }
 
@@ -58,7 +58,7 @@ abstract class AbstractViewModel : ViewModel() {
      */
     protected open fun <T : Actuator> getActuator(modelClass: Class<T>, vararg value: Any?): T {
         val values: Array<*> = value.let {
-            if (value.isNullOrEmpty()) {
+            if (value.isEmpty()) {
                 loadActuatorParameter() ?: emptyArray()
             } else {
                 value

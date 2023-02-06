@@ -1,5 +1,6 @@
 package org.sheedon.mvvm.event.notify
 
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import org.sheedon.mvvm.lifecycle.livedata.UnPeekLiveData
 
@@ -21,7 +22,11 @@ open class SignalNotify : ISignalNotify {
      * @param message 弹窗描述信息
      */
     override fun showLoading(message: String) {
-        notifyEmitter.postValue(NotifyStatus.Loading(message))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.Loading(message)
+        } else {
+            notifyEmitter.postValue(NotifyStatus.Loading(message))
+        }
     }
 
     /**
@@ -30,7 +35,11 @@ open class SignalNotify : ISignalNotify {
      * @param message 弹窗描述信息
      */
     override fun dismiss() {
-        notifyEmitter.postValue(NotifyStatus.Dismiss())
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.Dismiss()
+        } else {
+            notifyEmitter.postValue(NotifyStatus.Dismiss())
+        }
     }
 
     /**
@@ -38,7 +47,11 @@ open class SignalNotify : ISignalNotify {
      */
     override fun sendDataError(message: String?) {
         dismiss()
-        notifyEmitter.postValue(NotifyStatus.DataError(message ?: ""))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.DataError(message ?: "")
+        } else {
+            notifyEmitter.postValue(NotifyStatus.DataError(message ?: ""))
+        }
     }
 
     /**
@@ -46,7 +59,11 @@ open class SignalNotify : ISignalNotify {
      */
     override fun sendSignalAction(action: Int) {
         dismiss()
-        notifyEmitter.postValue(NotifyStatus.SignalAction(action))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.SignalAction(action)
+        } else {
+            notifyEmitter.postValue(NotifyStatus.SignalAction(action))
+        }
     }
 
 }
@@ -63,7 +80,11 @@ open class SignalNavNotify : ISignalNotify {
      * @param message 弹窗描述信息
      */
     override fun showLoading(message: String) {
-        notifyEmitter.postValue(NotifyStatus.Loading(message))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.Loading(message)
+        } else {
+            notifyEmitter.postValue(NotifyStatus.Loading(message))
+        }
     }
 
     /**
@@ -72,7 +93,11 @@ open class SignalNavNotify : ISignalNotify {
      * @param message 弹窗描述信息
      */
     override fun dismiss() {
-        notifyEmitter.postValue(NotifyStatus.Dismiss())
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.Dismiss()
+        } else {
+            notifyEmitter.postValue(NotifyStatus.Dismiss())
+        }
     }
 
     /**
@@ -80,7 +105,11 @@ open class SignalNavNotify : ISignalNotify {
      */
     override fun sendDataError(message: String?) {
         dismiss()
-        notifyEmitter.postValue(NotifyStatus.DataError(message ?: ""))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.DataError(message ?: "")
+        } else {
+            notifyEmitter.postValue(NotifyStatus.DataError(message ?: ""))
+        }
     }
 
     /**
@@ -88,7 +117,11 @@ open class SignalNavNotify : ISignalNotify {
      */
     override fun sendSignalAction(action: Int) {
         dismiss()
-        notifyEmitter.postValue(NotifyStatus.SignalAction(action))
+        if (Thread.currentThread() == Looper.getMainLooper().thread) {
+            notifyEmitter.value = NotifyStatus.SignalAction(action)
+        } else {
+            notifyEmitter.postValue(NotifyStatus.SignalAction(action))
+        }
     }
 
 }
