@@ -1,6 +1,7 @@
 package org.sheedon.common.data.build
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import org.sheedon.common.widget.rootview.IRootView
 import org.sheedon.common.widget.rootview.NormalRootView
 import org.sheedon.common.widget.toolbar.IToolbarView
@@ -27,4 +28,9 @@ open class RootViewBuildFactory {
     open fun buildToolbarView(context: Context): IToolbarView {
         return NormalToolbarView(context)
     }
+
+    /**
+     * 构建标题栏+状态栏的背景
+     */
+    open fun buildToolbarBackground(context: Context): Drawable? = null
 }

@@ -50,17 +50,17 @@ dependencies {
     kapt "com.android.databinding:compiler:4.2.0"
 
     api 'com.github.GrenderG:Toasty:1.5.2'
-    api 'com.google.android.material:material:1.5.0'
-    api 'com.github.getActivity:XXPermissions:11.0'
+    api 'com.google.android.material:material:1.4.0'
+    api 'com.github.getActivity:XXPermissions:16.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
 
     // recyclerViewAdapter
 //    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
 
     implementation project(':resource')
-    implementation project(':binding')
+    api project(':binding')
     implementation project(':application-tool')
 }
 
 apply from: '../script/gradle-jcenter-push.gradle'
-apply from: '../script/push_local.gradle'
+//apply from: '../script/push_local.gradle'

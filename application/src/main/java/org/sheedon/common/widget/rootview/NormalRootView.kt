@@ -13,7 +13,7 @@ import org.sheedon.common.R
 import org.sheedon.common.data.model.IToolbarModel
 import org.sheedon.common.handler.ConfigHandler
 import org.sheedon.common.widget.toolbar.IToolbarView
-import org.sheedon.tool.ext.screenHeight
+
 
 /**
  * 建议根布局
@@ -25,7 +25,7 @@ class NormalRootView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    val toolbar: IToolbarView = ConfigHandler.loadToolbarView(context)
+    val toolbar: IToolbarView = ConfigHandler.loadToolbarView(context),
 ) : CoordinatorLayout(context, attrs, defStyleAttr), IRootView {
 
     private lateinit var frameLayout: FrameLayout
@@ -33,8 +33,9 @@ class NormalRootView @JvmOverloads constructor(
     init {
         // 设置CoordinatorLayout基本配置
         overScrollMode = View.OVER_SCROLL_NEVER
+        fitsSystemWindows = true
         id = R.id.root_id
-        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, context.screenHeight)
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         initLayout()
     }
 
@@ -63,7 +64,13 @@ class NormalRootView @JvmOverloads constructor(
      * 初始化应用栏布局，将承载toolbar的ViewGroup返回
      */
     private fun initAppBarLayout(): ViewGroup {
-        val layout = AppBarLayout(context)
+        val layout = AppBarLayout(context).apply {
+            minimumHeight = convertDimen(R.dimen.navigationBarAndStatusBarSize)
+            fitsSystemWindows = true
+            ConfigHandler.loadToolbarBackground(context)?.also {
+                background = it
+            }
+        }
         layout.layoutParams = LayoutParams(
             LayoutParams.MATCH_PARENT,
             convertDimen(R.dimen.navigationBarAndStatusBarSize)
@@ -79,10 +86,12 @@ class NormalRootView @JvmOverloads constructor(
      */
     private fun initCollapsingToolbarLayout(parent: ViewGroup): ViewGroup {
         val layout = CollapsingToolbarLayout(context)
-        layout.layoutParams = LayoutParams(
+        layout.layoutParams = AppBarLayout.LayoutParams(
             LayoutParams.MATCH_PARENT,
             convertDimen(R.dimen.navigationBarAndStatusBarSize)
-        )
+        ).apply {
+            scrollFlags = behaviorScrollFlags()
+        }
         parent.addView(layout)
         return layout
     }
@@ -95,7 +104,7 @@ class NormalRootView @JvmOverloads constructor(
         frameLayout.layoutParams =
             LayoutParams(
                 LayoutParams.MATCH_PARENT,
-                context.screenHeight - convertDimen(R.dimen.navigationBarAndStatusBarSize)-1
+                LayoutParams.MATCH_PARENT
             )
         (frameLayout.layoutParams as LayoutParams).behavior = AppBarLayout.ScrollingViewBehavior()
         this.addView(frameLayout)
@@ -105,6 +114,9 @@ class NormalRootView @JvmOverloads constructor(
      * 获取根布局
      */
     override fun getRootView(): ViewGroup = this
+
+
+    fun behaviorScrollFlags() = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
 
     /**
      * 获取承载子布局的承载Layout
