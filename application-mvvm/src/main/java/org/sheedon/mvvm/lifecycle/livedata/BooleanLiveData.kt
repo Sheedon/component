@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
  * @Email: sheedonsun@163.com
  * @Date: 2022/1/12 1:30 下午
  */
-class BooleanLiveData : MutableLiveData<Boolean>() {
+class BooleanLiveData(boolean: Boolean = false) : MutableLiveData<Boolean>(boolean) {
 
     override fun setValue(value: Boolean) {
         super.setValue(value)
