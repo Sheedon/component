@@ -1,11 +1,13 @@
 package org.sheedon.common.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -92,6 +94,7 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      */
     protected open fun initData(view: View) {
         this.initData()
+        registerForActivityResult()
     }
 
     /**
@@ -162,7 +165,7 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      *
      * @param msg 错误信息
      */
-    protected open fun showError(msg: String) {
+    open fun showError(msg: String) {
         hideLoading()
         ToastHandler.showToast(msg)
     }
@@ -180,10 +183,23 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
         }
     }
 
+    private fun registerForActivityResult() {
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            onActivityResult(it.resultCode, it.data)
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         hideLoading()
         activity?.hideSoftKeyboard()
+    }
+
+    /**
+     * Activity数据返回
+     */
+    protected open fun onActivityResult(resultCode: Int, data: Intent?) {
+
     }
 
     /**
