@@ -1,5 +1,6 @@
 package org.sheedon.common.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -314,5 +315,16 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      */
     protected open fun onMenuClick() {
 
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        for (fragment in supportFragmentManager.fragments) {
+            for (childFragment in fragment.childFragmentManager.fragments) {
+                childFragment.onActivityResult(requestCode, resultCode, data)
+            }
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }

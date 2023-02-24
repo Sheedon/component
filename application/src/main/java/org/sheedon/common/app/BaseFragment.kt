@@ -94,7 +94,6 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
      */
     protected open fun initData(view: View) {
         this.initData()
-        registerForActivityResult()
     }
 
     /**
@@ -183,23 +182,10 @@ abstract class BaseFragment : Fragment(), IShowAndHideLoading {
         }
     }
 
-    private fun registerForActivityResult() {
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            onActivityResult(it.resultCode, it.data)
-        }
-    }
-
     override fun onPause() {
         super.onPause()
         hideLoading()
         activity?.hideSoftKeyboard()
-    }
-
-    /**
-     * Activity数据返回
-     */
-    protected open fun onActivityResult(resultCode: Int, data: Intent?) {
-
     }
 
     /**
