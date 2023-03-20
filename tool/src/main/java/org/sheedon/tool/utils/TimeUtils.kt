@@ -189,4 +189,27 @@ object TimeUtils {
         return time
     }
 
+    /**
+     * 是否早于当前
+     */
+    fun isEarlierThanNowTime(date: Date): Boolean {
+        return date.time < System.currentTimeMillis()
+    }
+
+    /**
+     * 后一个时间是否不晚于前一个时间
+     *
+     * @param lastTime 上一次时间
+     * @param time     当前时间
+     * @return boolean
+     */
+    fun isEarlierLastTime(lastTime: Date, time: Date): Boolean {
+        try {
+            return time.time <= lastTime.time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
 }

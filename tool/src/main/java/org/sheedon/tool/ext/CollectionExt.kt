@@ -27,23 +27,51 @@ fun Collection<String>?.merge(regex: String): String {
     return builder.toString()
 }
 
+///**
+// * 将List<T>合并，并且以[regex]分割符,内容根据block方法获取
+// */
+//fun <T> Collection<T>?.merge(regex: String, block: (T) -> String): String {
+//    if (this.isNullOrEmpty()) {
+//        return ""
+//    }
+//
+//    val builder = StringBuilder()
+//    for (item in this) {
+//        val result = block.invoke(item)
+//        builder.append(result).append(regex)
+//    }
+//
+//    if (builder.isNotEmpty()) {
+//        builder.deleteCharAt(builder.length - 1)
+//    }
+//
+//    return builder.toString()
+//}
+
 /**
  * 将List<T>合并，并且以[regex]分割符,内容根据block方法获取
  */
-fun <T> Collection<T>?.merge(regex: String, block: (T) -> String): String {
+fun <T> Collection<T>?.merge(regex: String, vararg blocks: (T) -> String): List<String> {
     if (this.isNullOrEmpty()) {
-        return ""
+        return blocks.map { "" }
     }
 
-    val builder = StringBuilder()
+    val builders = arrayListOf<StringBuilder>()
+    for (index in blocks.indices) {
+        builders.add(StringBuilder())
+    }
     for (item in this) {
-        val result = block.invoke(item)
-        builder.append(result).append(regex)
+        blocks.forEachIndexed { index, block ->
+            val result = block.invoke(item)
+            builders[index].append(result).append(regex)
+        }
     }
 
-    if (builder.isNotEmpty()) {
-        builder.deleteCharAt(builder.length - 1)
+    if (builders.firstOrNull()?.isNotEmpty() == true) {
+        builders.forEach {
+            it.deleteCharAt(it.length - 1)
+        }
     }
 
-    return builder.toString()
+    return builders.map { it.toString() }
 }
