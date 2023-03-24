@@ -212,4 +212,10 @@ object TimeUtils {
         return false
     }
 
+    fun getLastMonthEndTime(): Date {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.DAY_OF_MONTH] = 0
+        return calendar.time
+    }
+
 }
