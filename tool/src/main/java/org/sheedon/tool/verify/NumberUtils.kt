@@ -33,11 +33,19 @@ object NumberUtils {
     @JvmStatic
     @JvmOverloads
     fun toInt(number: Any?, defaultValue: Int = 0): Int {
-        val value = number ?: defaultValue
-        return if (value is Int) {
-            value
-        } else {
-            defaultValue
+        return when (val value = number ?: defaultValue) {
+            is Int -> {
+                value
+            }
+            is Number -> {
+                value.toInt()
+            }
+            is String -> {
+                toInt(value, defaultValue)
+            }
+            else -> {
+                defaultValue
+            }
         }
     }
 
@@ -65,11 +73,19 @@ object NumberUtils {
     @JvmStatic
     @JvmOverloads
     fun toLong(number: Any?, defaultValue: Long = 0): Long {
-        val value = number ?: defaultValue
-        return if (value is Long) {
-            value
-        } else {
-            defaultValue
+        return when (val value = number ?: defaultValue) {
+            is Long -> {
+                value
+            }
+            is Number -> {
+                value.toLong()
+            }
+            is String -> {
+                toLong(value, defaultValue)
+            }
+            else -> {
+                defaultValue
+            }
         }
     }
 
@@ -97,11 +113,19 @@ object NumberUtils {
     @JvmStatic
     @JvmOverloads
     fun toFloat(number: Any?, defaultValue: Float = 0F): Float {
-        val value = number ?: defaultValue
-        return if (value is Number) {
-            value.toFloat()
-        } else {
-            defaultValue
+        return when (val value = number ?: defaultValue) {
+            is Float -> {
+                value
+            }
+            is Number -> {
+                value.toFloat()
+            }
+            is String -> {
+                toFloat(value, defaultValue)
+            }
+            else -> {
+                defaultValue
+            }
         }
     }
 
@@ -129,11 +153,19 @@ object NumberUtils {
     @JvmStatic
     @JvmOverloads
     fun toDouble(number: Any?, defaultValue: Double = 0.0): Double {
-        val value = number ?: defaultValue
-        return if (value is Double) {
-            value
-        } else {
-            defaultValue
+        return when (val value = number ?: defaultValue) {
+            is Double -> {
+                value
+            }
+            is Number -> {
+                value.toDouble()
+            }
+            is String -> {
+                toDouble(value, defaultValue)
+            }
+            else -> {
+                defaultValue
+            }
         }
     }
 
