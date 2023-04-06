@@ -9,8 +9,8 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -30,4 +30,4 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
-//apply plugin: 'android-reporting'
+apply plugin: 'android-reporting'
