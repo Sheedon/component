@@ -32,3 +32,11 @@ fun Activity.showKeyboard() {
     val view = this.currentFocus
     view?.showKeyboard()
 }
+
+/**
+ * 隐藏软键盘
+ */
+fun Activity.hideKeyboard() {
+    val view = this.currentFocus
+    view?.hideKeyboard()
+}

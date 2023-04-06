@@ -24,6 +24,7 @@ class LoadingDialog(
 ) : AlertDialog(context, themeResId), ILoadingDialogHandler, LifecycleObserver {
 
     private val model = LoadingModel()
+    private var binding: DialogLoadingBinding? = null
 
     init {
         if (context is LifecycleOwner) {
@@ -38,19 +39,22 @@ class LoadingDialog(
             context.dip2px(120f),
             context.dip2px(120f)
         )
-        val binding: DialogLoadingBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.dialog_loading,
             null,
             false
         )
-        setContentView(binding.root)
-        binding.vm = model
+        setContentView(binding!!.root)
+        binding?.vm = model
     }
 
 
     override fun setTitle(title: CharSequence?) {
-        model.title = title?.toString()
+        if (model.title != title?.toString()) {
+            model.title = title?.toString()
+            binding?.vm = model
+        }
     }
 
     /**

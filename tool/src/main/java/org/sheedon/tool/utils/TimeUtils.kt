@@ -16,6 +16,8 @@ object TimeUtils {
     val format_y_m_d = SimpleDateFormat("yyyy-MM-dd")
     val format_y_m_d_h_m_s = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     val format_y_m_d_h_m_s_s = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+    val format_y_m_d_h_zh = SimpleDateFormat("yyyy年MM月dd日HH时")
+    val format_y_m_d_h_m_zh = SimpleDateFormat("yyyy年MM月dd日HH时mm分")
 
     /**
      * 获取今天时间
@@ -212,6 +214,9 @@ object TimeUtils {
         return false
     }
 
+    /**
+     * 获取上个月最后一天时间
+     */
     fun getLastMonthEndTime(): Date {
         val calendar = Calendar.getInstance()
         calendar[Calendar.DAY_OF_MONTH] = 0
