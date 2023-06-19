@@ -56,6 +56,20 @@ abstract class BaseActivity : AppCompatActivity(), IShowAndHideLoading {
      * 初始化窗口
      */
     protected open fun initWidows() {
+        if(autoStatusBarMode()){
+            initStatusBar()
+        }
+    }
+
+    /**
+     * 自动设置状态栏模式
+     */
+    protected open fun autoStatusBarMode() = true
+
+    /**
+     * 初始化状态栏
+     */
+    protected open fun initStatusBar() {
         ConfigHandler.setStatusBarMode(this)
     }
 
