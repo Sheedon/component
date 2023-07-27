@@ -75,3 +75,23 @@ fun <T> Collection<T>?.merge(regex: String, vararg blocks: (T) -> String): List<
 
     return builders.map { it.toString() }
 }
+
+
+fun <T> Collection<T>?.forAction(action: (T) -> Unit) {
+    if (this.isNullOrEmpty()) {
+        return
+    }
+
+    var index = 0
+    while (index < this.size) {
+        try {
+            val item = this.elementAt(index)
+            action.invoke(item)
+            index++
+        } catch (e: ConcurrentModificationException) {
+            e.printStackTrace()
+        } catch (e: IndexOutOfBoundsException) {
+            e.printStackTrace()
+        }
+    }
+}
