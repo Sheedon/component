@@ -2,7 +2,9 @@ package org.sheedon.common.utils
 
 import android.content.Context
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import es.dmoral.toasty.Toasty
+import org.sheedon.common.R
 
 /**
  * Toast工具箱  可防止用户多次点击之后 显示消息的时长太长
@@ -25,7 +27,16 @@ object ToastUtils {
      */
     fun showToast(context: Context, msg: String) {
         if (toast == null) {
-            toast = Toasty.normal(context, msg)
+            toast = Toasty.custom(
+                context,
+                msg,
+                null,
+                ContextCompat.getColor(context, R.color.normalColor),
+                ContextCompat.getColor(context, R.color.defaultTextColor),
+                Toast.LENGTH_LONG,
+                false,
+                true
+            )
             toast!!.show()
             oneTime = System.currentTimeMillis()
         } else {
@@ -49,7 +60,16 @@ object ToastUtils {
         try {
             toast?.setText(msg);
         } catch (e: RuntimeException) {
-            toast = Toasty.normal(context, msg)
+            toast = Toasty.custom(
+                context,
+                msg,
+                null,
+                ContextCompat.getColor(context, R.color.normalColor),
+                ContextCompat.getColor(context, R.color.defaultTextColor),
+                Toast.LENGTH_LONG,
+                false,
+                true
+            )
         }
     }
 

@@ -11,10 +11,10 @@ package org.sheedon.mvvm.viewmodel.actuator
 open class Actuator {
 
     init {
-        initConfig()
+
     }
 
-    protected open fun initConfig() {
+    open fun initConfig() {
 
     }
 

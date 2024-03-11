@@ -18,6 +18,7 @@ object TimeUtils {
     val format_y_m_d_h_m_s_s = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
     val format_y_m_d_h_zh = SimpleDateFormat("yyyy年MM月dd日HH时")
     val format_y_m_d_h_m_zh = SimpleDateFormat("yyyy年MM月dd日HH时mm分")
+    val format_m_d_h_m_s_zh = SimpleDateFormat("MM月dd日 HH:mm:ss")
 
     /**
      * 获取今天时间
@@ -91,14 +92,17 @@ object TimeUtils {
                 cal.set(Calendar.MONTH, 2)
                 cal.set(Calendar.DATE, 31)
             }
+
             in 4..6 -> {
                 cal.set(Calendar.MONTH, 5)
                 cal.set(Calendar.DATE, 30)
             }
+
             in 7..9 -> {
                 cal.set(Calendar.MONTH, 8)
                 cal.set(Calendar.DATE, 30)
             }
+
             in 10..12 -> {
                 cal.set(Calendar.MONTH, 11)
                 cal.set(Calendar.DATE, 31)
@@ -180,6 +184,8 @@ object TimeUtils {
             format.parse(time)
         } catch (e: ParseException) {
             Date()
+        } catch (e: ClassCastException) {
+            Date()
         }
     }
 
@@ -221,6 +227,56 @@ object TimeUtils {
         val calendar = Calendar.getInstance()
         calendar[Calendar.DAY_OF_MONTH] = 0
         return calendar.time
+    }
+
+    /**
+     * 获取今天0点的时间戳
+     * */
+    fun getTodayZeroTime(): Long {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
+    }
+
+    /**
+     * 获取今天23点59分59秒的时间戳
+     * */
+    fun getTodayEndTime(): Long {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
+    }
+
+    /**
+     * 明天0点时间戳
+     * */
+    fun getTomorrowZeroTime(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
+    }
+
+    /**
+     * 明天23点59分59秒的时间戳
+     * */
+    fun getTomorrowEndTime(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.timeInMillis
     }
 
 }

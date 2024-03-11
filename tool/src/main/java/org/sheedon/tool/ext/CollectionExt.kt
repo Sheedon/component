@@ -27,26 +27,26 @@ fun Collection<String>?.merge(regex: String): String {
     return builder.toString()
 }
 
-///**
-// * 将List<T>合并，并且以[regex]分割符,内容根据block方法获取
-// */
-//fun <T> Collection<T>?.merge(regex: String, block: (T) -> String): String {
-//    if (this.isNullOrEmpty()) {
-//        return ""
-//    }
-//
-//    val builder = StringBuilder()
-//    for (item in this) {
-//        val result = block.invoke(item)
-//        builder.append(result).append(regex)
-//    }
-//
-//    if (builder.isNotEmpty()) {
-//        builder.deleteCharAt(builder.length - 1)
-//    }
-//
-//    return builder.toString()
-//}
+/**
+ * 将List<T>合并，并且以[regex]分割符,内容根据block方法获取
+ */
+fun <T> Collection<T>?.mergeToString(regex: String, block: (T) -> String): String {
+    if (this.isNullOrEmpty()) {
+        return ""
+    }
+
+    val builder = StringBuilder()
+    for (item in this) {
+        val result = block.invoke(item)
+        builder.append(result).append(regex)
+    }
+
+    if (builder.isNotEmpty()) {
+        builder.deleteCharAt(builder.length - 1)
+    }
+
+    return builder.toString()
+}
 
 /**
  * 将List<T>合并，并且以[regex]分割符,内容根据block方法获取
@@ -77,7 +77,7 @@ fun <T> Collection<T>?.merge(regex: String, vararg blocks: (T) -> String): List<
 }
 
 
-fun <T> Collection<T>?.forAction(action: (T) -> Unit) {
+inline fun <T> Collection<T>?.forAction(action: (T) -> Unit) {
     if (this.isNullOrEmpty()) {
         return
     }

@@ -3,6 +3,7 @@ package org.sheedon.common.support.adapter
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.sheedon.common.support.manager.WrapContentLinearLayoutNotCanScrollManager
 
 /**
  * RecyclerView adapter
@@ -50,6 +51,20 @@ object RecyclerAdapter {
             layoutParams.height = height
             recyclerView.layoutParams = layoutParams
         }
+    }
+
+
+    @JvmStatic
+    @BindingAdapter(value = ["setOrientation"], requireAll = false)
+    fun <T> setOrientation(recyclerView: RecyclerView, orientation: Int?) {
+        if (orientation == null) {
+            return
+        }
+        recyclerView.layoutManager = WrapContentLinearLayoutNotCanScrollManager(
+            recyclerView.context,
+            orientation,
+            false
+        )
     }
 
 }
