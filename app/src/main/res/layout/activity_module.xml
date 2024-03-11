@@ -28,18 +28,18 @@
         android:background="#F5F9FC"
         android:orientation="vertical">
 
-        <org.sheedon.layout.RecyclerLoadMoreLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/bodyLittleSize"
-            android:layout_marginStart="@dimen/spacingDoubleSize"
-            android:layout_marginTop="@dimen/spacingDoubleSize"
-            android:layout_marginEnd="@dimen/spacingDoubleSize"
-            android:minHeight="@dimen/len_256"
-            app:adapter="@{adapter}"
-            app:layoutManager="org.sheedon.common.support.manager.WrapContentLinearLayoutNotCanScrollManager"
-            app:needLoadMore="false"
-            app:needRefresh="false" />
+<!--        <org.sheedon.layout.RecyclerLoadMoreLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="@dimen/bodyLittleSize"-->
+<!--            android:layout_marginStart="@dimen/spacingDoubleSize"-->
+<!--            android:layout_marginTop="@dimen/spacingDoubleSize"-->
+<!--            android:layout_marginEnd="@dimen/spacingDoubleSize"-->
+<!--            android:minHeight="@dimen/len_256"-->
+<!--            app:adapter="@{adapter}"-->
+<!--            app:layoutManager="org.sheedon.common.support.manager.WrapContentLinearLayoutNotCanScrollManager"-->
+<!--            app:needLoadMore="false"-->
+<!--            app:needRefresh="false" />-->
 
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->

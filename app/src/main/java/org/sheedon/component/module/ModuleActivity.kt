@@ -1,16 +1,11 @@
 package org.sheedon.component.module
 
-import android.util.Log
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
+
 import org.sheedon.common.data.model.IToolbarModel
+import org.sheedon.common.utils.ToastUtils
 import org.sheedon.component.R
-import org.sheedon.layout.special.TimeProgressView
 import org.sheedon.mvvm.ui.activities.AbstractModuleActivity
-import org.sheedon.network.lan.data.LanDeviceModel
-import org.sheedon.network.lan.launch.LanSearch
-import org.sheedon.network.lan.listener.OnDeviceScanListener
-import org.sheedon.network.lan.manager.Converter
+import org.sheedon.tool.ext.getScreenPhysicalSize
 
 class ModuleActivity : AbstractModuleActivity<ModuleViewModel, SearchCallback, SearchHandler>() {
 
@@ -26,7 +21,9 @@ class ModuleActivity : AbstractModuleActivity<ModuleViewModel, SearchCallback, S
     override fun initData() {
         super.initData()
 
-        findViewById<TimeProgressView>(R.id.radar).start()
+        ToastUtils.showToast(this, "" + getScreenPhysicalSize())
+
+//        findViewById<TimeProgressView>(R.id.radar).start()
 
 //        LanSearch.init(Converter.Factory())
 //        val manager = LanSearch.getScanDeviceManager(this, object : OnDeviceScanListener {
@@ -41,7 +38,6 @@ class ModuleActivity : AbstractModuleActivity<ModuleViewModel, SearchCallback, S
 //        }
 
     }
-
 
 
 }

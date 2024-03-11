@@ -68,6 +68,7 @@ dependencies {
     implementation project(':application')
     implementation project(':resource')
     implementation project(':notification')
+    implementation project(':application-tool')
 
     implementation project(':lifecycle')
     implementation project(':application-layout')
