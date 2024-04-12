@@ -186,6 +186,8 @@ object TimeUtils {
             Date()
         } catch (e: ClassCastException) {
             Date()
+        } catch (e: Exception) {
+            Date()
         }
     }
 
