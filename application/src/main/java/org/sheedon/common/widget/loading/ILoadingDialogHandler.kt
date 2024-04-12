@@ -25,7 +25,7 @@ interface ILoadingDialogHandler {
 
     open class LoadingDialogFactory {
 
-        protected open fun createLoadingDialog(content: Context): ILoadingDialogHandler {
+        open fun createLoadingDialog(content: Context): ILoadingDialogHandler {
             return LoadingDialog(content)
         }
     }
