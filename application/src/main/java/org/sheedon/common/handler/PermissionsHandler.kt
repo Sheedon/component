@@ -28,7 +28,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.CAMERA)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_camera)
+                showFailToast(context, all, R.string.common_permission_camera)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -48,7 +48,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.RECORD_AUDIO)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_microphone)
+                showFailToast(context, all, R.string.common_permission_microphone)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -76,7 +76,7 @@ class PermissionsHandler {
             .permission(Permission.ACCESS_FINE_LOCATION)
             .permission(Permission.ACCESS_BACKGROUND_LOCATION)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_location)
+                showFailToast(context, all, R.string.common_permission_location)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -95,7 +95,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.MANAGE_EXTERNAL_STORAGE)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_storage)
+                showFailToast(context, all, R.string.common_permission_storage)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -114,7 +114,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.REQUEST_INSTALL_PACKAGES)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_install)
+                showFailToast(context, all, R.string.common_permission_install)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -133,7 +133,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.SYSTEM_ALERT_WINDOW)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_window)
+                showFailToast(context, all, R.string.common_permission_window)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -152,7 +152,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.NOTIFICATION_SERVICE)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_notification)
+                showFailToast(context, all, R.string.common_permission_notification)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -171,7 +171,7 @@ class PermissionsHandler {
         XXPermissions.with(context)
             .permission(Permission.WRITE_SETTINGS)
             .request { _, all ->
-                showToast(context, all, R.string.common_permission_setting)
+                showFailToast(context, all, R.string.common_permission_setting)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -198,7 +198,7 @@ class PermissionsHandler {
         }
         xxPermissions
             .request { _, all ->
-                showToast(context, all, desc)
+                showOuterToast(context, all, desc)
                 callbackPermissionResult(callback, all)
             }
     }
@@ -229,6 +229,28 @@ class PermissionsHandler {
                 )
             )
         }
+    }
+
+    private fun showFailToast(context: Context, success: Boolean, res: Int) {
+        if (success) {
+            return
+        }
+
+        ToastHandler.showToast(
+            String.format(
+                context.resources.getString(R.string.common_permission_fail_3),
+                context.resources.getString(res)
+            )
+        )
+    }
+
+    /**
+     * 显示外部错误消息
+     */
+    private fun showOuterToast(context: Context, success: Boolean, res: Int) {
+        if (success) return
+
+        ToastHandler.showToast(context.resources.getString(res))
     }
 
     /**
