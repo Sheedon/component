@@ -74,10 +74,11 @@ object TimeUtils {
      * @param strDate 时间字符串
      * @param pattern 时间格式
      */
-    @Throws(ParseException::class)
-    fun parse(strDate: String): Date {
+    @JvmStatic
+    @JvmOverloads
+    fun parse(strDate: String, pattern: String = PATTERN_Y_M_D): Date {
         try {
-            return getDateFormat().parse(strDate)
+            return getDateFormat(pattern).parse(strDate)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -257,7 +258,11 @@ object TimeUtils {
     }
 
     fun yearStartDate(): String {
-        return getDateFormat("yyyy").format("yyyy") + "-01-01"
+        return try {
+            getDateFormat("yyyy").format("yyyy") + "-01-01"
+        } catch (e: Exception) {
+            ""
+        }
     }
 
     /**
@@ -271,7 +276,11 @@ object TimeUtils {
      * 获取本年的最后一天
      * **/
     fun yearEndDate(): String {
-        return getDateFormat("yyyy").format("yyyy") + "-12-31"
+        return try {
+            getDateFormat("yyyy").format("yyyy") + "-12-31"
+        } catch (e: Exception) {
+            ""
+        }
     }
 
     /**
@@ -282,7 +291,7 @@ object TimeUtils {
     }
 
     fun convertTime(date: Date, pattern: String): String {
-        return getDateFormat(pattern).format(date)
+        return formatDate(date, pattern)
     }
 
     /**
@@ -320,7 +329,7 @@ object TimeUtils {
         time: String,
         pattern: String
     ): Date {
-        return getDateFormat(pattern).parse(time)
+        return parse(time, pattern)
     }
 
     fun convertToDay(time: String): String {
