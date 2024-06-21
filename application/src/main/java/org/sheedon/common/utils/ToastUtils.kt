@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import es.dmoral.toasty.Toasty
 import org.sheedon.common.R
+import java.lang.Exception
 
 /**
  * Toast工具箱  可防止用户多次点击之后 显示消息的时长太长
@@ -37,21 +38,19 @@ object ToastUtils {
                 false,
                 true
             )
-            toast!!.show()
+            toast?.show()
             oneTime = System.currentTimeMillis()
         } else {
             val newTime = System.currentTimeMillis()
             if (msg == oldMsg) {
                 if ((newTime - oneTime) / 1000 > Toast.LENGTH_LONG) {
                     oneTime = newTime
-                    setText(context, msg)
-                    toast!!.show()
+                    showToastByCancel(context, msg)
                 }
             } else {
                 oneTime = newTime
                 oldMsg = msg
-                setText(context, msg)
-                toast!!.show()
+                showToastByCancel(context, msg)
             }
         }
     }
@@ -70,6 +69,25 @@ object ToastUtils {
                 false,
                 true
             )
+        }
+    }
+
+    private fun showToastByCancel(context: Context, msg: String) {
+        try {
+            toast?.cancel()
+            toast = Toasty.custom(
+                context,
+                msg,
+                null,
+                ContextCompat.getColor(context, R.color.normalColor),
+                ContextCompat.getColor(context, R.color.defaultTextColor),
+                Toast.LENGTH_LONG,
+                false,
+                true
+            )
+            toast?.show()
+        } catch (e: Exception) {
+            toast = null
         }
     }
 
