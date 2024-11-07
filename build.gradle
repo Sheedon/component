@@ -5,6 +5,7 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://nexus.web.cern.ch/nexus/content/repositories/public/' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
@@ -28,6 +29,7 @@ allprojects {
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://jitpack.io" }
+        maven { url 'https://nexus.web.cern.ch/nexus/content/repositories/public/' }
     }
 }
 apply plugin: 'android-reporting'
