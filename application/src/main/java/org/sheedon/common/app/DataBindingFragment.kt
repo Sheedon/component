@@ -62,7 +62,7 @@ abstract class DataBindingFragment : BaseFragment() {
             false
         )
             ?.apply {
-                lifecycleOwner = this@DataBindingFragment
+                lifecycleOwner = this@DataBindingFragment.viewLifecycleOwner
             } ?: return inflater.inflate(layId, container, false)
 
         val bindingConfig = appendBindingParam()
